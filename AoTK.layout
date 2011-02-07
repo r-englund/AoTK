@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Debug" />
+	<File name="Test.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="394" topLine="3" />
+	</File>
+	<File name="include\AoTK\Error.h" open="0" top="0" tabpos="0">
+		<Cursor position="44" topLine="0" />
+	</File>
+	<File name="include\AoTK\Fbo.h" open="0" top="0" tabpos="0">
+		<Cursor position="54" topLine="0" />
+	</File>
+	<File name="include\AoTK\aotk.h" open="0" top="0" tabpos="5">
+		<Cursor position="1057" topLine="37" />
+	</File>
+	<File name="include\AoTK\camera.h" open="0" top="0" tabpos="12">
+		<Cursor position="496" topLine="0" />
+	</File>
+	<File name="include\AoTK\enums.h" open="0" top="0" tabpos="0">
+		<Cursor position="32" topLine="0" />
+	</File>
+	<File name="include\AoTK\error.h" open="1" top="0" tabpos="0">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="include\AoTK\glsl.h" open="0" top="0" tabpos="0">
+		<Cursor position="53" topLine="0" />
+	</File>
+	<File name="include\AoTK\image.h" open="0" top="0" tabpos="0">
+		<Cursor position="1212" topLine="34" />
+	</File>
+	<File name="include\AoTK\listeners.h" open="0" top="0" tabpos="0">
+		<Cursor position="174" topLine="0" />
+	</File>
+	<File name="include\AoTK\math.h" open="0" top="0" tabpos="2">
+		<Cursor position="445" topLine="26" />
+	</File>
+	<File name="include\AoTK\object.h" open="0" top="0" tabpos="11">
+		<Cursor position="527" topLine="7" />
+	</File>
+	<File name="include\AoTK\scene.h" open="0" top="0" tabpos="10">
+		<Cursor position="429" topLine="0" />
+	</File>
+	<File name="include\AoTK\texture.h" open="0" top="0" tabpos="0">
+		<Cursor position="54" topLine="0" />
+	</File>
+	<File name="include\AoTK\viewport.h" open="0" top="0" tabpos="7">
+		<Cursor position="651" topLine="0" />
+	</File>
+	<File name="include\AoTK\window.h" open="0" top="0" tabpos="4">
+		<Cursor position="530" topLine="0" />
+	</File>
+	<File name="src\aotk.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="2810" topLine="78" />
+	</File>
+	<File name="src\camera.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="352" topLine="0" />
+	</File>
+	<File name="src\error.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="781" topLine="4" />
+	</File>
+	<File name="src\externals\glew.c" open="0" top="0" tabpos="0">
+		<Cursor position="13220" topLine="342" />
+	</File>
+	<File name="src\fbo.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="26" topLine="0" />
+	</File>
+	<File name="src\glsl.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="24" topLine="0" />
+	</File>
+	<File name="src\img\Image.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="24" topLine="0" />
+	</File>
+	<File name="src\img\Image_BMP.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="24" topLine="0" />
+	</File>
+	<File name="src\img\Image_GIF.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="24" topLine="0" />
+	</File>
+	<File name="src\img\Image_JPG.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="24" topLine="0" />
+	</File>
+	<File name="src\img\Image_PNG.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="24" topLine="0" />
+	</File>
+	<File name="src\listeners.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="342" topLine="2" />
+	</File>
+	<File name="src\matrix.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="22" topLine="0" />
+	</File>
+	<File name="src\object.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1543" topLine="39" />
+	</File>
+	<File name="src\scene.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="543" topLine="5" />
+	</File>
+	<File name="src\texture.cpp" open="0" top="0" tabpos="9">
+		<Cursor position="22" topLine="0" />
+	</File>
+	<File name="src\viewport.cpp" open="0" top="0" tabpos="8">
+		<Cursor position="674" topLine="17" />
+	</File>
+	<File name="src\window.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="952" topLine="0" />
+	</File>
+	<File name="src\window_win32.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="9666" topLine="282" />
+	</File>
+</CodeBlocks_layout_file>

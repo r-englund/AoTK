@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="AoTK" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\AoTK" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\AoTK" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Release\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wshadow" />
+			<Add option="-Wredundant-decls" />
+			<Add option="-Wfloat-equal" />
+			<Add option="-Wmissing-declarations" />
+			<Add option="-Wswitch-enum" />
+			<Add option="-Wswitch-default" />
+			<Add option="-std=c++0x" />
+			<Add option="-Wall" />
+			<Add directory="C:\Users\rickard\Documents\c++\AoTK\include" />
+		</Compiler>
+		<Linker>
+			<Add library="libopengl32.a" />
+			<Add library="gdi32" />
+			<Add library="kernel32" />
+			<Add library="user32" />
+		</Linker>
+		<Unit filename="Test.cpp" />
+		<Unit filename="include\AoTK\Error.h" />
+		<Unit filename="include\AoTK\Fbo.h" />
+		<Unit filename="include\AoTK\aotk.h" />
+		<Unit filename="include\AoTK\camera.h" />
+		<Unit filename="include\AoTK\enums.h" />
+		<Unit filename="include\AoTK\error.h" />
+		<Unit filename="include\AoTK\fbo.h" />
+		<Unit filename="include\AoTK\glsl.h" />
+		<Unit filename="include\AoTK\image.h" />
+		<Unit filename="include\AoTK\listeners.h" />
+		<Unit filename="include\AoTK\math.h" />
+		<Unit filename="include\AoTK\object.h" />
+		<Unit filename="include\AoTK\scene.h" />
+		<Unit filename="include\AoTK\texture.h" />
+		<Unit filename="include\AoTK\viewport.h" />
+		<Unit filename="include\AoTK\window.h" />
+		<Unit filename="src\aotk.cpp" />
+		<Unit filename="src\camera.cpp" />
+		<Unit filename="src\error.cpp" />
+		<Unit filename="src\externals\glew.c">
+			<Option compilerVar="CC" />
+			<Option weight="100" />
+			<Option compiler="gcc" use="1" buildCommand="$compiler $options -w $includes -c $file -o $object" />
+		</Unit>
+		<Unit filename="src\fbo.cpp" />
+		<Unit filename="src\glsl.cpp" />
+		<Unit filename="src\img\Image.cpp" />
+		<Unit filename="src\img\Image_BMP.cpp" />
+		<Unit filename="src\img\Image_GIF.cpp" />
+		<Unit filename="src\img\Image_JPG.cpp" />
+		<Unit filename="src\img\Image_PNG.cpp" />
+		<Unit filename="src\listeners.cpp" />
+		<Unit filename="src\math.cpp" />
+		<Unit filename="src\matrix.cpp" />
+		<Unit filename="src\object.cpp" />
+		<Unit filename="src\scene.cpp" />
+		<Unit filename="src\texture.cpp" />
+		<Unit filename="src\viewport.cpp" />
+		<Unit filename="src\window.cpp" />
+		<Unit filename="src\window_win32.cpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
