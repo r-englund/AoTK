@@ -7,6 +7,7 @@
 namespace AoTK{
 class Camera : public Object , public ResizeListener{
     Matrix projectionMatrix;
+    bool rend;
     float fov;
 public:
     Matrix getProjectionMatrix() const;

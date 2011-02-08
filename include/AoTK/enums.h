@@ -28,7 +28,9 @@ namespace AoTK{
     };
 
 
-
+    enum MOUSE_BUTTON{
+        LEFT_BUTTON,RIGHT_BUTTON,MIDDLE_BUTTON
+    };
 
 
 

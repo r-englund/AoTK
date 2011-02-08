@@ -180,6 +180,11 @@ KEY translateKEY(WPARAM w);
         }
     }
 
+    int prev_x = -1,prev_y = -1,dx,dy;
+    float maxl = 0;
+    float l;
+
+
     LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam){
         switch (message)                  /* handle the messages */
         {
@@ -194,8 +199,55 @@ KEY translateKEY(WPARAM w);
                 break;
             case WM_CHAR:
                 aotk->keyImpulse((unsigned char)wParam);
+                break;
             case WM_SIZE:
                 aotk->resize(LOWORD(lParam),HIWORD(lParam));
+                break;
+            case WM_LBUTTONUP:
+                aotk->mouseRelease(LEFT_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                break;
+            case WM_LBUTTONDOWN:
+                aotk->mousePress(LEFT_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                break;
+            case WM_RBUTTONUP:
+                aotk->mouseRelease(RIGHT_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                break;
+            case WM_RBUTTONDOWN:
+                aotk->mousePress(RIGHT_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                break;
+            case WM_MBUTTONUP:
+                aotk->mouseRelease(MIDDLE_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                break;
+            case WM_MBUTTONDOWN:
+                aotk->mousePress(MIDDLE_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                break;
+            case WM_MOUSEWHEEL:
+                aotk->scroll((short)HIWORD(wParam));
+                break;
+            case WM_MOUSELEAVE:
+                prev_x = -1;
+                prev_y = -1;
+                break;
+            case WM_MOUSEMOVE:
+                if(prev_x == -1 || prev_y == -1){
+                    prev_x = LOWORD(lParam);
+                    prev_y = HIWORD(lParam);
+                    break;
+                }
+                dx = LOWORD(lParam) - prev_x;
+                prev_x = LOWORD(lParam);
+                dy = HIWORD(lParam) - prev_y;
+                prev_y = HIWORD(lParam);
+
+                switch(wParam){
+                    case MK_LBUTTON:
+                    case MK_RBUTTON:
+                    case MK_MBUTTON:
+                        aotk->mousemotion(dx,dy);
+                        break;
+                    default:
+                        aotk->passiveMousemotion(dx,dy);
+                }
                 break;
             default:
                 return DefWindowProc (hwnd, message, wParam, lParam);
@@ -309,6 +361,22 @@ KEY translateKEY(WPARAM w);
                     DispatchMessage(&msg);
             }
             checkForMessages();
+        }else{
+            LPPOINT p;
+            GetCursorPos(p);
+            WINDOWINFO  wi;
+            GetWindowInfo(aotk->hwnd,&wi);
+            if(aotk->mouseInside){
+                if(!(p->x > wi.rcClient.left && p->x < wi.rcClient.right && p->y > wi.rcClient.top && p->y < wi.rcClient.bottom)){
+                    TRACKMOUSEEVENT tmt;
+                    tmt.cbSize = sizeof(TRACKMOUSEEVENT);
+                    tmt.dwFlags = TME_LEAVE;
+                    tmt.hwndTrack = aotk->hwnd;
+                    TrackMouseEvent(&tmt);
+                }
+                aotk->mouseInside = 0;
+            }else
+                aotk->mouseInside = (p->x > wi.rcClient.left && p->x < wi.rcClient.right && p->y > wi.rcClient.top && p->y < wi.rcClient.bottom);
         }
     }
     void Window::swapBuffers(){

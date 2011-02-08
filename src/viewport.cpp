@@ -7,7 +7,7 @@
 
 namespace AoTK{
 
-Viewport::Viewport(Scene *s,Camera *_cam,std::string _name):ResizeListener(_name),size(1,1),cam(_cam),pos(0.5,0.5),scene(s){
+Viewport::Viewport(Scene *s,Camera *_cam,std::string _name):ResizeListener(_name),size(1,1),pos(0.5,0.5),cam(_cam),scene(s){
     if(_name.length() == 0){
         static int uid = 0;
         char buf[30];
