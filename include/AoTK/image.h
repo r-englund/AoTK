@@ -5,21 +5,11 @@
 
 namespace AoTK{
 class Image{
-public:
-    enum MODE{
-        GREYSCALE,
-        RGB,
-        RGBA
-    };
-
-    enum CONVOLUTION_PADDIN{
-        zerofill
-    };
 private:
     float *data;
     unsigned int w; //Width
     unsigned int h; //Height
-    MODE mode;
+    IMG_MODE mode;
 
 
     void RGB2RGBA();
@@ -29,7 +19,7 @@ private:
     void GREY2RGBA();
     void GREY2RGB();
 public:
-    Image(unsigned int w,unsigned int h,MODE mode = RGBA);
+    Image(unsigned int w,unsigned int h,IMG_MODE mode = RGBA);
     Image();
     ~Image();
     Image(const Image&);
@@ -49,12 +39,12 @@ public:
     float* getRow(unsigned int row);
     float* getCol(unsigned int col);
 
-    MODE getMode(){return mode;}
+    IMG_MODE getMode(){return mode;}
 
-    void convolution(const Image &filter,CONVOLUTION_PADDIN padding = zerofill); //TODO implement
+    void convolution(const Image &filter,IMG_CONVOLUTION_PADDIN padding = zerofill); //TODO implement
 
     void setSize(unsigned int w,unsigned int h,bool keep = true);
-    void setMode(MODE m);
+    void setMode(IMG_MODE m);
     void normalize(float min = 0,float max = 1);
     void toGreyscale();
 
@@ -65,7 +55,7 @@ public:
     void saveJPG(std::string filename);
     void saveGIF(std::string filename);
 
-    static Image random(unsigned int w,unsigned int h, MODE mode = RGB);
+    static Image random(unsigned int w,unsigned int h, IMG_MODE mode = RGB);
 
     static Image LoadBMP(std::string filename);
     static Image LoadPNG(std::string filename);

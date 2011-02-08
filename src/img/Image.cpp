@@ -57,7 +57,7 @@ Image& Image::operator=(const Image &img){
     return *this;
 }
 
-Image::Image(unsigned int _w,unsigned int _h,MODE _mode):
+Image::Image(unsigned int _w,unsigned int _h,IMG_MODE _mode):
     data(0),
     w(_w),
     h(_h),
@@ -134,7 +134,7 @@ void Image::setColor(unsigned int x,unsigned int y,float grey){
     data[index] = grey;
 }
 
-void Image::setMode(MODE m){
+void Image::setMode(IMG_MODE m){
     switch(mode){
         case GREYSCALE:
             switch(m){
@@ -316,7 +316,7 @@ void Image::normalize(float min,float max){
 }
 void Image::toGreyscale(){assert(false && "toGreyScale not yet implemented");}
 
-Image Image::random(unsigned int w,unsigned int h, MODE mode){
+Image Image::random(unsigned int w,unsigned int h, IMG_MODE mode){
     Image img(w,h,mode);
     unsigned int c = 0;
     switch(mode){

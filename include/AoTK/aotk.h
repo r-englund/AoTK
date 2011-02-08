@@ -32,6 +32,7 @@
 #include "viewport.h"
 #include "window.h"
 #include "listeners.h"
+#include "light.h"
 #include "object.h"
 #include "scene.h"
 
@@ -64,6 +65,7 @@ namespace AoTK{
         void registerMouseListener(MouseListener *rl);
         void registerMouseMotionListener(MouseMotionListener *rl);
         void registerScrollListener(ScrollListener *rl);
+        void registerLightSource(Light *l);
         void unregisterViewport(Viewport *vp);
         void unregisterScene(Scene *s);
         void unregisterObject(Object *o);
@@ -72,16 +74,18 @@ namespace AoTK{
         void unregisterMouseListener(MouseListener *rl);
         void unregisterMouseMotionListener(MouseMotionListener *rl);
         void unregisterScrollListener(ScrollListener *rl);
+        void unregisterLightSource(Light *l);
 
     private:
-        std::map<std::string,Object*> objects;
-        std::map<std::string,Viewport*> viewports;
-        std::map<std::string,Scene*> scenes;
+        std::map<std::string,Object*>                  objects;
+        std::map<std::string,Viewport*>                viewports;
+        std::map<std::string,Scene*>                   scenes;
         std::map<std::string,KeyboardListener*>        keyboardListeners;
         std::map<std::string,ResizeListener*>          resizeListeners;
         std::map<std::string,MouseListener*>           mouseListeners;
         std::map<std::string,MouseMotionListener*>     mouseMotionListeners;
         std::map<std::string,ScrollListener*>          scrollListeners;
+        std::map<std::string,Light*>                   lights;
 
         std::map<KEY,bool> keyStates;
 

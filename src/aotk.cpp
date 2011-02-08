@@ -180,6 +180,11 @@ void AOTK::registerScrollListener(ScrollListener *sl){
     scrollListeners[sl->name] = sl;
 }
 
+void AOTK::registerLightSource(Light *l){
+    assert(lights.count(l->name) == 0 && "Light already exists");
+    lights[l->name] = l;
+}
+
 
 void AOTK::unregisterObject(Object *o){
     assert(objects.count(o->name) != 0 && "Object doesnt exists");
@@ -219,6 +224,11 @@ void AOTK::unregisterMouseMotionListener(MouseMotionListener *ml){
 void AOTK::unregisterScrollListener(ScrollListener *sl){
     assert(scrollListeners.count(sl->name) != 0 && "ScrollListener doesnt exists");
     scrollListeners.erase(sl->name);
+}
+
+void AOTK::unregisterLightSource(Light *l){
+    assert(lights.count(l->name) != 0 && "LightSource doesnt exists");
+    lights.erase(l->name);
 }
 
 

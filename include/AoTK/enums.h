@@ -32,7 +32,21 @@ namespace AoTK{
         LEFT_BUTTON,RIGHT_BUTTON,MIDDLE_BUTTON
     };
 
+    enum LIGHT_TYPE{
+        POINT,
+        DIRECTION,
+        SPOT
+    };
 
+    enum IMG_MODE{
+        GREYSCALE,
+        RGB,
+        RGBA
+    };
+
+    enum IMG_CONVOLUTION_PADDIN{
+        zerofill
+    };
 
 
 

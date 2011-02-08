@@ -26,6 +26,18 @@ void createObjects(){
     Matrix m = Matrix::translate(0,0,-3);
     TestObject *t = new TestObject("test",m);
     s->addObject(t);
+
+
+    s->addLight(Light::CreatePointLight("Light1"));
+    s->addLight(Light::CreatePointLight("Light2"));
+    s->addLight(Light::CreatePointLight("Light3"));
+    s->addLight(Light::CreatePointLight("Light4"));
+    s->addLight(Light::CreatePointLight("Light5"));
+    s->addLight(Light::CreatePointLight("Light6"));
+    s->addLight(Light::CreatePointLight("Light7"));
+    s->addLight(Light::CreatePointLight("Light8"));
+    s->addLight(Light::CreatePointLight("Light9"));
+    s->addLight(Light::CreatePointLight("Light10"));
 }
 
 void initGL(){

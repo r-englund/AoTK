@@ -14,7 +14,7 @@ namespace AoTK{
 
 struct Vector2{
     union{
-        float f[2];
+        float arr[2];
         struct{
             float x,y;
         };
@@ -29,7 +29,7 @@ struct Vector2{
 };
 struct Vector3{
     union{
-        float f[3];
+        float arr[3];
         struct{
             float x,y,z;
         };
@@ -48,7 +48,7 @@ struct Vector3{
 struct Vector4{
     Vector4(float _x = 0.0f,float _y = 0.0f,float _z = 0.0f,float _w = 1.0f):x(_x),y(_y),z(_z),w(_w){}
     union{
-        float f[4];
+        float arr[4];
         struct{
             float x,y,z,w;
         };

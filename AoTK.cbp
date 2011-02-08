@@ -55,9 +55,11 @@
 		<Unit filename="include\AoTK\fbo.h" />
 		<Unit filename="include\AoTK\glsl.h" />
 		<Unit filename="include\AoTK\image.h" />
+		<Unit filename="include\AoTK\light.h" />
 		<Unit filename="include\AoTK\listeners.h" />
 		<Unit filename="include\AoTK\math.h" />
 		<Unit filename="include\AoTK\object.h" />
+		<Unit filename="include\AoTK\sample_objects\sphere.h" />
 		<Unit filename="include\AoTK\scene.h" />
 		<Unit filename="include\AoTK\texture.h" />
 		<Unit filename="include\AoTK\viewport.h" />
@@ -77,6 +79,7 @@
 		<Unit filename="src\img\Image_GIF.cpp" />
 		<Unit filename="src\img\Image_JPG.cpp" />
 		<Unit filename="src\img\Image_PNG.cpp" />
+		<Unit filename="src\light.cpp" />
 		<Unit filename="src\listeners.cpp" />
 		<Unit filename="src\math.cpp" />
 		<Unit filename="src\matrix.cpp" />
