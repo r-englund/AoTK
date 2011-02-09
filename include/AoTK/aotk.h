@@ -37,6 +37,14 @@
 #include "scene.h"
 
 namespace AoTK{
+
+    struct Vertex{
+        Position pos;
+        Direction norm;
+        Vector2 tex_coord;
+    };
+
+
     class AOTK{
     friend class Window;
     public:
@@ -120,5 +128,8 @@ namespace AoTK{
     extern AOTK *aotk;
 
 };
+
+
+#include "sample_objects/sphere.h"
 
 #endif

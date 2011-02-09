@@ -84,6 +84,7 @@
 		<Unit filename="src\math.cpp" />
 		<Unit filename="src\matrix.cpp" />
 		<Unit filename="src\object.cpp" />
+		<Unit filename="src\sample_objects\sphere.cpp" />
 		<Unit filename="src\scene.cpp" />
 		<Unit filename="src\texture.cpp" />
 		<Unit filename="src\viewport.cpp" />

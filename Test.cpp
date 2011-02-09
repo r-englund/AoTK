@@ -25,19 +25,13 @@ void createObjects();
 void createObjects(){
     Matrix m = Matrix::translate(0,0,-3);
     TestObject *t = new TestObject("test",m);
-    s->addObject(t);
+//    s->addObject(t);
+
+    Light *l = Light::CreatePointLight("Light1");
+    s->addLight(l);
 
 
-    s->addLight(Light::CreatePointLight("Light1"));
-    s->addLight(Light::CreatePointLight("Light2"));
-    s->addLight(Light::CreatePointLight("Light3"));
-    s->addLight(Light::CreatePointLight("Light4"));
-    s->addLight(Light::CreatePointLight("Light5"));
-    s->addLight(Light::CreatePointLight("Light6"));
-    s->addLight(Light::CreatePointLight("Light7"));
-    s->addLight(Light::CreatePointLight("Light8"));
-    s->addLight(Light::CreatePointLight("Light9"));
-    s->addLight(Light::CreatePointLight("Light10"));
+    s->addObject(new Sphere(1,m,1,"Sphere"));
 }
 
 void initGL(){
@@ -45,16 +39,17 @@ void initGL(){
     glDepthFunc(GL_LESS);
     glClearDepth(1.0f);
     glClearColor(0.0,0.0,0.0,0.0);
+    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 }
 
 int main(int argc, const char** argv){
     initAoTK();
-    initGL();
     Size2D size;
     size.w = 800;
     size.h = 600;
 
     s = aotk->createWindow(size,"AoTK test Window");
+    initGL();
 
     createObjects();
 

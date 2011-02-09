@@ -222,7 +222,7 @@ KEY translateKEY(WPARAM w);
                 aotk->mousePress(MIDDLE_BUTTON,LOWORD(lParam),HIWORD(lParam));
                 break;
             case WM_MOUSEWHEEL:
-                aotk->scroll((short)HIWORD(wParam));
+                aotk->scroll((short)HIWORD(wParam) / 120);
                 break;
             case WM_MOUSELEAVE:
                 prev_x = -1;

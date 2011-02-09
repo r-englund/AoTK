@@ -26,6 +26,11 @@ struct Vector2{
         };
     };
     Vector2(float _x = 0.0f,float _y = 0.0f):x(_x),y(_y){}
+    void normalize(){
+        float l = sqrt(x*x+y*y);
+        x /= l;
+        y /= l;
+    }
 };
 struct Vector3{
     union{
@@ -44,6 +49,95 @@ struct Vector3{
         };
     };
     Vector3(float _x = 0.0f,float _y = 0.0f,float _z = 0.0f):x(_x),y(_y),z(_z){}
+    void normalize(){
+        float l = sqrt(x*x+y*y+z*z);
+        x /= l;
+        y /= l;
+        z /= l;
+    }
+    Vector3 &operator=(Vector3 const &_v){
+        if(this == &_v)
+            return *this;
+        x = _v.x;
+        y = _v.y;
+        z = _v.z;
+        return *this;
+    }
+
+    Vector3 &operator+=(Vector3 const &v){
+        x += v.x;
+        y += v.y;
+        z += v.z;
+        return *this;
+    }
+    Vector3 &operator-=(Vector3 const &v){
+        x -= v.x;
+        y -= v.y;
+        z -= v.z;
+        return *this;
+    }
+    Vector3 &operator+=(float f){
+        x += f;
+        y += f;
+        z += f;
+        return *this;
+    }
+    Vector3 &operator-=(float f){
+        x -= f;
+        y -= f;
+        z -= f;
+        return *this;
+    }
+    Vector3 &operator*=(float f){
+        x *= f;
+        y *= f;
+        z *= f;
+        return *this;
+    }
+    Vector3 &operator/=(float f){
+        x /= f;
+        y /= f;
+        z /= f;
+        return *this;
+    }
+
+    Vector3 operator+(Vector3 const &v)const{
+        Vector3 V(v);
+        V += *this;
+        return V;
+    }
+    Vector3 operator-(Vector3 const &v)const{
+        Vector3 V(v);
+        V -= *this;
+        return V;
+    }
+    Vector3 operator+(float f)const{
+        Vector3 V(*this);
+        V += f;
+        return V;
+    }
+    Vector3 operator-(float f)const{
+        Vector3 V(*this);
+        V -= f;
+        return V;
+    }
+    Vector3 operator*(float f)const{
+        Vector3 V(*this);
+        V *= f;
+        return V;
+    }
+    Vector3 operator/(float f)const{
+        Vector3 V(*this);
+        V /= f;
+        return V;
+    }
+
+    bool operator==(Vector3 const &v)const{
+        return (this->x == v.x && this->y == v.y && this->z == v.z);
+    }
+    bool operator!=(Vector3 const &v)const{
+        return !(*this==v);
+    }
 };
 struct Vector4{
     Vector4(float _x = 0.0f,float _y = 0.0f,float _z = 0.0f,float _w = 1.0f):x(_x),y(_y),z(_z),w(_w){}
@@ -56,6 +150,108 @@ struct Vector4{
             float r,g,b,a;
         };
     };
+    void normalize3(){
+        float l = sqrt(x*x+y*y+z*z);
+        x /= l;
+        y /= l;
+        z /= l;
+    }
+    void normalize(){
+        float l = sqrt(x*x+y*y+z*z+w*w);
+        x /= l;
+        y /= l;
+        z /= l;
+        w /= l;
+    }
+    Vector4 &operator=(Vector3 const &v){
+        x = v.x;
+        y = v.y;
+        z = v.z;
+        w = v.w;
+    }
+
+    Vector4 operator+(Vector4 const &v)const{
+        Vector4 V(*this);
+        V.x += v.x;
+        V.y += v.y;
+        V.z += v.z;
+        V.w += v.w;
+        return V;
+    }
+    Vector4 operator-(Vector4 const &v)const{
+        Vector4 V(*this);
+        V.x -= v.x;
+        V.y -= v.y;
+        V.z -= v.z;
+        V.w -= v.w;
+        return V;
+    }
+    Vector4 operator+(float f)const{
+        Vector4 V(*this);
+        V += f;
+        return V;
+    }
+    Vector4 operator-(float f)const{
+        Vector4 V(*this);
+        V -= f;
+        return V;
+    }
+    Vector4 operator*(float f)const{
+        Vector4 V(*this);
+        V *= f;
+        return V;
+    }
+    Vector4 operator/(float f)const{
+        Vector4 V(*this);
+        V /= f;
+        return V;
+    }
+
+    Vector4 &operator+=(Vector4 const &v){
+        x += v.x;
+        y += v.y;
+        z += v.z;
+        w += v.w;
+        return *this;
+    }
+    Vector4 &operator-=(Vector4 const &v){
+        x -= v.x;
+        y -= v.y;
+        z -= v.z;
+        w -= v.w;
+        return *this;
+    }
+    Vector4 &operator+=(float f){
+        x += f;
+        y += f;
+        z += f;
+        w += f;
+        return *this;
+    }
+    Vector4 &operator-=(float f){
+        x -= f;
+        y -= f;
+        z -= f;
+        w -= f;
+        return *this;
+    }
+    Vector4 &operator*=(float f){
+        x *= f;
+        y *= f;
+        z *= f;
+        w *= f;
+        return *this;
+    }
+    Vector4 &operator/=(float f){
+        x /= f;
+        y /= f;
+        z /= f;
+        w /= f;
+        return *this;
+    }
+
+    bool operator==(Vector4 const &v)const{ return (this->x == v.x && this->y == v.y && this->z == v.z && this->w == v.w);}
+    bool operator!=(Vector4 const &v)const{ return !(*this == v);};
 };
 
 
