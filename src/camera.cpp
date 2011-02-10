@@ -3,13 +3,21 @@
 namespace AoTK{
 
 
-Camera::Camera(float _fov,Matrix _toWorld,std::string _name)
-:Object(0,_toWorld,_name),
+Camera::Camera(Position pos, Direction dir, float _fov,std::string _name)
+:Object(0,Matrix(),_name),
     ResizeListener(_name),
     projectionMatrix(Matrix()),
     rend(0),
-    fov(_fov)
+    fov(_fov),
+    rotX(0),
+    rotY(0),
+    pos(pos)
 {
+    Position at(pos);
+    at.x += dir.x;
+    at.y += dir.y;
+    at.z += dir.z;
+    toWorld = Matrix::lookAt(pos,at,Direction(0,1,0));
 }
 
 Matrix Camera::getProjectionMatrix() const{
@@ -34,9 +42,9 @@ void Camera::logic(){
     }else if(aotk->keyState(ARROW_LEFT) ||aotk->keyState(A)){
         std::cout << "move LEFT" << std::endl;
     }
-
 }
-void Camera::graphic(){}
+void Camera::graphic(){
+}
 void Camera::prepare(){}
 void Camera::render(){
     if(!rend)

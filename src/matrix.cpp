@@ -132,6 +132,37 @@ Matrix Matrix::operator+(const Matrix &_m)const{
     return m;
 }
 
+Matrix Matrix::lookAt(Position pos,Position at,Direction up){
+    Vector3 center(pos.x,pos.y,pos.z);
+    Vector3 view_dir;
+    view_dir.x = at.x - pos.x;
+    view_dir.y = at.y - pos.y;
+    view_dir.z = at.z - pos.z;
+    view_dir.normalize();
+
+    Vector3 side = up.cross(view_dir);
+    side.normalize();
+    up = view_dir.cross(side);
+    Matrix m;
+    m._2d[0][0] = side.x;
+    m._2d[1][0] = side.y;
+    m._2d[2][0] = side.z;
+
+    m._2d[0][1] = up.x;
+    m._2d[1][1] = up.y;
+    m._2d[2][1] = up.z;
+
+    m._2d[0][2]  = -view_dir.x;
+    m._2d[1][2]  = -view_dir.y;
+    m._2d[2][2]  = -view_dir.z;
+
+    m._2d[3][0]  = -side.dot(center);
+    m._2d[3][1]  = -up.dot(center);
+    m._2d[3][2]  = view_dir.dot(center);
+
+    return m;
+}
+
 Matrix Matrix::perspectiveProjection(float fovy,float asp,float nearPlane,float farPlane){
     float e = 1.0/tan((fovy*0.0174532925/2));
     Matrix m;
@@ -227,5 +258,31 @@ std::ostream &operator<<(std::ostream &os,const Matrix &m){
     }
     return os;
 }
+Vector4 operator*(const Matrix &m,const Vector4 &v){
+    Vector4 V;
+    V.x = v.x*m.xx + v.y*m.yx + v.z*m.zx + v.w*m.wx;
+    V.y = v.x*m.xy + v.y*m.yy + v.z*m.zy + v.w*m.wy;
+    V.z = v.x*m.xz + v.y*m.yz + v.z*m.zz + v.w*m.wz;
+    V.w = v.x*m.xw + v.y*m.yw + v.z*m.zw + v.w*m.ww;
+    return V;
+}
+Vector3 operator*(const Matrix &m,const Vector3 &v){
+    Vector4 V;
+    V.x = v.x;
+    V.y = v.y;
+    V.z = v.z;
+    V.w = 1.0;
+    Vector4 a = m*V;
+    return Vector3(a.x/a.w,a.y/a.w,a.z/a.w);
+}
+
+
+std::ostream &operator<<(std::ostream &os,const Vector3 &v){
+    os << "[" << v.x << " " << v.y << " " << v.z << "]";
+}
+std::ostream &operator<<(std::ostream &os,const Vector4 &v){
+    os << "[" << v.x << " " << v.y << " " << v.z <<  " " << v.w << "]";
+}
+
 
 };

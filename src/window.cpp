@@ -16,7 +16,7 @@ namespace AoTK{
             std::cout << "VBO suport: NOT OK" << std::endl;
 
 
-        viewports.push_back(new Viewport(new Scene("main_scene"),new Camera(60,Matrix::translate(0,0,0),"main_camera"),"main_viewport"));
+        viewports.push_back(new Viewport(new Scene("main_scene"),new Camera(Position(0,0,3),Direction(0,0,-1),60,"main_camera"),"main_viewport"));
     }
 
 

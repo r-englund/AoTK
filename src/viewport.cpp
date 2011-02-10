@@ -30,7 +30,6 @@ void Viewport::setViewport(){
 
 }
 void Viewport::resize(unsigned int w,unsigned int h){
-    std::cout << w << " " << h << std::endl;
     if(abs(size.w - 1) < 0.001 && abs(size.h - 1) < 0.001 ){
         vp_params[0] = 0;
         vp_params[1] = 0;
@@ -49,7 +48,6 @@ void Viewport::resize(unsigned int w,unsigned int h){
         vp_params[2] = h*pos.y + size.w*0.5;
         vp_params[3] = h*pos.y + size.h*0.5;
     }
-    std::cout << vp_params[0] << " " << vp_params[1] << " " << vp_params[2] << " " << vp_params[3] << std::endl;
 }
 
 
