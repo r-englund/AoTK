@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="Test.cpp" open="1" top="0" tabpos="3">
+	<File name="Test.cpp" open="1" top="1" tabpos="3">
 		<Cursor position="1761" topLine="67" />
 	</File>
 	<File name="include\AoTK\Error.h" open="0" top="0" tabpos="0">
@@ -11,9 +11,9 @@
 		<Cursor position="54" topLine="0" />
 	</File>
 	<File name="include\AoTK\aotk.h" open="1" top="0" tabpos="4">
-		<Cursor position="1643" topLine="53" />
+		<Cursor position="3633" topLine="88" />
 	</File>
-	<File name="include\AoTK\camera.h" open="1" top="0" tabpos="16">
+	<File name="include\AoTK\camera.h" open="0" top="0" tabpos="16">
 		<Cursor position="516" topLine="0" />
 	</File>
 	<File name="include\AoTK\enums.h" open="0" top="0" tabpos="12">
@@ -25,20 +25,23 @@
 	<File name="include\AoTK\glsl.h" open="0" top="0" tabpos="0">
 		<Cursor position="157" topLine="0" />
 	</File>
-	<File name="include\AoTK\image.h" open="0" top="0" tabpos="0">
+	<File name="include\AoTK\image.h" open="1" top="0" tabpos="0">
 		<Cursor position="1622" topLine="28" />
 	</File>
-	<File name="include\AoTK\light.h" open="1" top="0" tabpos="5">
+	<File name="include\AoTK\light.h" open="0" top="0" tabpos="5">
 		<Cursor position="431" topLine="0" />
 	</File>
-	<File name="include\AoTK\listeners.h" open="1" top="0" tabpos="14">
+	<File name="include\AoTK\listeners.h" open="0" top="0" tabpos="14">
 		<Cursor position="961" topLine="0" />
 	</File>
-	<File name="include\AoTK\math.h" open="1" top="0" tabpos="13">
-		<Cursor position="1997" topLine="87" />
+	<File name="include\AoTK\math.h" open="0" top="0" tabpos="13">
+		<Cursor position="5994" topLine="274" />
 	</File>
 	<File name="include\AoTK\object.h" open="0" top="0" tabpos="10">
 		<Cursor position="398" topLine="0" />
+	</File>
+	<File name="include\AoTK\sample_objects\dvr.h" open="0" top="0" tabpos="0">
+		<Cursor position="118" topLine="0" />
 	</File>
 	<File name="include\AoTK\sample_objects\sphere.h" open="1" top="0" tabpos="15">
 		<Cursor position="379" topLine="6" />
@@ -46,19 +49,25 @@
 	<File name="include\AoTK\scene.h" open="0" top="0" tabpos="8">
 		<Cursor position="544" topLine="0" />
 	</File>
-	<File name="include\AoTK\texture.h" open="1" top="0" tabpos="7">
+	<File name="include\AoTK\texture.h" open="0" top="0" tabpos="7">
 		<Cursor position="237" topLine="0" />
 	</File>
 	<File name="include\AoTK\viewport.h" open="0" top="0" tabpos="1">
 		<Cursor position="651" topLine="0" />
 	</File>
-	<File name="include\AoTK\window.h" open="0" top="0" tabpos="4">
+	<File name="include\AoTK\window.h" open="1" top="0" tabpos="4">
 		<Cursor position="530" topLine="0" />
+	</File>
+	<File name="shaders\dvr_frag.glsl" open="1" top="0" tabpos="0">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="shaders\dvr_vert.glsl" open="1" top="0" tabpos="0">
+		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="src\aotk.cpp" open="1" top="0" tabpos="10">
 		<Cursor position="1428" topLine="41" />
 	</File>
-	<File name="src\camera.cpp" open="1" top="0" tabpos="12">
+	<File name="src\camera.cpp" open="0" top="0" tabpos="12">
 		<Cursor position="423" topLine="1" />
 	</File>
 	<File name="src\error.cpp" open="0" top="0" tabpos="13">
@@ -70,8 +79,8 @@
 	<File name="src\fbo.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="26" topLine="0" />
 	</File>
-	<File name="src\glsl.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="24" topLine="0" />
+	<File name="src\glsl.cpp" open="1" top="0" tabpos="0">
+		<Cursor position="988" topLine="18" />
 	</File>
 	<File name="src\img\Image.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="7703" topLine="299" />
@@ -88,17 +97,20 @@
 	<File name="src\img\Image_PNG.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="24" topLine="0" />
 	</File>
-	<File name="src\light.cpp" open="1" top="0" tabpos="1">
+	<File name="src\light.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="807" topLine="12" />
 	</File>
 	<File name="src\listeners.cpp" open="0" top="0" tabpos="10">
 		<Cursor position="1832" topLine="59" />
 	</File>
-	<File name="src\matrix.cpp" open="1" top="0" tabpos="11">
+	<File name="src\matrix.cpp" open="0" top="0" tabpos="11">
 		<Cursor position="2995" topLine="131" />
 	</File>
-	<File name="src\object.cpp" open="0" top="0" tabpos="5">
+	<File name="src\object.cpp" open="1" top="0" tabpos="5">
 		<Cursor position="1480" topLine="44" />
+	</File>
+	<File name="src\sample_objects\dvr.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="157" topLine="0" />
 	</File>
 	<File name="src\sample_objects\sphere.cpp" open="1" top="0" tabpos="2">
 		<Cursor position="8894" topLine="227" />
@@ -106,16 +118,16 @@
 	<File name="src\scene.cpp" open="1" top="0" tabpos="9">
 		<Cursor position="964" topLine="31" />
 	</File>
-	<File name="src\texture.cpp" open="1" top="1" tabpos="18">
+	<File name="src\texture.cpp" open="0" top="0" tabpos="18">
 		<Cursor position="810" topLine="2" />
 	</File>
-	<File name="src\viewport.cpp" open="1" top="0" tabpos="17">
+	<File name="src\viewport.cpp" open="0" top="0" tabpos="17">
 		<Cursor position="1388" topLine="13" />
 	</File>
-	<File name="src\window.cpp" open="1" top="0" tabpos="8">
+	<File name="src\window.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="850" topLine="0" />
 	</File>
-	<File name="src\window_win32.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="7647" topLine="232" />
+	<File name="src\window_win32.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="7545" topLine="232" />
 	</File>
 </CodeBlocks_layout_file>

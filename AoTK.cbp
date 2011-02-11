@@ -59,11 +59,16 @@
 		<Unit filename="include\AoTK\listeners.h" />
 		<Unit filename="include\AoTK\math.h" />
 		<Unit filename="include\AoTK\object.h" />
+		<Unit filename="include\AoTK\sample_objects\dvr.h" />
 		<Unit filename="include\AoTK\sample_objects\sphere.h" />
 		<Unit filename="include\AoTK\scene.h" />
 		<Unit filename="include\AoTK\texture.h" />
 		<Unit filename="include\AoTK\viewport.h" />
 		<Unit filename="include\AoTK\window.h" />
+		<Unit filename="shaders\dvr_frag.glsl" />
+		<Unit filename="shaders\dvr_vert.glsl" />
+		<Unit filename="shaders\quad_frag.glsl" />
+		<Unit filename="shaders\quad_vert.glsl" />
 		<Unit filename="src\aotk.cpp" />
 		<Unit filename="src\camera.cpp" />
 		<Unit filename="src\error.cpp" />
@@ -84,6 +89,7 @@
 		<Unit filename="src\math.cpp" />
 		<Unit filename="src\matrix.cpp" />
 		<Unit filename="src\object.cpp" />
+		<Unit filename="src\sample_objects\dvr.cpp" />
 		<Unit filename="src\sample_objects\sphere.cpp" />
 		<Unit filename="src\scene.cpp" />
 		<Unit filename="src\texture.cpp" />

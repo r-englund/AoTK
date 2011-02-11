@@ -26,9 +26,25 @@ public:
         wfstate = 1;
         culstate = 0;
     }
+    void takeScreenShoot(){
+        Image i(aotk->window->getSize().x,aotk->window->getSize().y,RGB);
+        float *f = new float[(int)(3*aotk->window->getSize().x*aotk->window->getSize().y)]();
+        glReadPixels(0,0,aotk->window->getSize().x,aotk->window->getSize().y,GL_RGB,GL_FLOAT,f);
+        i.setData(f);
+
+        char name[40];
+        sprintf(name,"screens/%i.bmp",time(NULL));
+        std::cout << "f"<< std::endl;
+        i.saveBMP(name);
+        std::cout << name << std::endl;
+    }
+
     bool wfstate;
     int culstate;
     virtual void keyDown(KEY key){
+        if(key == KEY::P){
+            takeScreenShoot();
+        }
         if(key == M){
             if(wfstate){
                 glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
@@ -37,7 +53,6 @@ public:
                 glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
                 wfstate = 1;
             }
-
         }
         if(key == C){
             switch(culstate){
@@ -66,19 +81,30 @@ public:
     virtual void keyImpulse(unsigned char key){};
 };
 
+
+
 void initGL();
 void createObjects();
 void createObjects(){
-    Matrix m = Matrix::translate(0,0,0);
-    TestObject *t = new TestObject("test",m);
-//    s->addObject(t);
+    Matrix m = Matrix::translate(0,0,-1);
+//    TestObject *t = new TestObject("test",m);
+////    s->addObject(t);
+//
+//    Light *l = Light::CreatePointLight("Light1");
+////    s->addLight(l);
+//
+//    Sphere *sp = new Sphere(0.01,m,4,"Sphere");
+//    sp->setTexture(Create2DTexture(Image::LoadBMP("C:/Users/rickard/Pictures/earth.bmp")));
+//    s->addObject(sp);
 
-    Light *l = Light::CreatePointLight("Light1");
-//    s->addLight(l);
-
-    Sphere *sp = new Sphere(0.6,m,4,"Sphere");
-    sp->setTexture(Create2DTexture(Image::LoadBMP("C:/Users/rickard/Pictures/lines.bmp")));
-    s->addObject(sp);
+    DVR::VolumeInfo vi;
+    vi.depth  = 256;
+    vi.width  = 256;
+    vi.height = 256;
+    vi.filename = "volumes/engine.raw";
+    GLuint pgm = loadShaderProgram("shaders/dvr_vert.glsl","shaders/dvr_frag.glsl");
+    DVR *d = new DVR(pgm,vi,m,"Volume Rendering Test");
+    s->addObject(d);
 }
 
 void initGL(){
@@ -101,6 +127,8 @@ int main(int argc, const char** argv){
     initGL();
 
     createObjects();
-
+    int i;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE,&i);
+    std::cout << i << std::endl;
     aotk->start();
 }

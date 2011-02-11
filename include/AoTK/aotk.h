@@ -9,6 +9,7 @@
 #endif
 
 #include <string>
+#include <sstream>
 #include <vector>
 #include <algorithm>
 #include <map>
@@ -19,6 +20,7 @@
 #include <assert.h>
 #include <cstdlib>
 #include <stdio.h>
+#include <time.h>
 
 
 #include "enums.h"
@@ -85,6 +87,8 @@ namespace AoTK{
         void unregisterScrollListener(ScrollListener *rl);
         void unregisterLightSource(Light *l);
 
+        Window *window;
+
     private:
         std::map<std::string,Object*>                  objects;
         std::map<std::string,Viewport*>                viewports;
@@ -105,7 +109,6 @@ namespace AoTK{
 
         bool running;
 
-        Window *window;
         void mainLoop();
     friend void initAoTK();
 #ifdef _WIN32
@@ -132,5 +135,6 @@ namespace AoTK{
 
 
 #include "sample_objects/sphere.h"
+#include "sample_objects/dvr.h"
 
 #endif

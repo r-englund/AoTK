@@ -20,10 +20,12 @@ namespace AoTK{
         Window& operator=(const Window &w) = delete;
         ~Window();
 
-
         void checkForMessages();
         void swapBuffers();
 
+    public:
+
+        Size2D getSize(){return size;}
     };
 };
 

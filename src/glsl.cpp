@@ -38,10 +38,10 @@ GLuint loadShaderProgram(std::string vertex,std::string fragment){
     buf_vert[vert_size] = 0;
     buf_frag[frag_size] = 0;
 
-    GLuint pgm = glCreateProgram();
-
     std::cout << buf_vert << std::endl;
     std::cout << buf_frag << std::endl;
+
+    GLuint pgm = glCreateProgram();
 
     GLuint vShader,fShader;
     vShader = glCreateShader(GL_VERTEX_SHADER);

@@ -55,15 +55,13 @@ void Object::doPrepare(unsigned int cur_frame){
     getAllError(__FILE__,__LINE__);
 }
 void Object::doRender(){
-    glUseProgram(pgm);
+    //glUseProgram(pgm);
     getAllError(__FILE__,__LINE__);
     glPushMatrix();
     glMultMatrixf(toWorld._1d);
-//    glUniformMatrix4fv(proj_matrix_loc,1,0,cur_cam->getProjectionMatrix()._1d);
-//    glUniformMatrix4fv(view_matrix_loc,1,0,cur_cam->getToWorldMatrix()._1d);
-//    glUniformMatrix4fv(model_matrix_loc,1,0,toWorld._1d);
     render();
     glPopMatrix();
+    glUseProgram(0);
     getAllError(__FILE__,__LINE__);
 }
 

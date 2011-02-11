@@ -253,7 +253,6 @@ KEY translateKEY(WPARAM w);
                 return DefWindowProc (hwnd, message, wParam, lParam);
         }
 
-
         return 0;
     }
 

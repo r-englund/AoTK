@@ -20,6 +20,7 @@ void Sphere::render(){
 
     glBindTexture(GL_TEXTURE_2D,texture);
     glBegin(GL_TRIANGLES);
+    glColor3f(1,1,1);
     for(auto i = vertices.begin(); i != vertices.end();++i){
         glTexCoord2fv(i->tex_coord.arr);
 //        glColor3f(i->tex_coord.x,i->tex_coord.y,0);
@@ -207,14 +208,22 @@ void Sphere::tesselate(){
 
         i->tex_coord.v = 1 - acos(i->pos.y) / M_PI;
 
-        i->pos *= radius;
-
         if(i->tex_coord.u > maxU) maxU = i->tex_coord.u;
         if(i->tex_coord.u < minU) minU = i->tex_coord.u;
         if(i->tex_coord.v > maxV) maxV = i->tex_coord.v;
         if(i->tex_coord.v < minV) minV = i->tex_coord.v;
     }
     for(int i = 0;i<vertices.size();i+=3){
+        vertices[i].pos.x *= radius;
+        vertices[i].pos.y *= radius;
+        vertices[i].pos.z *= radius;
+        vertices[i+1].pos.x *= radius;
+        vertices[i+1].pos.y *= radius;
+        vertices[i+1].pos.z *= radius;
+        vertices[i+2].pos.x *= radius;
+        vertices[i+2].pos.y *= radius;
+        vertices[i+2].pos.z *= radius;
+
         Vector2 *t0,*t1,*t2;
         t0 = &vertices[i].tex_coord;
         t1 = &vertices[i+1].tex_coord;
