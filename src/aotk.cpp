@@ -42,9 +42,20 @@ void AOTK::start(){
     mainLoop();
 }
 
+time_t tt,cur;
 void AOTK::mainLoop(){
     unsigned int frame = 1;
+    tt = time(NULL);
     while(running){
+////        cur = time(NULL);
+////        long ds = cur-tt;
+////        if(ds > 10){
+////            std::cout << frame / float(ds) << "fps" << std::endl;
+////            tt = time(NULL);
+////        }
+//
+//        std::cout << time(NULL) <<std::endl;
+
         window->checkForMessages();
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT);
 
@@ -74,6 +85,7 @@ void AOTK::mainLoop(){
         }
 
         window->swapBuffers();
+
         frame++;
     }
 }
@@ -132,7 +144,7 @@ void AOTK::scroll(int p){
     }
 }
 
-Scene* AOTK::createWindow(Size2D size,std::string title){
+Scene* AOTK::createWindow(Size2D<unsigned int> size,std::string title){
     window = new Window(size,title);
     assert(window && "Couldnt create a window instance");
     return aotk->scenes["main_scene"];

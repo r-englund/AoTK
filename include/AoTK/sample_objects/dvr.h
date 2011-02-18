@@ -9,6 +9,14 @@
 namespace AoTK{
 
 class DVR : public Object, KeyboardListener, ResizeListener, MouseMotionListener, ScrollListener{
+    enum RayMethod{
+        RayInCoord = 0,
+        RayOutCoord,
+        avg,
+        GradMag,
+        mip,
+        density
+    } type;
 public:
     struct VolumeInfo{
         std::string filename;
@@ -41,11 +49,12 @@ public:
 
 private:
     Matrix trans;
-    float *data;
+    GLubyte *data;
     float roty;
     float rotx;
     float threshold;
     float stepsize;
+    float div_coeff;
     VolumeInfo volumeInfo;
     GLuint tex;
     FBO frontFace;
@@ -57,6 +66,8 @@ private:
     GLint window_size_loc;
     GLint threshold_loc;
     GLint stepsize_loc;
+    GLint div_coeff_loc;
+    GLint type_loc;
 
     unsigned int win_w,win_h;
 

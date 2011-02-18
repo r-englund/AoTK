@@ -148,20 +148,20 @@ void Sphere::tesselate(){
     indices.clear();
 
     Vertex v[12];
-    v[0].pos = Position(tau,one,0.0);
-    v[1].pos = Position(-tau,one,0.0);
-    v[2].pos = Position(-tau,-one,0.0);
-    v[3].pos = Position(tau,-one,0.0);
+    v[0].pos = Position<>(tau,one,0.0);
+    v[1].pos = Position<>(-tau,one,0.0);
+    v[2].pos = Position<>(-tau,-one,0.0);
+    v[3].pos = Position<>(tau,-one,0.0);
 
-    v[4].pos = Position(one,0.0,tau);
-    v[5].pos = Position(one,0.0,-tau);
-    v[6].pos = Position(-one,0.0,-tau);
-    v[7].pos = Position(-one,0.0,tau);
+    v[4].pos = Position<>(one,0.0,tau);
+    v[5].pos = Position<>(one,0.0,-tau);
+    v[6].pos = Position<>(-one,0.0,-tau);
+    v[7].pos = Position<>(-one,0.0,tau);
 
-    v[8].pos = Position(0.0,tau,one);
-    v[9].pos = Position(0.0,-tau,one);
-    v[10].pos = Position(0.0,-tau,-one);
-    v[11].pos = Position(0.0,tau,-one);
+    v[8].pos = Position<>(0.0,tau,one);
+    v[9].pos = Position<>(0.0,-tau,one);
+    v[10].pos = Position<>(0.0,-tau,-one);
+    v[11].pos = Position<>(0.0,tau,-one);
 
     indices = {4, 8, 7,4, 7, 9,5, 6, 11,5, 10, 6,0, 4, 3,0, 3, 5,2, 7, 1,2, 1, 6,8, 0, 11,8, 11, 1,9, 10, 3,9, 2, 10,8, 4, 0,11, 0, 5,4, 9, 3,5, 3, 10,7, 8, 1,6, 1, 11,7, 2, 9,6, 10, 2};
     reverse(indices.begin(),indices.end());
@@ -224,7 +224,7 @@ void Sphere::tesselate(){
         vertices[i+2].pos.y *= radius;
         vertices[i+2].pos.z *= radius;
 
-        Vector2 *t0,*t1,*t2;
+        Vector2<> *t0,*t1,*t2;
         t0 = &vertices[i].tex_coord;
         t1 = &vertices[i+1].tex_coord;
         t2 = &vertices[i+2].tex_coord;

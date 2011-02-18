@@ -138,7 +138,7 @@ Image Image::LoadBMP(std::string filename){
                 pad_bytes++;
                 PIXEL24BIT pixel;
                 fread(&pixel,sizeof(PIXEL24BIT),1,file);
-                i.setColor(x,y,Color(pixel.red/255.0,pixel.green/255.0,pixel.blue/255.0));
+                i.setColor(x,y,Color<>(pixel.red/255.0,pixel.green/255.0,pixel.blue/255.0));
             }
             pad_bytes = pad_bytes % 4;
             if(pad_bytes)

@@ -1,6 +1,9 @@
 #ifndef MATH_H
 #define MATH_H
 
+#include <cmath>
+#include <iostream>
+
 #ifndef M_E
 #define M_E		    2.7182818284590452354
 #endif
@@ -54,46 +57,48 @@ namespace AoTK{
 #define Position Vector4
 #define Color Vector4
 
-
+template <typename T = float>
 struct Vector2{
     union{
-        float arr[2];
+        T arr[2];
         struct{
-            float x,y;
+            T x,y;
         };
         struct{
-            float u,v;
+            T u,v;
         };
         struct{
-            float w,h;
+            T w,h;
         };
     };
-    Vector2(float _x = 0.0f,float _y = 0.0f):x(_x),y(_y){}
+    Vector2(T _x = 0.0f,T _y = 0.0f):x(_x),y(_y){}
     void normalize(){
         float l = sqrt(x*x+y*y);
         x /= l;
         y /= l;
     }
 };
+
+template <typename T = float>
 struct Vector3{
     union{
-        float arr[3];
+        T arr[3];
         struct{
-            float x,y,z;
+            T x,y,z;
         };
         struct{
-            float u,v,s;
+            T u,v,s;
         };
         struct{
-            float w,h,d;
+            T w,h,d;
         };
         struct{
-            float r,g,b;
+            T r,g,b;
         };
     };
-    Vector3(float _x = 0.0f,float _y = 0.0f,float _z = 0.0f):x(_x),y(_y),z(_z){}
+    Vector3<T>(T _x = 0.0f,T _y = 0.0f,T _z = 0.0f):x(_x),y(_y),z(_z){}
 
-    float dot(const Vector3 &v)const{
+    T dot(const Vector3<T> &v)const{
         return x*v.x + y*v.y + z*v.z;
     }
 
@@ -195,110 +200,112 @@ struct Vector3{
         return !(*this==v);
     }
 };
+
+template <typename T = float>
 struct Vector4{
-    Vector4(float _x = 0.0f,float _y = 0.0f,float _z = 0.0f,float _w = 1.0f):x(_x),y(_y),z(_z),w(_w){}
+    Vector4(T _x = 0.0f,T _y = 0.0f,T _z = 0.0f,T _w = 1.0f):x(_x),y(_y),z(_z),w(_w){}
     union{
-        float arr[4];
+        T arr[4];
         struct{
-            float x,y,z,w;
+            T x,y,z,w;
         };
         struct{
-            float r,g,b,a;
+            T r,g,b,a;
         };
     };
     void normalize3(){
-        float l = sqrt(x*x+y*y+z*z);
+        T l = sqrt(x*x+y*y+z*z);
         x /= l;
         y /= l;
         z /= l;
     }
     void normalize(){
-        float l = sqrt(x*x+y*y+z*z+w*w);
+        T l = sqrt(x*x+y*y+z*z+w*w);
         x /= l;
         y /= l;
         z /= l;
         w /= l;
     }
-    Vector4 &operator=(Vector3 const &v){
+    Vector4<T> &operator=(Vector3<T> const &v){
         x = v.x;
         y = v.y;
         z = v.z;
         w = v.w;
     }
 
-    Vector4 operator+(Vector4 const &v)const{
-        Vector4 V(*this);
+    Vector4<T> operator+(Vector4<T> const &v)const{
+        Vector4<T> V(*this);
         V.x += v.x;
         V.y += v.y;
         V.z += v.z;
         V.w += v.w;
         return V;
     }
-    Vector4 operator-(Vector4 const &v)const{
-        Vector4 V(*this);
+    Vector4<T> operator-(Vector4<T> const &v)const{
+        Vector4<T> V(*this);
         V.x -= v.x;
         V.y -= v.y;
         V.z -= v.z;
         V.w -= v.w;
         return V;
     }
-    Vector4 operator+(float f)const{
-        Vector4 V(*this);
+    Vector4<T> operator+(T f)const{
+        Vector4<T> V(*this);
         V += f;
         return V;
     }
-    Vector4 operator-(float f)const{
-        Vector4 V(*this);
+    Vector4<T> operator-(T f)const{
+        Vector4<T> V(*this);
         V -= f;
         return V;
     }
-    Vector4 operator*(float f)const{
-        Vector4 V(*this);
+    Vector4<T> operator*(T f)const{
+        Vector4<T> V(*this);
         V *= f;
         return V;
     }
-    Vector4 operator/(float f)const{
-        Vector4 V(*this);
+    Vector4<T> operator/(T f)const{
+        Vector4<T> V(*this);
         V /= f;
         return V;
     }
 
-    Vector4 &operator+=(Vector4 const &v){
+    Vector4<T> &operator+=(Vector4<T> const &v){
         x += v.x;
         y += v.y;
         z += v.z;
         w += v.w;
         return *this;
     }
-    Vector4 &operator-=(Vector4 const &v){
+    Vector4<T> &operator-=(Vector4<T> const &v){
         x -= v.x;
         y -= v.y;
         z -= v.z;
         w -= v.w;
         return *this;
     }
-    Vector4 &operator+=(float f){
+    Vector4<T> &operator+=(float f){
         x += f;
         y += f;
         z += f;
         w += f;
         return *this;
     }
-    Vector4 &operator-=(float f){
+    Vector4<T> &operator-=(float f){
         x -= f;
         y -= f;
         z -= f;
         w -= f;
         return *this;
     }
-    Vector4 &operator*=(float f){
+    Vector4<T> &operator*=(float f){
         x *= f;
         y *= f;
         z *= f;
         w *= f;
         return *this;
     }
-    Vector4 &operator/=(float f){
+    Vector4<T> &operator/=(float f){
         x /= f;
         y /= f;
         z /= f;
@@ -306,8 +313,8 @@ struct Vector4{
         return *this;
     }
 
-    bool operator==(Vector4 const &v)const{ return (this->x == v.x && this->y == v.y && this->z == v.z && this->w == v.w);}
-    bool operator!=(Vector4 const &v)const{ return !(*this == v);};
+    bool operator==(Vector4<T> const &v)const{ return (this->x == v.x && this->y == v.y && this->z == v.z && this->w == v.w);}
+    bool operator!=(Vector4<T> const &v)const{ return !(*this == v);};
 };
 
 
@@ -377,13 +384,13 @@ public:
 
     static Matrix perspectiveProjection(float fovy,float aspc,float near,float far);
     static Matrix orthogonalProjection(float left, float right, float bottom, float top, float near, float far);
-    static Matrix lookAt(Position pos,Position at,Direction up);
+    static Matrix lookAt(Position<> pos,Position<> at,Direction<> up);
 
     static Matrix rotateX(float deg);
     static Matrix rotateY(float deg);
     static Matrix rotateZ(float deg);
     static Matrix rotateAxis(float deg,float x,float y,float z);
-    static Matrix rotateAxis(float deg,const Vector3 &v);
+    static Matrix rotateAxis(float deg,const Vector3<> &v);
 
     static Matrix translate(float x,float y,float z);
     static Matrix scale(float x,float y,float z);
@@ -391,11 +398,11 @@ public:
     friend std::ostream &operator<<(std::ostream &os,const Matrix &m);
 };
 
-Vector4 operator*(const Matrix &m,const Vector4 &v);
-Vector3 operator*(const Matrix &m,const Vector3 &v);
+Vector4<> operator*(const Matrix &m,const Vector4<> &v);
+Vector3<> operator*(const Matrix &m,const Vector3<> &v);
 
-std::ostream &operator<<(std::ostream &os,const Vector3 &v);
-std::ostream &operator<<(std::ostream &os,const Vector4 &v);
+std::ostream &operator<<(std::ostream &os,const Vector3<> &v);
+std::ostream &operator<<(std::ostream &os,const Vector4<> &v);
 
 };
 #endif

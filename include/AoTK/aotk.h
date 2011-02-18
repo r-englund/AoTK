@@ -42,16 +42,17 @@
 namespace AoTK{
 
     struct Vertex{
-        Position pos;
-        Direction norm;
-        Vector2 tex_coord;
+        Position<> pos;
+        Direction<> norm;
+        Vector2<> tex_coord;
     };
 
 
     class AOTK{
     friend class Window;
     public:
-        Scene* createWindow(Size2D size,std::string title="AoTK Window");
+        Scene* createWindow(Size2D<unsigned int> size,std::string title="AoTK Window");
+        void createSubWindow(Size2D<unsigned int> size){window->createSubWindow(size);}
         void start();
         void stop();
         void keyUp(KEY key);

@@ -256,6 +256,99 @@ KEY translateKEY(WPARAM w);
         return 0;
     }
 
+    VOID Window::createSubWindow(Size2D<unsigned int> size){
+        WNDCLASSEX wnc;
+        wnc.hInstance = aotk->hInst;
+        wnc.lpszClassName = "OpenGLsubwindow";
+        wnc.lpfnWndProc = WindowProcedure;      /* This function is called by windows */
+        wnc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;                 /* Catch double-clicks */
+        wnc.cbSize = sizeof (WNDCLASSEX);
+
+        wnc.hIcon = LoadIcon (NULL, IDI_APPLICATION);
+        wnc.hIconSm = LoadIcon (NULL, IDI_APPLICATION);
+        wnc.hCursor = LoadCursor (NULL, IDC_ARROW);
+        wnc.lpszMenuName = NULL;                 /* No menu */
+        wnc.cbClsExtra = 0;                      /* No extra bytes after the window class */
+        wnc.cbWndExtra = 0;                      /* structure or the window instance */
+        /* Use Windows's default colour as the background of the window */
+        wnc.hbrBackground = NULL;
+
+        /* Register the window class, and if it fails quit the program */
+        assert(RegisterClassEx (&wnc) && "Could not register winclass");
+
+
+        HWND hwnd = CreateWindowEx (
+           0,                   /* Extended possibilites for variation */
+           "OpenGLsubwindowwindow",         /* Classname */
+           title.c_str(),       /* Title Text */
+           WS_OVERLAPPEDWINDOW, /* default window */
+           CW_USEDEFAULT,       /* Windows decides the position */
+           CW_USEDEFAULT,       /* where the window ends up on the screen */
+           size.w,                 /* The programs width */
+           size.h,                 /* and height in pixels */
+           hwnd,        /* The window is a child-window to desktop */
+           NULL,                /* No menu */
+           aotk->hInst,       /* Program Instance handler */
+           NULL                 /* No Window Creation data */
+           );
+
+        assert(hwnd && "Could not create window");
+        HDC hdc=GetDC(hwnd);
+        assert(hdc);
+
+        PIXELFORMATDESCRIPTOR pfd;
+        memset(&pfd, 0, sizeof(PIXELFORMATDESCRIPTOR));
+        pfd.nSize  = sizeof(PIXELFORMATDESCRIPTOR);
+        pfd.nVersion   = 1;
+        pfd.dwFlags    = PFD_DOUBLEBUFFER | PFD_SUPPORT_OPENGL | PFD_DRAW_TO_WINDOW;
+        pfd.iPixelType = PFD_TYPE_RGBA;
+        pfd.cColorBits = 32;
+        pfd.cDepthBits = 32;
+        pfd.iLayerType = PFD_MAIN_PLANE;
+
+        assert(aotk->pixelformat=ChoosePixelFormat(hdc,&pfd));
+        assert(SetPixelFormat(hdc,aotk->pixelformat,&pfd));
+        HGLRC tmp;
+        assert(tmp=wglCreateContext(hdc));
+        assert(wglMakeCurrent(hdc,tmp));
+
+        getAllError( __FILE__, __LINE__);
+
+        GLenum err = glewInit();
+        assert(err == GLEW_OK && glewGetErrorString(err));
+
+        if(wglewIsSupported("WGL_ARB_create_context") == 1){
+            std::cout << "Context creation support: OK" << std::endl;
+        }else
+            std::cout << "Context creation support: NOT OK" << std::endl;
+        HGLRC hrc;
+        if(wglewIsSupported("WGL_ARB_create_context") == 1){
+            int attribs[] = {
+                WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
+                WGL_CONTEXT_MINOR_VERSION_ARB, 2,
+//                WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+        		WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB ,
+                0
+            };
+            glGetIntegerv(GL_MAJOR_VERSION, &attribs[1]);
+            glGetIntegerv(GL_MINOR_VERSION, &attribs[3]);
+
+
+            assert(hrc = wglCreateContextAttribsARB(hdc,0,attribs));
+            wglMakeCurrent(NULL,NULL);
+            wglDeleteContext(tmp);
+        }else{
+            assert(hrc = tmp);
+        }
+        assert(wglMakeCurrent(hdc,hrc));
+        wglSwapIntervalEXT(0); //Disable vsync
+
+        getAllError( __FILE__, __LINE__);
+
+        ShowWindow (hwnd, SW_SHOWNORMAL);
+
+        getAllError( __FILE__, __LINE__);
+    }
 
     VOID Window::createWindow(){
         aotk->wincl.hInstance = aotk->hInst;

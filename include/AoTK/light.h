@@ -8,13 +8,13 @@ namespace AoTK{
     class Light: public Object{
         friend class AOTK;
         std::string name;
-        Position pos;
-        Color amb;
-        Color dif;
-        Color spec;
+        Position<> pos;
+        Color<> amb;
+        Color<> dif;
+        Color<> spec;
         float spot_exp;
         float spot_cutoff;
-        Direction dir;
+        Direction<> dir;
 
         float con_att;
         float lin_att;
@@ -36,9 +36,9 @@ namespace AoTK{
 
         void setLight(GLuint id);
 
-        void setAmbientColor(Color col);
-        void setDiffuseColor(Color col);
-        void setSpecularColor(Color col);
+        void setAmbientColor(Color<> col);
+        void setDiffuseColor(Color<> col);
+        void setSpecularColor(Color<> col);
 
         void setSpotExp(float exp);
         void setSpotCutoff(float cutoff);
@@ -48,9 +48,9 @@ namespace AoTK{
         void setQuadraticAttenuation(float att);
         void setAttenuation(float constant,float linear,float quadratic);
 
-        static Light* CreatePointLight(std::string name = "",Position pos = Position(),Color ambient_color = Color(0,0,0,1),Color diffuse_color = Color(1,1,1,1),Color specular_color = Color(1,1,1,1));
-        static Light* CreateDirectionLight(std::string name = "",Direction dir = Direction(0,-1,0),Color ambient_color = Color(0,0,0,1),Color diffuse_color = Color(1,1,1,1),Color specular_color = Color(1,1,1,1));
-        static Light* CreateSpotLight(std::string name = "",Position pos = Position(),Direction dir = Direction(0,-1,0),Color ambient_color = Color(0,0,0,1),Color diffuse_color = Color(1,1,1,1),Color specular_color = Color(1,1,1,1));
+        static Light* CreatePointLight(std::string name = "",Position<> pos = Position<>(),Color<> ambient_color = Color<>(0,0,0,1),Color<> diffuse_color = Color<>(1,1,1,1),Color<> specular_color = Color<>(1,1,1,1));
+        static Light* CreateDirectionLight(std::string name = "",Direction<> dir = Direction<>(0,-1,0),Color<> ambient_color = Color<>(0,0,0,1),Color<> diffuse_color = Color<>(1,1,1,1),Color<> specular_color = Color<>(1,1,1,1));
+        static Light* CreateSpotLight(std::string name = "",Position<> pos = Position<>(),Direction<> dir = Direction<>(0,-1,0),Color<> ambient_color = Color<>(0,0,0,1),Color<> diffuse_color = Color<>(1,1,1,1),Color<> specular_color = Color<>(1,1,1,1));
 
     };
 };

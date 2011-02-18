@@ -11,8 +11,8 @@ namespace AoTK{
     friend class AOTK;
         std::string name;
         int vp_params[4];
-        Size2D size;
-        Position pos;
+        Size2D<> size;
+        Position<> pos;
 
         Scene *scene;
         Camera *cam;

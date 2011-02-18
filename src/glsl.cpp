@@ -11,8 +11,8 @@ GLuint loadShaderProgram(std::string vertex,std::string fragment){
     getAllError(__FILE__,__LINE__);
     GLint err;
     FILE *fvert,*ffrag;
-    fvert = fopen(vertex.c_str(),"r");
-    ffrag = fopen(fragment.c_str(),"r");
+    fvert = fopen(vertex.c_str(),"rt");
+    ffrag = fopen(fragment.c_str(),"rt");
 
     assert(fvert != NULL);
     assert(ffrag != NULL);
@@ -21,8 +21,8 @@ GLuint loadShaderProgram(std::string vertex,std::string fragment){
     fseek(ffrag,0,SEEK_END);
     int vert_size = ftell(fvert);
     int frag_size = ftell(ffrag);
-    char *buf_vert = new char[vert_size];
-    char *buf_frag = new char[frag_size];
+    char *buf_vert = new char[vert_size+1];
+    char *buf_frag = new char[frag_size+1];
     fseek(fvert,0,SEEK_SET);
     fseek(ffrag,0,SEEK_SET);
     fread(buf_vert,sizeof(char),vert_size,fvert);
@@ -34,12 +34,17 @@ GLuint loadShaderProgram(std::string vertex,std::string fragment){
     fclose(fvert);
     fclose(ffrag);
 
+    buf_vert[vert_size] = '\0';
+    buf_frag[frag_size] = '\0';
 
-    buf_vert[vert_size] = 0;
-    buf_frag[frag_size] = 0;
-
-    std::cout << buf_vert << std::endl;
-    std::cout << buf_frag << std::endl;
+    int i = frag_size;
+    while(buf_frag[i] != '}'){
+        buf_frag[i--] = '\0';
+    }
+    i = vert_size;
+    while(buf_vert[i] != '}'){
+        buf_vert[i--] = '\0';
+    }
 
     GLuint pgm = glCreateProgram();
 
@@ -50,8 +55,8 @@ GLuint loadShaderProgram(std::string vertex,std::string fragment){
 //    const char *cv=buf_vert;
 //    const char *cf=buf_frag;
 
-    glShaderSource(vShader, 1, (const GLchar**)&buf_vert, &vert_size);
-    glShaderSource(fShader, 1, (const GLchar**)&buf_frag, &frag_size);
+    glShaderSource(vShader, 1, (const GLchar**)&buf_vert, NULL);
+    glShaderSource(fShader, 1, (const GLchar**)&buf_frag, NULL);
     getAllError(__FILE__,__LINE__);
 
     glCompileShader(vShader);

@@ -65,9 +65,9 @@ void Object::doRender(){
     getAllError(__FILE__,__LINE__);
 }
 
-Vector4 Object::getCenter(){
+Vector4<> Object::getCenter(){
 //    return toWorld * Vector4<>(0,0,0,1);
-    return Vector4(); //TODO fix this
+    return Vector4<>(); //TODO fix this
 }
 Matrix Object::getToWorldMatrix(){
     return toWorld;

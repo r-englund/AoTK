@@ -7,14 +7,14 @@
 
 namespace AoTK{
     class Window{
-        Size2D size;
+        Size2D<unsigned int> size;
         std::string title;
         std::vector<Viewport *> viewports;
 
         void createWindow();
 
     friend class AOTK;
-        Window(Size2D size,std::string title);
+        Window(Size2D<unsigned int> size,std::string title);
         Window() = delete;
         Window(const Window &w) = delete;
         Window& operator=(const Window &w) = delete;
@@ -23,9 +23,11 @@ namespace AoTK{
         void checkForMessages();
         void swapBuffers();
 
+        void createSubWindow(Size2D<unsigned int> size);
+
     public:
 
-        Size2D getSize(){return size;}
+        Size2D<unsigned int> getSize(){return size;}
     };
 };
 

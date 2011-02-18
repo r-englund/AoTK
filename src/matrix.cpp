@@ -132,15 +132,15 @@ Matrix Matrix::operator+(const Matrix &_m)const{
     return m;
 }
 
-Matrix Matrix::lookAt(Position pos,Position at,Direction up){
-    Vector3 center(pos.x,pos.y,pos.z);
-    Vector3 view_dir;
+Matrix Matrix::lookAt(Position<> pos,Position<> at,Direction<> up){
+    Vector3<> center(pos.x,pos.y,pos.z);
+    Vector3<> view_dir;
     view_dir.x = at.x - pos.x;
     view_dir.y = at.y - pos.y;
     view_dir.z = at.z - pos.z;
     view_dir.normalize();
 
-    Vector3 side = up.cross(view_dir);
+    Vector3<> side = up.cross(view_dir);
     side.normalize();
     up = view_dir.cross(side);
     Matrix m;
@@ -228,7 +228,7 @@ Matrix Matrix::rotateAxis(float deg,float x,float y,float z){
 
     return m;
 }
-Matrix Matrix::rotateAxis(float deg,const Vector3 &v){
+Matrix Matrix::rotateAxis(float deg,const Vector3<> &v){
     return rotateAxis(deg,v.x,v.y,v.z);
 }
 
@@ -258,29 +258,29 @@ std::ostream &operator<<(std::ostream &os,const Matrix &m){
     }
     return os;
 }
-Vector4 operator*(const Matrix &m,const Vector4 &v){
-    Vector4 V;
+Vector4<> operator*(const Matrix &m,const Vector4<> &v){
+    Vector4<> V;
     V.x = v.x*m.xx + v.y*m.yx + v.z*m.zx + v.w*m.wx;
     V.y = v.x*m.xy + v.y*m.yy + v.z*m.zy + v.w*m.wy;
     V.z = v.x*m.xz + v.y*m.yz + v.z*m.zz + v.w*m.wz;
     V.w = v.x*m.xw + v.y*m.yw + v.z*m.zw + v.w*m.ww;
     return V;
 }
-Vector3 operator*(const Matrix &m,const Vector3 &v){
-    Vector4 V;
+Vector3<> operator*(const Matrix &m,const Vector3<> &v){
+    Vector4<> V;
     V.x = v.x;
     V.y = v.y;
     V.z = v.z;
     V.w = 1.0;
-    Vector4 a = m*V;
-    return Vector3(a.x/a.w,a.y/a.w,a.z/a.w);
+    Vector4<> a = m*V;
+    return Vector3<>(a.x/a.w,a.y/a.w,a.z/a.w);
 }
 
 
-std::ostream &operator<<(std::ostream &os,const Vector3 &v){
+std::ostream &operator<<(std::ostream &os,const Vector3<> &v){
     os << "[" << v.x << " " << v.y << " " << v.z << "]";
 }
-std::ostream &operator<<(std::ostream &os,const Vector4 &v){
+std::ostream &operator<<(std::ostream &os,const Vector4<> &v){
     os << "[" << v.x << " " << v.y << " " << v.z <<  " " << v.w << "]";
 }
 

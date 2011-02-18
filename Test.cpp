@@ -97,11 +97,13 @@ void createObjects(){
 //    sp->setTexture(Create2DTexture(Image::LoadBMP("C:/Users/rickard/Pictures/earth.bmp")));
 //    s->addObject(sp);
 
+    // 384,384, 240
+
     DVR::VolumeInfo vi;
-    vi.depth  = 256;
-    vi.width  = 256;
+    vi.width  = 128;
     vi.height = 256;
-    vi.filename = "volumes/engine.raw";
+    vi.depth  = 256;
+    vi.filename = "volumes/vismale.raw";
     GLuint pgm = loadShaderProgram("shaders/dvr_vert.glsl","shaders/dvr_frag.glsl");
     DVR *d = new DVR(pgm,vi,m,"Volume Rendering Test");
     s->addObject(d);
@@ -117,18 +119,18 @@ void initGL(){
 
 int main(int argc, const char** argv){
     initAoTK();
-    Size2D size;
+    Size2D<unsigned int> size;
     size.w = 800;
     size.h = 600;
 
     new WireframeToggle();
 
     s = aotk->createWindow(size,"AoTK test Window");
+    //aotk->createSubWindow(size);
     initGL();
 
     createObjects();
     int i;
     glGetIntegerv(GL_MAX_TEXTURE_SIZE,&i);
-    std::cout << i << std::endl;
     aotk->start();
 }

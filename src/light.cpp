@@ -68,13 +68,13 @@ void Light::setLight(GLuint id){
     }
 }
 
-void Light::setAmbientColor(Color col){
+void Light::setAmbientColor(Color<> col){
     amb = col;
 }
-void Light::setDiffuseColor(Color col){
+void Light::setDiffuseColor(Color<> col){
     dif = col;
 }
-void Light::setSpecularColor(Color col){
+void Light::setSpecularColor(Color<> col){
     spec = col;
 }
 
@@ -100,7 +100,7 @@ void Light::setAttenuation(float constant,float linear,float quadratic){
     quad_att = quadratic;
 }
 
-Light* Light::CreatePointLight(std::string name,Position pos,Color ambient_color,Color diffuse_color,Color specular_color){
+Light* Light::CreatePointLight(std::string name,Position<> pos,Color<> ambient_color,Color<> diffuse_color,Color<> specular_color){
     Light *l = new Light(name);
     l->pos = pos;
     l->amb = ambient_color;
@@ -108,7 +108,7 @@ Light* Light::CreatePointLight(std::string name,Position pos,Color ambient_color
     l->spec = specular_color;
     return l;
 }
-Light* Light::CreateDirectionLight(std::string name,Direction dir,Color ambient_color,Color diffuse_color,Color specular_color){
+Light* Light::CreateDirectionLight(std::string name,Direction<> dir,Color<> ambient_color,Color<> diffuse_color,Color<> specular_color){
     Light *l = new Light(name);
     l->dir = dir;
     l->amb = ambient_color;
@@ -117,7 +117,7 @@ Light* Light::CreateDirectionLight(std::string name,Direction dir,Color ambient_
     return l;
 }
 
-Light* Light::CreateSpotLight(std::string name,Position pos,Direction dir,Color ambient_color,Color diffuse_color,Color specular_color){
+Light* Light::CreateSpotLight(std::string name,Position<> pos,Direction<> dir,Color<> ambient_color,Color<> diffuse_color,Color<> specular_color){
     Light *l = new Light(name);
     l->pos = pos;
     l->amb = ambient_color;

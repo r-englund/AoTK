@@ -26,8 +26,8 @@ public:
     Image& operator=(const Image&);
 
     float getGreyscale(unsigned int w,unsigned int h);
-    Color getColor(unsigned int w,unsigned int h);
-    void setColor(unsigned int w,unsigned int h,Color rgb);
+    Color<> getColor(unsigned int w,unsigned int h);
+    void setColor(unsigned int w,unsigned int h,Color<> rgb);
     void setColor(unsigned int w,unsigned int h,float grey);
 
     float* getData()const{return data;}
@@ -41,7 +41,7 @@ public:
 
     IMG_MODE getMode(){return mode;}
 
-    void convolution(const Image &filter,IMG_CONVOLUTION_PADDIN padding = zerofill); //TODO implement
+    void convolution(const Image &filter,FILTER_WRAP padding = zero_padding); //TODO implement
 
     void setSize(unsigned int w,unsigned int h,bool keep = true);
     void setMode(IMG_MODE m);

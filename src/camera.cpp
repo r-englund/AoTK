@@ -3,7 +3,7 @@
 namespace AoTK{
 
 
-Camera::Camera(Position pos, Direction dir, float _fov,std::string _name)
+Camera::Camera(Position<> pos, Direction<> dir, float _fov,std::string _name)
 :Object(0,Matrix(),_name),
     ResizeListener(_name),
     projectionMatrix(Matrix()),
@@ -13,11 +13,11 @@ Camera::Camera(Position pos, Direction dir, float _fov,std::string _name)
     rotY(0),
     pos(pos)
 {
-    Position at(pos);
+    Position<> at(pos);
     at.x += dir.x;
     at.y += dir.y;
     at.z += dir.z;
-    toWorld = Matrix::lookAt(pos,at,Direction(0,1,0));
+    toWorld = Matrix::lookAt(pos,at,Direction<>(0,1,0));
 }
 
 Matrix Camera::getProjectionMatrix() const{

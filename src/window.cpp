@@ -2,7 +2,7 @@
 
 
 namespace AoTK{
-    Window::Window(Size2D _size,std::string _title):size(_size),title(_title){
+    Window::Window(Size2D<unsigned int> _size,std::string _title):size(_size),title(_title){
         createWindow();
         std::cout << "OpenGL window created, using:" << std::endl;
         std::cout << "Using GLEW version: " << glewGetString(GLEW_VERSION) << std::endl;
@@ -16,7 +16,7 @@ namespace AoTK{
             std::cout << "VBO suport: NOT OK" << std::endl;
 
 
-        viewports.push_back(new Viewport(new Scene("main_scene"),new Camera(Position(0,0,3),Direction(0,0,-1),60,"main_camera"),"main_viewport"));
+        viewports.push_back(new Viewport(new Scene("main_scene"),new Camera(Position<>(0,0,3),Direction<>(0,0,-1),60,"main_camera"),"main_viewport"));
     }
 
 

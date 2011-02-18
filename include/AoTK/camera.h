@@ -12,11 +12,11 @@ class Camera : public Object , public ResizeListener{
 
     float rotX,rotY;
 
-    Position pos;
+    Position<> pos;
 
 public:
     Matrix getProjectionMatrix() const;
-    Camera(Position pos = Position(0,0,0), Direction dir = Direction(0,0,-1), float fov = 60,std::string name = "");
+    Camera(Position<> pos = Position<>(0,0,0), Direction<> dir = Direction<>(0,0,-1), float fov = 60,std::string name = "");
     virtual ~Camera(){}
 
     virtual void resize(unsigned int w,unsigned int h);

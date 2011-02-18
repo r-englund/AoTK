@@ -39,7 +39,7 @@ public:
 
     void setShader(GLint shader);
 
-    Vector4 getCenter();
+    Vector4<> getCenter();
     Matrix  getToWorldMatrix();
 };
 };

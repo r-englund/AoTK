@@ -80,8 +80,8 @@ float Image::getGreyscale(unsigned int x,unsigned int y){
     unsigned int index = (x+y*w);
     return data[index];
 }
-Color Image::getColor(unsigned int x,unsigned int y){
-    Color col;
+Color<> Image::getColor(unsigned int x,unsigned int y){
+    Color<> col;
     col.a = 1;
     switch(mode){
         case GREYSCALE:
@@ -105,7 +105,7 @@ Color Image::getColor(unsigned int x,unsigned int y){
     return col;
 }
 
-void Image::setColor(unsigned int x,unsigned int y,Color rgb){
+void Image::setColor(unsigned int x,unsigned int y,Color<> rgb){
     assert(x<w && y<h && "Index outside of image");
     unsigned int c = 0;
     switch(mode){

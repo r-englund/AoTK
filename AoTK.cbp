@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-DDEBUG" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -20,9 +21,6 @@
 				<Option object_output="obj\Release\" />
 				<Option type="1" />
 				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-				</Compiler>
 				<Linker>
 					<Add option="-s" />
 				</Linker>
@@ -37,6 +35,7 @@
 			<Add option="-Wswitch-default" />
 			<Add option="-std=c++0x" />
 			<Add option="-Wall" />
+			<Add option="-DGLEW_STATIC" />
 			<Add directory="C:\Users\rickard\Documents\c++\AoTK\include" />
 		</Compiler>
 		<Linker>
@@ -64,6 +63,7 @@
 		<Unit filename="include\AoTK\scene.h" />
 		<Unit filename="include\AoTK\texture.h" />
 		<Unit filename="include\AoTK\viewport.h" />
+		<Unit filename="include\AoTK\volume.h" />
 		<Unit filename="include\AoTK\window.h" />
 		<Unit filename="shaders\dvr_frag.glsl" />
 		<Unit filename="shaders\dvr_vert.glsl" />
@@ -94,6 +94,7 @@
 		<Unit filename="src\scene.cpp" />
 		<Unit filename="src\texture.cpp" />
 		<Unit filename="src\viewport.cpp" />
+		<Unit filename="src\volume.cpp" />
 		<Unit filename="src\window.cpp" />
 		<Unit filename="src\window_win32.cpp" />
 		<Extensions>
