@@ -4,8 +4,8 @@
 #ifdef _WIN32
 #define GLEW_STATIC
 #include <windows.h>
-#include <gl/glew.h>
-#include <gl/wglew.h>
+#include "externals/glew.h"
+#include "externals/wglew.h"
 #endif
 
 #include <string>

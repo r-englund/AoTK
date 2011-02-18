@@ -51,6 +51,9 @@
 		<Unit filename="include\AoTK\camera.h" />
 		<Unit filename="include\AoTK\enums.h" />
 		<Unit filename="include\AoTK\error.h" />
+		<Unit filename="include\AoTK\externals\glew.h" />
+		<Unit filename="include\AoTK\externals\glxew.h" />
+		<Unit filename="include\AoTK\externals\wglew.h" />
 		<Unit filename="include\AoTK\fbo.h" />
 		<Unit filename="include\AoTK\glsl.h" />
 		<Unit filename="include\AoTK\image.h" />

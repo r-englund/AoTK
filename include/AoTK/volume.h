@@ -4,7 +4,7 @@
 #include "math.h"
 #include "enums.h"
 #include <assert.h>
-#include <GL/glew.h>
+#include <AoTK/externals/glew.h>
 
 namespace AoTK{
 
