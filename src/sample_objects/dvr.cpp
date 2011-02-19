@@ -8,14 +8,14 @@
 
 namespace AoTK{
 
-DVR::DVR(GLint shader,VolumeInfo vi,Matrix toWorld,std::string name):
- Object(shader,toWorld, name),
- KeyboardListener(name),
- MouseMotionListener(name),
- ScrollListener(name),
+DVR::DVR(GLint _shader,VolumeInfo vi,Matrix _toWorld,std::string _name):
+ Object(_shader,_toWorld, _name),
+ KeyboardListener(_name),
+ MouseMotionListener(_name),
+ ScrollListener(_name),
  type(density),
- rotx(0),
  roty(0),
+ rotx(0),
  threshold(0.5),
  div_coeff(0.5)
 {
@@ -49,15 +49,15 @@ DVR::DVR(GLint shader,VolumeInfo vi,Matrix toWorld,std::string name):
         data[index*4+0] = 0;
         data[index*4+1] = 0;
         data[index*4+2] = 0;
-        float f = 0;
+        float ff = 0;
         unsigned int div = 0;
         for(unsigned int c = std::max(0,(int)z-kernelsize)   ;   c<std::min(z+kernelsize,vi.depth);c++)
             for(unsigned int b = std::max(0,(int)y-kernelsize)   ;   b<std::min(y+kernelsize,vi.height);b++)
                 for(unsigned int a = std::max(0,(int)x-kernelsize)   ;   a<std::min(x+kernelsize,vi.width);a++){
                     div++;
-                    f += buf[INDEX(a,b,c,vi.width,vi.height)];
+                    ff += buf[INDEX(a,b,c,vi.width,vi.height)];
                 }
-        data[index*4+3] = (GLubyte) (f/div);
+        data[index*4+3] = (GLubyte) (ff/div);
 
         x++;
         if(x>=vi.width){
@@ -272,6 +272,8 @@ void DVR::keyDown(KEY key){
                 break;
             case density:
                 type = RayInCoord;
+                break;
+            default:
                 break;
         }
     }

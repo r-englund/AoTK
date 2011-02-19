@@ -14,8 +14,9 @@ namespace AoTK{
         Size2D<> size;
         Position<> pos;
 
-        Scene *scene;
         Camera *cam;
+        Scene *scene;
+
 
     public:
         Viewport(Scene *scene,Camera *cam,std::string name = "");

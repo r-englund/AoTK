@@ -6,7 +6,7 @@ Scene *s;
 
 class TestObject : public Object{
 public:
-    TestObject(std::string name,Matrix toWorld):Object(0,toWorld,name){}
+    TestObject(std::string _name,Matrix _toWorld):Object(0,_toWorld,_name){}
     virtual void logic(){}
     virtual void graphic(){}
     virtual void prepare(){}
@@ -32,11 +32,11 @@ public:
         glReadPixels(0,0,aotk->window->getSize().x,aotk->window->getSize().y,GL_RGB,GL_FLOAT,f);
         i.setData(f);
 
-        char name[40];
-        sprintf(name,"screens/%i.bmp",time(NULL));
+        char img_name[40];
+        sprintf(img_name,"screens/%i.bmp",(int)time(NULL));
         std::cout << "f"<< std::endl;
-        i.saveBMP(name);
-        std::cout << name << std::endl;
+        i.saveBMP(img_name);
+        std::cout << img_name << std::endl;
     }
 
     bool wfstate;
@@ -74,6 +74,8 @@ public:
                 std::cout << "Cull front face" << std::endl;
                 culstate = 0;
                 break;
+            default:
+                break;
             }
         }
     };
@@ -99,6 +101,8 @@ void createObjects(){
 
     // 384,384, 240
 
+    Volume<uint16_t> v = Volume<uint16_t>::loadRawVolume(256,256,256,(char *)"volumes/3dhead.raw");
+
     DVR::VolumeInfo vi;
     vi.width  = 128;
     vi.height = 256;
@@ -118,19 +122,22 @@ void initGL(){
 }
 
 int main(int argc, const char** argv){
-    initAoTK();
-    Size2D<unsigned int> size;
-    size.w = 800;
-    size.h = 600;
-
-    new WireframeToggle();
-
-    s = aotk->createWindow(size,"AoTK test Window");
-    //aotk->createSubWindow(size);
-    initGL();
-
-    createObjects();
-    int i;
-    glGetIntegerv(GL_MAX_TEXTURE_SIZE,&i);
-    aotk->start();
+    std::cout << clamp(1,2,3) << std::endl;
+    std::cout << clamp(2.5,2,3) << std::endl;
+    std::cout << clamp(5,2,3) << std::endl;
+//    initAoTK();
+//    Size2D<unsigned int> size;
+//    size.w = 800;
+//    size.h = 600;
+//
+//    new WireframeToggle();
+//
+//    s = aotk->createWindow(size,"AoTK test Window");
+//    //aotk->createSubWindow(size);
+//    initGL();
+//
+//    createObjects();
+//    int i;
+//    glGetIntegerv(GL_MAX_TEXTURE_SIZE,&i);
+//    aotk->start();
 }

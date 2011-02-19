@@ -40,7 +40,7 @@ void Scene::render(){
     glGetIntegerv(GL_MAX_LIGHTS,&maxLights);
     if(lights.size() > 0){
         glEnable(GL_LIGHTING);
-        unsigned int numLights = 0;
+        int numLights = 0;
         for(auto li = lights.begin();li != lights.end();++li){
             if(numLights >= maxLights){
                 std::cout << "Trying to enable more lights than possible. max light is: " << maxLights <<std::endl;
@@ -55,7 +55,7 @@ void Scene::render(){
         (*obj)->doRender();
     if(lights.size() > 0){
         glDisable(GL_LIGHTING);
-        for(int i = 0; i< lights.size() && i < maxLights;i++)
+        for(uint8_t i = 0; i< lights.size() && i < maxLights;i++)
             glDisable(GL_LIGHT0+i);
     }
     getAllError(__FILE__,__LINE__);

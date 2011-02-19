@@ -2,7 +2,9 @@
 #define AOTK_H
 
 #ifdef _WIN32
+#ifndef GLEW_STATIC
 #define GLEW_STATIC
+#endif
 #include <windows.h>
 #include "externals/glew.h"
 #include "externals/wglew.h"
@@ -37,6 +39,7 @@
 #include "light.h"
 #include "object.h"
 #include "scene.h"
+#include "volume.h"
 
 
 namespace AoTK{

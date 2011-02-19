@@ -30,7 +30,8 @@ namespace AoTK{
         PRINTSCREEN,
         KEY0,KEY1,KEY2,KEY3,KEY4,KEY5,KEY6,KEY7,KEY8,KEY9,
         MULTI,ADD,SUB,DECIMAL,DIVIDE,
-        A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z
+        A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,
+        UNASIGNED_KEY
     };
 
 
@@ -51,12 +52,12 @@ namespace AoTK{
     };
 
     enum FILTER_WRAP{
-        zero_padding, // all elements outside equal to zero
-        one_padding, // all elements outside equal to one ( or maximum)
-        shrink, //Only use the elements where kernel has perfect fit
-        clamp, //cpoy the closest element
-        mirror,  //miror along the axis eg : -3 = 3 and max + 3 = max - 3
-        repeat //max + 3 = 3 and -3 = max -3
+        ZERO_PADDING, // all elements outside equal to zero
+        ONE_PADDING, // all elements outside equal to one ( or maximum)
+        SHRINK, //Only use the elements where kernel has perfect fit
+        CLAMP, //cpoy the closest element
+        MIRROR,  //miror along the axis eg : -3 = 3 and max + 3 = max - 3
+        REPEAT //max + 3 = 3 and -3 = max -3
     };
 
 

@@ -45,6 +45,7 @@
 #define M_SQRT1_2	0.70710678118654752440
 #endif
 
+#define clamp(a,b,c) (((a) > (c)) ? (c) : (((a) < (b)) ? (b) : (a)))
 
 
 namespace AoTK{
@@ -98,15 +99,15 @@ struct Vector3{
     };
     Vector3<T>(T _x = 0.0f,T _y = 0.0f,T _z = 0.0f):x(_x),y(_y),z(_z){}
 
-    T dot(const Vector3<T> &v)const{
-        return x*v.x + y*v.y + z*v.z;
+    T dot(const Vector3<T> &_v)const{
+        return x*_v.x + y*_v.y + z*_v.z;
     }
 
-    Vector3 cross(const Vector3 &v){
+    Vector3 cross(const Vector3 &_v){
         Vector3 V;
-        V.x =  y*v.z - z*v.y;
-        V.y =-(x*v.z - z*v.x);
-        V.z =  x*v.y - y*v.x;
+        V.x =  y*_v.z - z*_v.y;
+        V.y =-(x*_v.z - z*_v.x);
+        V.z =  x*_v.y - y*_v.x;
         return V;
     }
 
@@ -125,16 +126,16 @@ struct Vector3{
         return *this;
     }
 
-    Vector3 &operator+=(Vector3 const &v){
-        x += v.x;
-        y += v.y;
-        z += v.z;
+    Vector3 &operator+=(Vector3 const &_v){
+        x += _v.x;
+        y += _v.y;
+        z += _v.z;
         return *this;
     }
-    Vector3 &operator-=(Vector3 const &v){
-        x -= v.x;
-        y -= v.y;
-        z -= v.z;
+    Vector3 &operator-=(Vector3 const &_v){
+        x -= _v.x;
+        y -= _v.y;
+        z -= _v.z;
         return *this;
     }
     Vector3 &operator+=(float f){
@@ -162,12 +163,12 @@ struct Vector3{
         return *this;
     }
 
-    Vector3 operator+(Vector3 const &v)const{
+    Vector3 operator+(Vector3 const &_v)const{
         Vector3 V(v);
         V += *this;
         return V;
     }
-    Vector3 operator-(Vector3 const &v)const{
+    Vector3 operator-(Vector3 const &_v)const{
         Vector3 V(v);
         V -= *this;
         return V;
@@ -193,10 +194,10 @@ struct Vector3{
         return V;
     }
 
-    bool operator==(Vector3 const &v)const{
-        return (this->x == v.x && this->y == v.y && this->z == v.z);
+    bool operator==(Vector3 const &_v)const{
+        return (abs(this->x - _v.x) < 0.001 && abs(this->y - _v.y) < 0.001 && abs(this->z - _v.z) < 0.001);
     }
-    bool operator!=(Vector3 const &v)const{
+    bool operator!=(Vector3 const &_v)const{
         return !(*this==v);
     }
 };
@@ -226,27 +227,27 @@ struct Vector4{
         z /= l;
         w /= l;
     }
-    Vector4<T> &operator=(Vector3<T> const &v){
-        x = v.x;
-        y = v.y;
-        z = v.z;
-        w = v.w;
+    Vector4<T> &operator=(Vector3<T> const &_v){
+        x = _v.x;
+        y = _v.y;
+        z = _v.z;
+        w = _v.w;
     }
 
-    Vector4<T> operator+(Vector4<T> const &v)const{
+    Vector4<T> operator+(Vector4<T> const &_v)const{
         Vector4<T> V(*this);
-        V.x += v.x;
-        V.y += v.y;
-        V.z += v.z;
-        V.w += v.w;
+        V.x += _v.x;
+        V.y += _v.y;
+        V.z += _v.z;
+        V.w += _v.w;
         return V;
     }
-    Vector4<T> operator-(Vector4<T> const &v)const{
+    Vector4<T> operator-(Vector4<T> const &_v)const{
         Vector4<T> V(*this);
-        V.x -= v.x;
-        V.y -= v.y;
-        V.z -= v.z;
-        V.w -= v.w;
+        V.x -= _v.x;
+        V.y -= _v.y;
+        V.z -= _v.z;
+        V.w -= _v.w;
         return V;
     }
     Vector4<T> operator+(T f)const{
@@ -270,18 +271,18 @@ struct Vector4{
         return V;
     }
 
-    Vector4<T> &operator+=(Vector4<T> const &v){
-        x += v.x;
-        y += v.y;
-        z += v.z;
-        w += v.w;
+    Vector4<T> &operator+=(Vector4<T> const &_v){
+        x += _v.x;
+        y += _v.y;
+        z += _v.z;
+        w += _v.w;
         return *this;
     }
-    Vector4<T> &operator-=(Vector4<T> const &v){
-        x -= v.x;
-        y -= v.y;
-        z -= v.z;
-        w -= v.w;
+    Vector4<T> &operator-=(Vector4<T> const &_v){
+        x -= _v.x;
+        y -= _v.y;
+        z -= _v.z;
+        w -= _v.w;
         return *this;
     }
     Vector4<T> &operator+=(float f){
@@ -313,8 +314,8 @@ struct Vector4{
         return *this;
     }
 
-    bool operator==(Vector4<T> const &v)const{ return (this->x == v.x && this->y == v.y && this->z == v.z && this->w == v.w);}
-    bool operator!=(Vector4<T> const &v)const{ return !(*this == v);};
+    bool operator==(Vector4<T> const &_v)const{ return (abs(this->x - _v.x) < 0.001 && abs(this->y - _v.y) < 0.001 && abs(this->z - _v.z) < 0.001 && abs(this->w - _v.w) < 0.001);}
+    bool operator!=(Vector4<T> const &_v)const{ return !(*this == _v);};
 };
 
 
@@ -390,7 +391,7 @@ public:
     static Matrix rotateY(float deg);
     static Matrix rotateZ(float deg);
     static Matrix rotateAxis(float deg,float x,float y,float z);
-    static Matrix rotateAxis(float deg,const Vector3<> &v);
+    static Matrix rotateAxis(float deg,const Vector3<> &_v);
 
     static Matrix translate(float x,float y,float z);
     static Matrix scale(float x,float y,float z);
@@ -398,11 +399,11 @@ public:
     friend std::ostream &operator<<(std::ostream &os,const Matrix &m);
 };
 
-Vector4<> operator*(const Matrix &m,const Vector4<> &v);
-Vector3<> operator*(const Matrix &m,const Vector3<> &v);
+Vector4<> operator*(const Matrix &m,const Vector4<> &_v);
+Vector3<> operator*(const Matrix &m,const Vector3<> &_v);
 
-std::ostream &operator<<(std::ostream &os,const Vector3<> &v);
-std::ostream &operator<<(std::ostream &os,const Vector4<> &v);
+std::ostream &operator<<(std::ostream &os,const Vector3<> &_v);
+std::ostream &operator<<(std::ostream &os,const Vector4<> &_v);
 
 };
 #endif

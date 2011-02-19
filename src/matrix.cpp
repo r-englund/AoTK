@@ -279,9 +279,11 @@ Vector3<> operator*(const Matrix &m,const Vector3<> &v){
 
 std::ostream &operator<<(std::ostream &os,const Vector3<> &v){
     os << "[" << v.x << " " << v.y << " " << v.z << "]";
+    return os;
 }
 std::ostream &operator<<(std::ostream &os,const Vector4<> &v){
     os << "[" << v.x << " " << v.y << " " << v.z <<  " " << v.w << "]";
+    return os;
 }
 
 

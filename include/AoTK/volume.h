@@ -1,5 +1,5 @@
-#ifndef GLSL_H
-#define GLSL_H
+#ifndef VOLUME_H
+#define VOLUME_H
 
 #include "math.h"
 #include "enums.h"
@@ -23,7 +23,7 @@ class Volume{
         #endif
         return x + y*width + x*width*height;
     }
-
+    inline T MAX() const;
 public:
     Volume(unsigned int width,unsigned int height,unsigned int depth);
     Volume(const Volume<T> &v);
@@ -37,10 +37,10 @@ public:
         data[index(x,y,z)] = t;
     }
 
-    void convolution(const Volume<float> kernel,FILTER_WRAP pad = zero_padding);
-    void erode(const Volume<bool> &kernel,FILTER_WRAP pad = zero_padding);
-    void dialte(const Volume<bool> &kernel,FILTER_WRAP pad = zero_padding);
-    void hitAndMiss(const Volume<HITANDMISS_BOOLEAN> &kernel);
+    Volume<T> convolution(const Volume<float> kernel,FILTER_WRAP wrap = ZERO_PADDING)const;
+    Volume<bool> erode(const Volume<bool> &kernel,FILTER_WRAP wrap = ZERO_PADDING)const;
+    Volume<bool> dilate(const Volume<bool> &kernel,FILTER_WRAP wrap = ZERO_PADDING)const;
+    //void hitAndMiss(const Volume<HITANDMISS_BOOLEAN> &kernel);
 
 
     Volume<Vector3<T>> getGradientVolume(bool normalize = false)const;
@@ -48,9 +48,9 @@ public:
 
     Volume<bool> toBinary(T threshold)const;
 
-    GLuint toGLtexture()const;
+    GLuint getGLtexture()const; //TODO implement
 
-    static Volume<T> loadRawVolume(unsigned int width,unsigned int height,unsigned int depth);
+    static Volume<T> loadRawVolume(unsigned int width,unsigned int height,unsigned int depth,char *filename);
 
 
 private:
@@ -62,6 +62,9 @@ private:
     friend class Volume<HITANDMISS_BOOLEAN>;
 };
 
+
 };
+
+//#include "src/volume.hpp"
 
 #endif

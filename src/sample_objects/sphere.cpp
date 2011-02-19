@@ -31,8 +31,8 @@ void Sphere::render(){
     glBindTexture(GL_TEXTURE_2D,0);
 }
 
-Sphere::Sphere(float _radius,Matrix toWorld,unsigned int _subdivision, std::string name):
-Object(0,toWorld,name),
+Sphere::Sphere(float _radius,Matrix _toWorld,unsigned int _subdivision, std::string _name):
+Object(0,_toWorld,_name),
 radius(_radius),
 subdivisions(_subdivision)
 {
@@ -169,12 +169,12 @@ void Sphere::tesselate(){
         vertices.push_back(v[*in]);
     }
 
-    for(int j = 0;j<subdivisions;j++){
+    for(uint16_t j = 0;j<subdivisions;j++){
         int curVertexSize = vertices.size();
         Vertex A,B,C,a,b,c;
         std::vector<Vertex> newVertex;
         for(int i = 0;i<curVertexSize;i+=3){
-            Vertex A,B,C,a,b,c;
+
             A = vertices[i+0];
             B = vertices[i+1];
             C = vertices[i+2];
@@ -213,7 +213,7 @@ void Sphere::tesselate(){
         if(i->tex_coord.v > maxV) maxV = i->tex_coord.v;
         if(i->tex_coord.v < minV) minV = i->tex_coord.v;
     }
-    for(int i = 0;i<vertices.size();i+=3){
+    for(uint32_t i = 0;i<vertices.size();i+=3){
         vertices[i].pos.x *= radius;
         vertices[i].pos.y *= radius;
         vertices[i].pos.z *= radius;
@@ -229,20 +229,19 @@ void Sphere::tesselate(){
         t1 = &vertices[i+1].tex_coord;
         t2 = &vertices[i+2].tex_coord;
         float dx1,dx2,dy1,dy2,l1,l2;
-            dx1 = t0->x - t1->x;
-            dx2 = t0->x - t2->x;
-            dy1 = t0->y - t1->y;
-            dy2 = t0->y - t2->y;
-            l1 = sqrt(dx1*dx1+dy1*dy1);
-            l2 = sqrt(dx2*dx2+dy2*dy2);
+        dx1 = t0->x - t1->x;
+        dx2 = t0->x - t2->x;
+        dy1 = t0->y - t1->y;
+        dy2 = t0->y - t2->y;
+        l1 = sqrt(dx1*dx1+dy1*dy1);
+        l2 = sqrt(dx2*dx2+dy2*dy2);
         if(l1 > 0.5 || l2 > 0.5){
-            float dx1,dx2,dy1,dy2,l1,l2;
-            dx1 = t0->x - t1->x;
-            dx2 = t0->x - t2->x;
-            dy1 = t0->y - t1->y;
-            dy2 = t0->y - t2->y;
-            l1 = sqrt(dx1*dx1+dy1*dy1);
-            l2 = sqrt(dx2*dx2+dy2*dy2);
+//            dx1 = t0->x - t1->x;
+//            dx2 = t0->x - t2->x;
+//            dy1 = t0->y - t1->y;
+//            dy2 = t0->y - t2->y;
+//            l1 = sqrt(dx1*dx1+dy1*dy1);
+//            l2 = sqrt(dx2*dx2+dy2*dy2);
 
 //            if(fabs(l1-l2) > 0.1){
                 if(t0->x < 0.5 && t1->x < 0.5 && t2->x > 0.5){

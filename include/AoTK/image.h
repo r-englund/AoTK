@@ -41,7 +41,7 @@ public:
 
     IMG_MODE getMode(){return mode;}
 
-    void convolution(const Image &filter,FILTER_WRAP padding = zero_padding); //TODO implement
+    void convolution(const Image &filter,FILTER_WRAP padding = ZERO_PADDING); //TODO implement
 
     void setSize(unsigned int w,unsigned int h,bool keep = true);
     void setMode(IMG_MODE m);
