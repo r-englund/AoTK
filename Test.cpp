@@ -99,17 +99,18 @@ void createObjects(){
 //    sp->setTexture(Create2DTexture(Image::LoadBMP("C:/Users/rickard/Pictures/earth.bmp")));
 //    s->addObject(sp);
 
-    // 384,384, 240
+    auto  v = Volume<uint8_t>::loadRawVolume(256,256,256,(char *)"volumes/engine.raw");
+    uint8_t filter_size = 3;
+    Volume<float> filter(filter_size,filter_size,filter_size);
+    for(int x = 0;x<filter_size;x++)for(int y = 0;y<filter_size;y++)for(int z = 0;z<filter_size;z++){
+        filter.setVoxel(x,y,z,1.0/(filter_size*filter_size*filter_size));
+    }
+    v = v.convolution(filter);
 
-    Volume<uint16_t> v = Volume<uint16_t>::loadRawVolume(256,256,256,(char *)"volumes/3dhead.raw");
+    GLuint texture3 = v.getGradientDensityVolume().getGLtexture(true);
 
-    DVR::VolumeInfo vi;
-    vi.width  = 128;
-    vi.height = 256;
-    vi.depth  = 256;
-    vi.filename = "volumes/vismale.raw";
     GLuint pgm = loadShaderProgram("shaders/dvr_vert.glsl","shaders/dvr_frag.glsl");
-    DVR *d = new DVR(pgm,vi,m,"Volume Rendering Test");
+    DVR *d = new DVR(pgm,texture3,m,"Volume Rendering Test");
     s->addObject(d);
 }
 
@@ -125,19 +126,19 @@ int main(int argc, const char** argv){
     std::cout << clamp(1,2,3) << std::endl;
     std::cout << clamp(2.5,2,3) << std::endl;
     std::cout << clamp(5,2,3) << std::endl;
-//    initAoTK();
-//    Size2D<unsigned int> size;
-//    size.w = 800;
-//    size.h = 600;
-//
-//    new WireframeToggle();
-//
-//    s = aotk->createWindow(size,"AoTK test Window");
-//    //aotk->createSubWindow(size);
-//    initGL();
-//
-//    createObjects();
-//    int i;
-//    glGetIntegerv(GL_MAX_TEXTURE_SIZE,&i);
-//    aotk->start();
+    initAoTK();
+    Size2D<unsigned int> size;
+    size.w = 800;
+    size.h = 600;
+
+    new WireframeToggle();
+
+    s = aotk->createWindow(size,"AoTK test Window");
+    //aotk->createSubWindow(size);
+    initGL();
+
+    createObjects();
+    int i;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE,&i);
+    aotk->start();
 }

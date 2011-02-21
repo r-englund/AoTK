@@ -455,21 +455,21 @@ KEY translateKEY(WPARAM w);
             }
             checkForMessages();
         }else{
-            LPPOINT p = NULL;
-            GetCursorPos(p);
-            WINDOWINFO  wi;
-            GetWindowInfo(aotk->hwnd,&wi);
-            if(aotk->mouseInside){
-                if(!(p->x > wi.rcClient.left && p->x < wi.rcClient.right && p->y > wi.rcClient.top && p->y < wi.rcClient.bottom)){
-                    TRACKMOUSEEVENT tmt;
-                    tmt.cbSize = sizeof(TRACKMOUSEEVENT);
-                    tmt.dwFlags = TME_LEAVE;
-                    tmt.hwndTrack = aotk->hwnd;
-                    TrackMouseEvent(&tmt);
-                }
-                aotk->mouseInside = 0;
-            }else
-                aotk->mouseInside = (p->x > wi.rcClient.left && p->x < wi.rcClient.right && p->y > wi.rcClient.top && p->y < wi.rcClient.bottom);
+//            LPPOINT p = NULL;
+//            GetCursorPos(p);
+//            WINDOWINFO  wi;
+//            GetWindowInfo(aotk->hwnd,&wi);
+//            if(aotk->mouseInside){ //TODO felet är här
+//                if(!(p->x > wi.rcClient.left && p->x < wi.rcClient.right && p->y > wi.rcClient.top && p->y < wi.rcClient.bottom)){
+//                    TRACKMOUSEEVENT tmt;
+//                    tmt.cbSize = sizeof(TRACKMOUSEEVENT);
+//                    tmt.dwFlags = TME_LEAVE;
+//                    tmt.hwndTrack = aotk->hwnd;
+//                    TrackMouseEvent(&tmt);
+//                }
+//                aotk->mouseInside = 0;
+//            }else
+//                aotk->mouseInside = (p->x > wi.rcClient.left && p->x < wi.rcClient.right && p->y > wi.rcClient.top && p->y < wi.rcClient.bottom);
         }
     }
     void Window::swapBuffers(){

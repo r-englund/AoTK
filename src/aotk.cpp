@@ -11,6 +11,7 @@ void InitAoTKwin(){
     GetConsoleTitleA( t, 500 );
     aotk->hwndConsole = FindWindowA( NULL, t );
     aotk->hInst = (HINSTANCE)GetWindowLong(aotk->hwndConsole, GWL_HINSTANCE);
+    aotk->mouseInside = 0;
 }
 #endif
 

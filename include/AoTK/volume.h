@@ -21,7 +21,7 @@ class Volume{
         assert(y<height);
         assert(z<depth);
         #endif
-        return x + y*width + x*width*height;
+        return x + y*width + z*width*height;
     }
     inline T MAX() const;
 public:
@@ -48,16 +48,18 @@ public:
 
     Volume<bool> toBinary(T threshold)const;
 
-    GLuint getGLtexture()const; //TODO implement
+    GLuint getGLtexture(bool toPow2 = false)const;
 
-    static Volume<T> loadRawVolume(unsigned int width,unsigned int height,unsigned int depth,char *filename);
+    static Volume<T> loadRawVolume(unsigned int width,unsigned int height,unsigned int depth,char *filename,bool swap = false);
 
 
 private:
     friend class Volume<double>;
     friend class Volume<float>;
     friend class Volume<uint8_t>;
+    friend class Volume<int8_t>;
     friend class Volume<uint16_t>;
+    friend class Volume<int16_t>;
     friend class Volume<bool>;
     friend class Volume<HITANDMISS_BOOLEAN>;
 };

@@ -8,92 +8,19 @@
 
 namespace AoTK{
 
-DVR::DVR(GLint _shader,VolumeInfo vi,Matrix _toWorld,std::string _name):
+DVR::DVR(GLint _shader,GLuint _tex,Matrix _toWorld,std::string _name):
  Object(_shader,_toWorld, _name),
  KeyboardListener(_name),
  MouseMotionListener(_name),
  ScrollListener(_name),
  type(density),
+ tex(_tex),
  roty(0),
  rotx(0),
  threshold(0.5),
- div_coeff(0.5)
+ div_coeff(0.5),
+ stepsize(1.0/450.0)
 {
-    volumeInfo = vi;
-    FILE *f;
-    f = fopen(vi.filename.c_str(),"rb");
-    assert(f != NULL);
-    uint8_t *buf = new uint8_t[vi.width*vi.height*vi.depth]();
-
-    fread(buf,sizeof(uint8_t),vi.width*vi.height*vi.depth,f);
-    assert(ferror(f)==0);
-    fclose(f);
-
-    unsigned int x,y,z;
-    x = 0;
-    y = 0;
-    z = 0;
-    unsigned int pow2width,pow2height,pow2depth;
-    pow2width = pow(2,ceil(log(vi.width) / log(2.0f)));
-    pow2height = pow(2,ceil(log(vi.height) / log(2.0f)));
-    pow2depth = pow(2,ceil(log(vi.depth) / log(2.0f)));
-    stepsize = 1.0/sqrt(pow2width*pow2width+pow2height*pow2height+pow2depth*pow2depth);
-    std::cout << vi.width << " " << vi.height << " " << vi.depth << std::endl;
-    std::cout << pow2width << " " << pow2height << " " << pow2depth << std::endl;
-    data = new GLubyte[pow2width*pow2height*pow2depth*4]();
-    int kernelsize = 1; // actually kernel divded by two plus 1
-    for(unsigned int i = 0;i<pow2width*pow2height*pow2depth*4;i++)
-        data[i] = 0;
-    for(unsigned int i = 0;i<vi.width*vi.height*vi.depth;i++){
-        unsigned int index = INDEX(x,y,z,pow2width,pow2height);
-        data[index*4+0] = 0;
-        data[index*4+1] = 0;
-        data[index*4+2] = 0;
-        float ff = 0;
-        unsigned int div = 0;
-        for(unsigned int c = std::max(0,(int)z-kernelsize)   ;   c<std::min(z+kernelsize,vi.depth);c++)
-            for(unsigned int b = std::max(0,(int)y-kernelsize)   ;   b<std::min(y+kernelsize,vi.height);b++)
-                for(unsigned int a = std::max(0,(int)x-kernelsize)   ;   a<std::min(x+kernelsize,vi.width);a++){
-                    div++;
-                    ff += buf[INDEX(a,b,c,vi.width,vi.height)];
-                }
-        data[index*4+3] = (GLubyte) (ff/div);
-
-        x++;
-        if(x>=vi.width){
-            x = 0;
-            y++;
-            if(y>=vi.height){
-                y = 0;
-                z++;
-            }
-        }
-    }
-    volumeInfo.depth = pow2depth;
-    volumeInfo.height = pow2height;
-    volumeInfo.width = pow2width;
-    calcGradients();
-
-    getAllError(__FILE__,__LINE__);
-    glGenTextures(1,&tex);
-    glBindTexture(GL_TEXTURE_3D,tex);
-    getAllError(__FILE__,__LINE__);
-
-    glTexParameterf(GL_TEXTURE_3D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_3D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    getAllError(__FILE__,__LINE__);
-
-    glTexParameterf(GL_TEXTURE_3D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
-    glTexParameterf(GL_TEXTURE_3D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
-    glTexParameterf(GL_TEXTURE_3D,GL_TEXTURE_WRAP_R,GL_CLAMP_TO_EDGE);
-    getAllError(__FILE__,__LINE__);
-
-    glTexImage3D(GL_TEXTURE_3D,0,4,volumeInfo.width,volumeInfo.height,volumeInfo.depth,0,GL_RGBA,GL_UNSIGNED_BYTE,&data[0]);
-    getAllError(__FILE__,__LINE__);
-
-    glBindTexture(GL_TEXTURE_3D,0);
-    getAllError(__FILE__,__LINE__);
-
 //    assert(pgm);
     glUseProgram(pgm);
 
@@ -120,12 +47,11 @@ DVR::DVR(GLint _shader,VolumeInfo vi,Matrix _toWorld,std::string _name):
     glUseProgram(0);
 
     getAllError(__FILE__,__LINE__);
-    delete buf;
 };
 
 void DVR::scroll(int p){
     if(aotk->keyState(SHIFT)){
-        threshold += 0.03 * p;
+        threshold += 0.005 * p;
         if(threshold < 0) threshold = 0;
         if(threshold > 1) threshold = 1;
         std::cout << threshold << std::endl;
@@ -150,29 +76,6 @@ void DVR::resize(unsigned int w,unsigned int h){
 
 DVR::~DVR(){
     delete data;
-}
-
-
-void DVR::calcGradients(){
-    unsigned int i;
-    int gx,gy,gz;
-    for(unsigned int z = 0;z<volumeInfo.depth;z++)for(unsigned int y = 0;y<volumeInfo.height;y++)for(unsigned int x = 0;x<volumeInfo.width;x++){
-        i = INDEX(x,y,z,volumeInfo.width,volumeInfo.height);
-        if((z==0||z==volumeInfo.depth-1) || (y==0||y==volumeInfo.height-1) || (x==0||x==volumeInfo.width-1)){
-            data[i*4+0] = 128;
-            data[i*4+1] = 128;
-            data[i*4+2] = 128;
-        }else{
-            gx = data[INDEX(x+1,y,z,volumeInfo.width,volumeInfo.height)*4+3] - data[INDEX(x-1,y,z,volumeInfo.width,volumeInfo.height)*4+3];
-            gy = data[INDEX(x,y+1,z,volumeInfo.width,volumeInfo.height)*4+3] - data[INDEX(x,y-1,z,volumeInfo.width,volumeInfo.height)*4+3];
-            gz = data[INDEX(x,y,z+1,volumeInfo.width,volumeInfo.height)*4+3] - data[INDEX(x,y,z-1,volumeInfo.width,volumeInfo.height)*4+3];
-
-            data[i*4+0] = 128 + 0.5*gx;
-            data[i*4+1] = 128 + 0.5*gy;
-            data[i*4+2] = 128 + 0.5*gz;
-        }
-//        std::cout << data[i*4+3] << std::endl;
-    }
 }
 
 void DVR::logic(){}

@@ -18,21 +18,21 @@ class DVR : public Object, KeyboardListener, ResizeListener, MouseMotionListener
         density
     } type;
 public:
-    struct VolumeInfo{
-        std::string filename;
-        unsigned int width;
-        unsigned int height;
-        unsigned int depth;
-        VolumeInfo():filename(""),width(0),height(0),depth(0){}
-        VolumeInfo(std::string f,unsigned int w,unsigned int h,unsigned int d):filename(f),width(w),height(h),depth(d){}
-        VolumeInfo(const VolumeInfo &v):filename(v.filename),width(v.width),height(v.height),depth(v.depth){}
-    };
+//    struct VolumeInfo{
+//        std::string filename;
+//        unsigned int width;
+//        unsigned int height;
+//        unsigned int depth;
+//        VolumeInfo():filename(""),width(0),height(0),depth(0){}
+//        VolumeInfo(std::string f,unsigned int w,unsigned int h,unsigned int d):filename(f),width(w),height(h),depth(d){}
+//        VolumeInfo(const VolumeInfo &v):filename(v.filename),width(v.width),height(v.height),depth(v.depth){}
+//    };
 
 
     virtual void mousemotion(int dx,int dy);
     virtual void passiveMousemotion(int dx,int dy){}
 
-    DVR(GLint shader,VolumeInfo vi,Matrix toWorld = Matrix(),std::string = "");
+    DVR(GLint shader,GLuint _tex,Matrix toWorld = Matrix(),std::string = "");
     ~DVR();
     DVR() = delete;
     DVR(const DVR &o) = delete;
@@ -55,7 +55,6 @@ private:
     float threshold;
     float stepsize;
     float div_coeff;
-    VolumeInfo volumeInfo;
     GLuint tex;
     FBO frontFace;
     FBO backFace;
@@ -71,7 +70,6 @@ private:
 
     unsigned int win_w,win_h;
 
-    void calcGradients();
     void drawFaces();
 protected:
     virtual void logic();
