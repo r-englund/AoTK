@@ -464,15 +464,15 @@ typedef struct _cl_event *cl_event;
 #define GL_STENCIL_PASS_DEPTH_PASS 0x0B96
 #define GL_STENCIL_REF 0x0B97
 #define GL_STENCIL_WRITEMASK 0x0B98
-#define GL_MATRIX_MODE 0x0BA0
+#define GL_Matrix4x4_MODE 0x0BA0
 #define GL_NORMALIZE 0x0BA1
 #define GL_VIEWPORT 0x0BA2
 #define GL_MODELVIEW_STACK_DEPTH 0x0BA3
 #define GL_PROJECTION_STACK_DEPTH 0x0BA4
 #define GL_TEXTURE_STACK_DEPTH 0x0BA5
-#define GL_MODELVIEW_MATRIX 0x0BA6
-#define GL_PROJECTION_MATRIX 0x0BA7
-#define GL_TEXTURE_MATRIX 0x0BA8
+#define GL_MODELVIEW_Matrix4x4 0x0BA6
+#define GL_PROJECTION_Matrix4x4 0x0BA7
+#define GL_TEXTURE_Matrix4x4 0x0BA8
 #define GL_ATTRIB_STACK_DEPTH 0x0BB0
 #define GL_CLIENT_ATTRIB_STACK_DEPTH 0x0BB1
 #define GL_ALPHA_TEST 0x0BC0
@@ -980,8 +980,8 @@ GLAPI void GLAPIENTRY glLineStipple (GLint factor, GLushort pattern);
 GLAPI void GLAPIENTRY glLineWidth (GLfloat width);
 GLAPI void GLAPIENTRY glListBase (GLuint base);
 GLAPI void GLAPIENTRY glLoadIdentity (void);
-GLAPI void GLAPIENTRY glLoadMatrixd (const GLdouble *m);
-GLAPI void GLAPIENTRY glLoadMatrixf (const GLfloat *m);
+GLAPI void GLAPIENTRY glLoadMatrix4x4d (const GLdouble *m);
+GLAPI void GLAPIENTRY glLoadMatrix4x4f (const GLfloat *m);
 GLAPI void GLAPIENTRY glLoadName (GLuint name);
 GLAPI void GLAPIENTRY glLogicOp (GLenum opcode);
 GLAPI void GLAPIENTRY glMap1d (GLenum target, GLdouble u1, GLdouble u2, GLint stride, GLint order, const GLdouble *points);
@@ -996,9 +996,9 @@ GLAPI void GLAPIENTRY glMaterialf (GLenum face, GLenum pname, GLfloat param);
 GLAPI void GLAPIENTRY glMaterialfv (GLenum face, GLenum pname, const GLfloat *params);
 GLAPI void GLAPIENTRY glMateriali (GLenum face, GLenum pname, GLint param);
 GLAPI void GLAPIENTRY glMaterialiv (GLenum face, GLenum pname, const GLint *params);
-GLAPI void GLAPIENTRY glMatrixMode (GLenum mode);
-GLAPI void GLAPIENTRY glMultMatrixd (const GLdouble *m);
-GLAPI void GLAPIENTRY glMultMatrixf (const GLfloat *m);
+GLAPI void GLAPIENTRY glMatrix4x4Mode (GLenum mode);
+GLAPI void GLAPIENTRY glMultMatrix4x4d (const GLdouble *m);
+GLAPI void GLAPIENTRY glMultMatrix4x4f (const GLfloat *m);
 GLAPI void GLAPIENTRY glNewList (GLuint list, GLenum mode);
 GLAPI void GLAPIENTRY glNormal3b (GLbyte nx, GLbyte ny, GLbyte nz);
 GLAPI void GLAPIENTRY glNormal3bv (const GLbyte *v);
@@ -1027,12 +1027,12 @@ GLAPI void GLAPIENTRY glPolygonOffset (GLfloat factor, GLfloat units);
 GLAPI void GLAPIENTRY glPolygonStipple (const GLubyte *mask);
 GLAPI void GLAPIENTRY glPopAttrib (void);
 GLAPI void GLAPIENTRY glPopClientAttrib (void);
-GLAPI void GLAPIENTRY glPopMatrix (void);
+GLAPI void GLAPIENTRY glPopMatrix4x4 (void);
 GLAPI void GLAPIENTRY glPopName (void);
 GLAPI void GLAPIENTRY glPrioritizeTextures (GLsizei n, const GLuint *textures, const GLclampf *priorities);
 GLAPI void GLAPIENTRY glPushAttrib (GLbitfield mask);
 GLAPI void GLAPIENTRY glPushClientAttrib (GLbitfield mask);
-GLAPI void GLAPIENTRY glPushMatrix (void);
+GLAPI void GLAPIENTRY glPushMatrix4x4 (void);
 GLAPI void GLAPIENTRY glPushName (GLuint name);
 GLAPI void GLAPIENTRY glRasterPos2d (GLdouble x, GLdouble y);
 GLAPI void GLAPIENTRY glRasterPos2dv (const GLdouble *v);
@@ -1291,10 +1291,10 @@ typedef void (GLAPIENTRY * PFNGLTEXSUBIMAGE3DPROC) (GLenum target, GLint level, 
 #define GL_ACTIVE_TEXTURE 0x84E0
 #define GL_CLIENT_ACTIVE_TEXTURE 0x84E1
 #define GL_MAX_TEXTURE_UNITS 0x84E2
-#define GL_TRANSPOSE_MODELVIEW_MATRIX 0x84E3
-#define GL_TRANSPOSE_PROJECTION_MATRIX 0x84E4
-#define GL_TRANSPOSE_TEXTURE_MATRIX 0x84E5
-#define GL_TRANSPOSE_COLOR_MATRIX 0x84E6
+#define GL_TRANSPOSE_MODELVIEW_Matrix4x4 0x84E3
+#define GL_TRANSPOSE_PROJECTION_Matrix4x4 0x84E4
+#define GL_TRANSPOSE_TEXTURE_Matrix4x4 0x84E5
+#define GL_TRANSPOSE_COLOR_Matrix4x4 0x84E6
 #define GL_SUBTRACT 0x84E7
 #define GL_COMPRESSED_ALPHA 0x84E9
 #define GL_COMPRESSED_LUMINANCE 0x84EA
@@ -1353,10 +1353,10 @@ typedef void (GLAPIENTRY * PFNGLCOMPRESSEDTEXSUBIMAGE1DPROC) (GLenum target, GLi
 typedef void (GLAPIENTRY * PFNGLCOMPRESSEDTEXSUBIMAGE2DPROC) (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLsizei imageSize, const GLvoid *data);
 typedef void (GLAPIENTRY * PFNGLCOMPRESSEDTEXSUBIMAGE3DPROC) (GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const GLvoid *data);
 typedef void (GLAPIENTRY * PFNGLGETCOMPRESSEDTEXIMAGEPROC) (GLenum target, GLint lod, GLvoid *img);
-typedef void (GLAPIENTRY * PFNGLLOADTRANSPOSEMATRIXDPROC) (const GLdouble m[16]);
-typedef void (GLAPIENTRY * PFNGLLOADTRANSPOSEMATRIXFPROC) (const GLfloat m[16]);
-typedef void (GLAPIENTRY * PFNGLMULTTRANSPOSEMATRIXDPROC) (const GLdouble m[16]);
-typedef void (GLAPIENTRY * PFNGLMULTTRANSPOSEMATRIXFPROC) (const GLfloat m[16]);
+typedef void (GLAPIENTRY * PFNGLLOADTRANSPOSEMatrix4x4DPROC) (const GLdouble m[16]);
+typedef void (GLAPIENTRY * PFNGLLOADTRANSPOSEMatrix4x4FPROC) (const GLfloat m[16]);
+typedef void (GLAPIENTRY * PFNGLMULTTRANSPOSEMatrix4x4DPROC) (const GLdouble m[16]);
+typedef void (GLAPIENTRY * PFNGLMULTTRANSPOSEMatrix4x4FPROC) (const GLfloat m[16]);
 typedef void (GLAPIENTRY * PFNGLMULTITEXCOORD1DPROC) (GLenum target, GLdouble s);
 typedef void (GLAPIENTRY * PFNGLMULTITEXCOORD1DVPROC) (GLenum target, const GLdouble *v);
 typedef void (GLAPIENTRY * PFNGLMULTITEXCOORD1FPROC) (GLenum target, GLfloat s);
@@ -1400,10 +1400,10 @@ typedef void (GLAPIENTRY * PFNGLSAMPLECOVERAGEPROC) (GLclampf value, GLboolean i
 #define glCompressedTexSubImage2D GLEW_GET_FUN(__glewCompressedTexSubImage2D)
 #define glCompressedTexSubImage3D GLEW_GET_FUN(__glewCompressedTexSubImage3D)
 #define glGetCompressedTexImage GLEW_GET_FUN(__glewGetCompressedTexImage)
-#define glLoadTransposeMatrixd GLEW_GET_FUN(__glewLoadTransposeMatrixd)
-#define glLoadTransposeMatrixf GLEW_GET_FUN(__glewLoadTransposeMatrixf)
-#define glMultTransposeMatrixd GLEW_GET_FUN(__glewMultTransposeMatrixd)
-#define glMultTransposeMatrixf GLEW_GET_FUN(__glewMultTransposeMatrixf)
+#define glLoadTransposeMatrix4x4d GLEW_GET_FUN(__glewLoadTransposeMatrix4x4d)
+#define glLoadTransposeMatrix4x4f GLEW_GET_FUN(__glewLoadTransposeMatrix4x4f)
+#define glMultTransposeMatrix4x4d GLEW_GET_FUN(__glewMultTransposeMatrix4x4d)
+#define glMultTransposeMatrix4x4f GLEW_GET_FUN(__glewMultTransposeMatrix4x4f)
 #define glMultiTexCoord1d GLEW_GET_FUN(__glewMultiTexCoord1d)
 #define glMultiTexCoord1dv GLEW_GET_FUN(__glewMultiTexCoord1dv)
 #define glMultiTexCoord1f GLEW_GET_FUN(__glewMultiTexCoord1f)
@@ -1831,9 +1831,9 @@ typedef void (GLAPIENTRY * PFNGLUNIFORM4FPROC) (GLint location, GLfloat v0, GLfl
 typedef void (GLAPIENTRY * PFNGLUNIFORM4FVPROC) (GLint location, GLsizei count, const GLfloat* value);
 typedef void (GLAPIENTRY * PFNGLUNIFORM4IPROC) (GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
 typedef void (GLAPIENTRY * PFNGLUNIFORM4IVPROC) (GLint location, GLsizei count, const GLint* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX2FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX3FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX4FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x42FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x43FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNglUniformMatrix4fvPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
 typedef void (GLAPIENTRY * PFNGLUSEPROGRAMPROC) (GLuint program);
 typedef void (GLAPIENTRY * PFNGLVALIDATEPROGRAMPROC) (GLuint program);
 typedef void (GLAPIENTRY * PFNGLVERTEXATTRIB1DPROC) (GLuint index, GLdouble x);
@@ -1925,9 +1925,9 @@ typedef void (GLAPIENTRY * PFNGLVERTEXATTRIBPOINTERPROC) (GLuint index, GLint si
 #define glUniform4fv GLEW_GET_FUN(__glewUniform4fv)
 #define glUniform4i GLEW_GET_FUN(__glewUniform4i)
 #define glUniform4iv GLEW_GET_FUN(__glewUniform4iv)
-#define glUniformMatrix2fv GLEW_GET_FUN(__glewUniformMatrix2fv)
-#define glUniformMatrix3fv GLEW_GET_FUN(__glewUniformMatrix3fv)
-#define glUniformMatrix4fv GLEW_GET_FUN(__glewUniformMatrix4fv)
+#define glUniformMatrix4x42fv GLEW_GET_FUN(__glewUniformMatrix4x42fv)
+#define glUniformMatrix4x43fv GLEW_GET_FUN(__glewUniformMatrix4x43fv)
+#define glUniformMatrix4fv GLEW_GET_FUN(__glewUniformMatrix4x44fv)
 #define glUseProgram GLEW_GET_FUN(__glewUseProgram)
 #define glValidateProgram GLEW_GET_FUN(__glewValidateProgram)
 #define glVertexAttrib1d GLEW_GET_FUN(__glewVertexAttrib1d)
@@ -2001,19 +2001,19 @@ typedef void (GLAPIENTRY * PFNGLVERTEXATTRIBPOINTERPROC) (GLuint index, GLint si
 #define GL_COMPRESSED_SLUMINANCE 0x8C4A
 #define GL_COMPRESSED_SLUMINANCE_ALPHA 0x8C4B
 
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX2X3FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX2X4FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX3X2FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX3X4FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX4X2FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX4X3FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x42X3FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x42X4FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x43X2FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x43X4FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x44X2FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x44X3FVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat *value);
 
-#define glUniformMatrix2x3fv GLEW_GET_FUN(__glewUniformMatrix2x3fv)
-#define glUniformMatrix2x4fv GLEW_GET_FUN(__glewUniformMatrix2x4fv)
-#define glUniformMatrix3x2fv GLEW_GET_FUN(__glewUniformMatrix3x2fv)
-#define glUniformMatrix3x4fv GLEW_GET_FUN(__glewUniformMatrix3x4fv)
-#define glUniformMatrix4x2fv GLEW_GET_FUN(__glewUniformMatrix4x2fv)
-#define glUniformMatrix4x3fv GLEW_GET_FUN(__glewUniformMatrix4x3fv)
+#define glUniformMatrix4x42x3fv GLEW_GET_FUN(__glewUniformMatrix4x42x3fv)
+#define glUniformMatrix4x42x4fv GLEW_GET_FUN(__glewUniformMatrix4x42x4fv)
+#define glUniformMatrix4x43x2fv GLEW_GET_FUN(__glewUniformMatrix4x43x2fv)
+#define glUniformMatrix4x43x4fv GLEW_GET_FUN(__glewUniformMatrix4x43x4fv)
+#define glUniformMatrix4x44x2fv GLEW_GET_FUN(__glewUniformMatrix4x44x2fv)
+#define glUniformMatrix4x44x3fv GLEW_GET_FUN(__glewUniformMatrix4x44x3fv)
 
 #define GLEW_VERSION_2_1 GLEW_GET_VAR(__GLEW_VERSION_2_1)
 
@@ -3560,15 +3560,15 @@ typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM3DEXTPROC) (GLuint program, GLint 
 typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM3DVEXTPROC) (GLuint program, GLint location, GLsizei count, const GLdouble* value);
 typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM4DEXTPROC) (GLuint program, GLint location, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
 typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM4DVEXTPROC) (GLuint program, GLint location, GLsizei count, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2X3DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2X4DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3X2DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3X4DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4X2DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4X3DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42X3DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42X4DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43X2DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43X4DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44X2DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44X3DVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
 typedef void (GLAPIENTRY * PFNGLUNIFORM1DPROC) (GLint location, GLdouble x);
 typedef void (GLAPIENTRY * PFNGLUNIFORM1DVPROC) (GLint location, GLsizei count, const GLdouble* value);
 typedef void (GLAPIENTRY * PFNGLUNIFORM2DPROC) (GLint location, GLdouble x, GLdouble y);
@@ -3577,15 +3577,15 @@ typedef void (GLAPIENTRY * PFNGLUNIFORM3DPROC) (GLint location, GLdouble x, GLdo
 typedef void (GLAPIENTRY * PFNGLUNIFORM3DVPROC) (GLint location, GLsizei count, const GLdouble* value);
 typedef void (GLAPIENTRY * PFNGLUNIFORM4DPROC) (GLint location, GLdouble x, GLdouble y, GLdouble z, GLdouble w);
 typedef void (GLAPIENTRY * PFNGLUNIFORM4DVPROC) (GLint location, GLsizei count, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX2DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX2X3DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX2X4DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX3DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX3X2DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX3X4DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX4DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX4X2DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX4X3DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x42DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x42X3DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x42X4DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x43DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x43X2DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x43X4DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x44DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x44X2DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x44X3DVPROC) (GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
 
 #define glGetUniformdv GLEW_GET_FUN(__glewGetUniformdv)
 #define glProgramUniform1dEXT GLEW_GET_FUN(__glewProgramUniform1dEXT)
@@ -3596,15 +3596,15 @@ typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX4X3DVPROC) (GLint location, GLsizei
 #define glProgramUniform3dvEXT GLEW_GET_FUN(__glewProgramUniform3dvEXT)
 #define glProgramUniform4dEXT GLEW_GET_FUN(__glewProgramUniform4dEXT)
 #define glProgramUniform4dvEXT GLEW_GET_FUN(__glewProgramUniform4dvEXT)
-#define glProgramUniformMatrix2dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix2dvEXT)
-#define glProgramUniformMatrix2x3dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix2x3dvEXT)
-#define glProgramUniformMatrix2x4dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix2x4dvEXT)
-#define glProgramUniformMatrix3dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix3dvEXT)
-#define glProgramUniformMatrix3x2dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix3x2dvEXT)
-#define glProgramUniformMatrix3x4dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix3x4dvEXT)
-#define glProgramUniformMatrix4dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4dvEXT)
-#define glProgramUniformMatrix4x2dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x2dvEXT)
-#define glProgramUniformMatrix4x3dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x3dvEXT)
+#define glProgramUniformMatrix4x42dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x42dvEXT)
+#define glProgramUniformMatrix4x42x3dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x42x3dvEXT)
+#define glProgramUniformMatrix4x42x4dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x42x4dvEXT)
+#define glProgramUniformMatrix4x43dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x43dvEXT)
+#define glProgramUniformMatrix4x43x2dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x43x2dvEXT)
+#define glProgramUniformMatrix4x43x4dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x43x4dvEXT)
+#define glProgramUniformMatrix4x44dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x44dvEXT)
+#define glProgramUniformMatrix4x44x2dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x44x2dvEXT)
+#define glProgramUniformMatrix4x44x3dvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x44x3dvEXT)
 #define glUniform1d GLEW_GET_FUN(__glewUniform1d)
 #define glUniform1dv GLEW_GET_FUN(__glewUniform1dv)
 #define glUniform2d GLEW_GET_FUN(__glewUniform2d)
@@ -3613,15 +3613,15 @@ typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX4X3DVPROC) (GLint location, GLsizei
 #define glUniform3dv GLEW_GET_FUN(__glewUniform3dv)
 #define glUniform4d GLEW_GET_FUN(__glewUniform4d)
 #define glUniform4dv GLEW_GET_FUN(__glewUniform4dv)
-#define glUniformMatrix2dv GLEW_GET_FUN(__glewUniformMatrix2dv)
-#define glUniformMatrix2x3dv GLEW_GET_FUN(__glewUniformMatrix2x3dv)
-#define glUniformMatrix2x4dv GLEW_GET_FUN(__glewUniformMatrix2x4dv)
-#define glUniformMatrix3dv GLEW_GET_FUN(__glewUniformMatrix3dv)
-#define glUniformMatrix3x2dv GLEW_GET_FUN(__glewUniformMatrix3x2dv)
-#define glUniformMatrix3x4dv GLEW_GET_FUN(__glewUniformMatrix3x4dv)
-#define glUniformMatrix4dv GLEW_GET_FUN(__glewUniformMatrix4dv)
-#define glUniformMatrix4x2dv GLEW_GET_FUN(__glewUniformMatrix4x2dv)
-#define glUniformMatrix4x3dv GLEW_GET_FUN(__glewUniformMatrix4x3dv)
+#define glUniformMatrix4x42dv GLEW_GET_FUN(__glewUniformMatrix4x42dv)
+#define glUniformMatrix4x42x3dv GLEW_GET_FUN(__glewUniformMatrix4x42x3dv)
+#define glUniformMatrix4x42x4dv GLEW_GET_FUN(__glewUniformMatrix4x42x4dv)
+#define glUniformMatrix4x43dv GLEW_GET_FUN(__glewUniformMatrix4x43dv)
+#define glUniformMatrix4x43x2dv GLEW_GET_FUN(__glewUniformMatrix4x43x2dv)
+#define glUniformMatrix4x43x4dv GLEW_GET_FUN(__glewUniformMatrix4x43x4dv)
+#define glUniformMatrix4x44dv GLEW_GET_FUN(__glewUniformMatrix4x44dv)
+#define glUniformMatrix4x44x2dv GLEW_GET_FUN(__glewUniformMatrix4x44x2dv)
+#define glUniformMatrix4x44x3dv GLEW_GET_FUN(__glewUniformMatrix4x44x3dv)
 
 #define GLEW_ARB_gpu_shader_fp64 GLEW_GET_VAR(__GLEW_ARB_gpu_shader_fp64)
 
@@ -3699,23 +3699,23 @@ typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX4X3DVPROC) (GLint location, GLsizei
 #define GL_MINMAX_FORMAT 0x802F
 #define GL_MINMAX_SINK 0x8030
 #define GL_TABLE_TOO_LARGE 0x8031
-#define GL_COLOR_MATRIX 0x80B1
-#define GL_COLOR_MATRIX_STACK_DEPTH 0x80B2
-#define GL_MAX_COLOR_MATRIX_STACK_DEPTH 0x80B3
-#define GL_POST_COLOR_MATRIX_RED_SCALE 0x80B4
-#define GL_POST_COLOR_MATRIX_GREEN_SCALE 0x80B5
-#define GL_POST_COLOR_MATRIX_BLUE_SCALE 0x80B6
-#define GL_POST_COLOR_MATRIX_ALPHA_SCALE 0x80B7
-#define GL_POST_COLOR_MATRIX_RED_BIAS 0x80B8
-#define GL_POST_COLOR_MATRIX_GREEN_BIAS 0x80B9
-#define GL_POST_COLOR_MATRIX_BLUE_BIAS 0x80BA
-#define GL_POST_COLOR_MATRIX_ALPHA_BIAS 0x80BB
+#define GL_COLOR_Matrix4x4 0x80B1
+#define GL_COLOR_Matrix4x4_STACK_DEPTH 0x80B2
+#define GL_MAX_COLOR_Matrix4x4_STACK_DEPTH 0x80B3
+#define GL_POST_COLOR_Matrix4x4_RED_SCALE 0x80B4
+#define GL_POST_COLOR_Matrix4x4_GREEN_SCALE 0x80B5
+#define GL_POST_COLOR_Matrix4x4_BLUE_SCALE 0x80B6
+#define GL_POST_COLOR_Matrix4x4_ALPHA_SCALE 0x80B7
+#define GL_POST_COLOR_Matrix4x4_RED_BIAS 0x80B8
+#define GL_POST_COLOR_Matrix4x4_GREEN_BIAS 0x80B9
+#define GL_POST_COLOR_Matrix4x4_BLUE_BIAS 0x80BA
+#define GL_POST_COLOR_Matrix4x4_ALPHA_BIAS 0x80BB
 #define GL_COLOR_TABLE 0x80D0
 #define GL_POST_CONVOLUTION_COLOR_TABLE 0x80D1
-#define GL_POST_COLOR_MATRIX_COLOR_TABLE 0x80D2
+#define GL_POST_COLOR_Matrix4x4_COLOR_TABLE 0x80D2
 #define GL_PROXY_COLOR_TABLE 0x80D3
 #define GL_PROXY_POST_CONVOLUTION_COLOR_TABLE 0x80D4
-#define GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE 0x80D5
+#define GL_PROXY_POST_COLOR_Matrix4x4_COLOR_TABLE 0x80D5
 #define GL_COLOR_TABLE_SCALE 0x80D6
 #define GL_COLOR_TABLE_BIAS 0x80D7
 #define GL_COLOR_TABLE_FORMAT 0x80D8
@@ -3839,37 +3839,37 @@ typedef GLvoid * (GLAPIENTRY * PFNGLMAPBUFFERRANGEPROC) (GLenum target, GLintptr
 
 #endif /* GL_ARB_map_buffer_range */
 
-/* ------------------------- GL_ARB_matrix_palette ------------------------- */
+/* ------------------------- GL_ARB_Matrix4x4_palette ------------------------- */
 
-#ifndef GL_ARB_matrix_palette
-#define GL_ARB_matrix_palette 1
+#ifndef GL_ARB_Matrix4x4_palette
+#define GL_ARB_Matrix4x4_palette 1
 
-#define GL_MATRIX_PALETTE_ARB 0x8840
-#define GL_MAX_MATRIX_PALETTE_STACK_DEPTH_ARB 0x8841
+#define GL_Matrix4x4_PALETTE_ARB 0x8840
+#define GL_MAX_Matrix4x4_PALETTE_STACK_DEPTH_ARB 0x8841
 #define GL_MAX_PALETTE_MATRICES_ARB 0x8842
-#define GL_CURRENT_PALETTE_MATRIX_ARB 0x8843
-#define GL_MATRIX_INDEX_ARRAY_ARB 0x8844
-#define GL_CURRENT_MATRIX_INDEX_ARB 0x8845
-#define GL_MATRIX_INDEX_ARRAY_SIZE_ARB 0x8846
-#define GL_MATRIX_INDEX_ARRAY_TYPE_ARB 0x8847
-#define GL_MATRIX_INDEX_ARRAY_STRIDE_ARB 0x8848
-#define GL_MATRIX_INDEX_ARRAY_POINTER_ARB 0x8849
+#define GL_CURRENT_PALETTE_Matrix4x4_ARB 0x8843
+#define GL_Matrix4x4_INDEX_ARRAY_ARB 0x8844
+#define GL_CURRENT_Matrix4x4_INDEX_ARB 0x8845
+#define GL_Matrix4x4_INDEX_ARRAY_SIZE_ARB 0x8846
+#define GL_Matrix4x4_INDEX_ARRAY_TYPE_ARB 0x8847
+#define GL_Matrix4x4_INDEX_ARRAY_STRIDE_ARB 0x8848
+#define GL_Matrix4x4_INDEX_ARRAY_POINTER_ARB 0x8849
 
-typedef void (GLAPIENTRY * PFNGLCURRENTPALETTEMATRIXARBPROC) (GLint index);
-typedef void (GLAPIENTRY * PFNGLMATRIXINDEXPOINTERARBPROC) (GLint size, GLenum type, GLsizei stride, GLvoid *pointer);
-typedef void (GLAPIENTRY * PFNGLMATRIXINDEXUBVARBPROC) (GLint size, GLubyte *indices);
-typedef void (GLAPIENTRY * PFNGLMATRIXINDEXUIVARBPROC) (GLint size, GLuint *indices);
-typedef void (GLAPIENTRY * PFNGLMATRIXINDEXUSVARBPROC) (GLint size, GLushort *indices);
+typedef void (GLAPIENTRY * PFNGLCURRENTPALETTEMatrix4x4ARBPROC) (GLint index);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4INDEXPOINTERARBPROC) (GLint size, GLenum type, GLsizei stride, GLvoid *pointer);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4INDEXUBVARBPROC) (GLint size, GLubyte *indices);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4INDEXUIVARBPROC) (GLint size, GLuint *indices);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4INDEXUSVARBPROC) (GLint size, GLushort *indices);
 
-#define glCurrentPaletteMatrixARB GLEW_GET_FUN(__glewCurrentPaletteMatrixARB)
-#define glMatrixIndexPointerARB GLEW_GET_FUN(__glewMatrixIndexPointerARB)
-#define glMatrixIndexubvARB GLEW_GET_FUN(__glewMatrixIndexubvARB)
-#define glMatrixIndexuivARB GLEW_GET_FUN(__glewMatrixIndexuivARB)
-#define glMatrixIndexusvARB GLEW_GET_FUN(__glewMatrixIndexusvARB)
+#define glCurrentPaletteMatrix4x4ARB GLEW_GET_FUN(__glewCurrentPaletteMatrix4x4ARB)
+#define glMatrix4x4IndexPointerARB GLEW_GET_FUN(__glewMatrix4x4IndexPointerARB)
+#define glMatrix4x4IndexubvARB GLEW_GET_FUN(__glewMatrix4x4IndexubvARB)
+#define glMatrix4x4IndexuivARB GLEW_GET_FUN(__glewMatrix4x4IndexuivARB)
+#define glMatrix4x4IndexusvARB GLEW_GET_FUN(__glewMatrix4x4IndexusvARB)
 
-#define GLEW_ARB_matrix_palette GLEW_GET_VAR(__GLEW_ARB_matrix_palette)
+#define GLEW_ARB_Matrix4x4_palette GLEW_GET_VAR(__GLEW_ARB_Matrix4x4_palette)
 
-#endif /* GL_ARB_matrix_palette */
+#endif /* GL_ARB_Matrix4x4_palette */
 
 /* --------------------------- GL_ARB_multisample -------------------------- */
 
@@ -4297,24 +4297,24 @@ typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM4IPROC) (GLuint program, GLint loc
 typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM4IVPROC) (GLuint program, GLint location, GLsizei count, const GLint* value);
 typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM4UIPROC) (GLuint program, GLint location, GLuint x, GLuint y, GLuint z, GLuint w);
 typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM4UIVPROC) (GLuint program, GLint location, GLsizei count, const GLuint* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2X3DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2X3FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2X4DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2X4FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3X2DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3X2FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3X4DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3X4FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4X2DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4X2FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4X3DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4X3FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42X3DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42X3FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42X4DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42X4FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43X2DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43X2FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43X4DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43X4FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44X2DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44X2FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44X3DVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLdouble* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44X3FVPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
 typedef void (GLAPIENTRY * PFNGLUSEPROGRAMSTAGESPROC) (GLuint pipeline, GLbitfield stages, GLuint program);
 typedef void (GLAPIENTRY * PFNGLVALIDATEPROGRAMPIPELINEPROC) (GLuint pipeline);
 
@@ -4358,24 +4358,24 @@ typedef void (GLAPIENTRY * PFNGLVALIDATEPROGRAMPIPELINEPROC) (GLuint pipeline);
 #define glProgramUniform4iv GLEW_GET_FUN(__glewProgramUniform4iv)
 #define glProgramUniform4ui GLEW_GET_FUN(__glewProgramUniform4ui)
 #define glProgramUniform4uiv GLEW_GET_FUN(__glewProgramUniform4uiv)
-#define glProgramUniformMatrix2dv GLEW_GET_FUN(__glewProgramUniformMatrix2dv)
-#define glProgramUniformMatrix2fv GLEW_GET_FUN(__glewProgramUniformMatrix2fv)
-#define glProgramUniformMatrix2x3dv GLEW_GET_FUN(__glewProgramUniformMatrix2x3dv)
-#define glProgramUniformMatrix2x3fv GLEW_GET_FUN(__glewProgramUniformMatrix2x3fv)
-#define glProgramUniformMatrix2x4dv GLEW_GET_FUN(__glewProgramUniformMatrix2x4dv)
-#define glProgramUniformMatrix2x4fv GLEW_GET_FUN(__glewProgramUniformMatrix2x4fv)
-#define glProgramUniformMatrix3dv GLEW_GET_FUN(__glewProgramUniformMatrix3dv)
-#define glProgramUniformMatrix3fv GLEW_GET_FUN(__glewProgramUniformMatrix3fv)
-#define glProgramUniformMatrix3x2dv GLEW_GET_FUN(__glewProgramUniformMatrix3x2dv)
-#define glProgramUniformMatrix3x2fv GLEW_GET_FUN(__glewProgramUniformMatrix3x2fv)
-#define glProgramUniformMatrix3x4dv GLEW_GET_FUN(__glewProgramUniformMatrix3x4dv)
-#define glProgramUniformMatrix3x4fv GLEW_GET_FUN(__glewProgramUniformMatrix3x4fv)
-#define glProgramUniformMatrix4dv GLEW_GET_FUN(__glewProgramUniformMatrix4dv)
-#define glProgramUniformMatrix4fv GLEW_GET_FUN(__glewProgramUniformMatrix4fv)
-#define glProgramUniformMatrix4x2dv GLEW_GET_FUN(__glewProgramUniformMatrix4x2dv)
-#define glProgramUniformMatrix4x2fv GLEW_GET_FUN(__glewProgramUniformMatrix4x2fv)
-#define glProgramUniformMatrix4x3dv GLEW_GET_FUN(__glewProgramUniformMatrix4x3dv)
-#define glProgramUniformMatrix4x3fv GLEW_GET_FUN(__glewProgramUniformMatrix4x3fv)
+#define glProgramUniformMatrix4x42dv GLEW_GET_FUN(__glewProgramUniformMatrix4x42dv)
+#define glProgramUniformMatrix4x42fv GLEW_GET_FUN(__glewProgramUniformMatrix4x42fv)
+#define glProgramUniformMatrix4x42x3dv GLEW_GET_FUN(__glewProgramUniformMatrix4x42x3dv)
+#define glProgramUniformMatrix4x42x3fv GLEW_GET_FUN(__glewProgramUniformMatrix4x42x3fv)
+#define glProgramUniformMatrix4x42x4dv GLEW_GET_FUN(__glewProgramUniformMatrix4x42x4dv)
+#define glProgramUniformMatrix4x42x4fv GLEW_GET_FUN(__glewProgramUniformMatrix4x42x4fv)
+#define glProgramUniformMatrix4x43dv GLEW_GET_FUN(__glewProgramUniformMatrix4x43dv)
+#define glProgramUniformMatrix4x43fv GLEW_GET_FUN(__glewProgramUniformMatrix4x43fv)
+#define glProgramUniformMatrix4x43x2dv GLEW_GET_FUN(__glewProgramUniformMatrix4x43x2dv)
+#define glProgramUniformMatrix4x43x2fv GLEW_GET_FUN(__glewProgramUniformMatrix4x43x2fv)
+#define glProgramUniformMatrix4x43x4dv GLEW_GET_FUN(__glewProgramUniformMatrix4x43x4dv)
+#define glProgramUniformMatrix4x43x4fv GLEW_GET_FUN(__glewProgramUniformMatrix4x43x4fv)
+#define glProgramUniformMatrix4x44dv GLEW_GET_FUN(__glewProgramUniformMatrix4x44dv)
+#define glProgramUniformMatrix4x44fv GLEW_GET_FUN(__glewProgramUniformMatrix4x44fv)
+#define glProgramUniformMatrix4x44x2dv GLEW_GET_FUN(__glewProgramUniformMatrix4x44x2dv)
+#define glProgramUniformMatrix4x44x2fv GLEW_GET_FUN(__glewProgramUniformMatrix4x44x2fv)
+#define glProgramUniformMatrix4x44x3dv GLEW_GET_FUN(__glewProgramUniformMatrix4x44x3dv)
+#define glProgramUniformMatrix4x44x3fv GLEW_GET_FUN(__glewProgramUniformMatrix4x44x3fv)
 #define glUseProgramStages GLEW_GET_FUN(__glewUseProgramStages)
 #define glValidateProgramPipeline GLEW_GET_FUN(__glewValidateProgramPipeline)
 
@@ -4469,9 +4469,9 @@ typedef void (GLAPIENTRY * PFNGLUNIFORM4FARBPROC) (GLint location, GLfloat v0, G
 typedef void (GLAPIENTRY * PFNGLUNIFORM4FVARBPROC) (GLint location, GLsizei count, const GLfloat* value);
 typedef void (GLAPIENTRY * PFNGLUNIFORM4IARBPROC) (GLint location, GLint v0, GLint v1, GLint v2, GLint v3);
 typedef void (GLAPIENTRY * PFNGLUNIFORM4IVARBPROC) (GLint location, GLsizei count, const GLint* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX2FVARBPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX3FVARBPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLUNIFORMMATRIX4FVARBPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x42FVARBPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLUNIFORMMatrix4x43FVARBPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNglUniformMatrix4fvARBPROC) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
 typedef void (GLAPIENTRY * PFNGLUSEPROGRAMOBJECTARBPROC) (GLhandleARB programObj);
 typedef void (GLAPIENTRY * PFNGLVALIDATEPROGRAMARBPROC) (GLhandleARB programObj);
 
@@ -4509,9 +4509,9 @@ typedef void (GLAPIENTRY * PFNGLVALIDATEPROGRAMARBPROC) (GLhandleARB programObj)
 #define glUniform4fvARB GLEW_GET_FUN(__glewUniform4fvARB)
 #define glUniform4iARB GLEW_GET_FUN(__glewUniform4iARB)
 #define glUniform4ivARB GLEW_GET_FUN(__glewUniform4ivARB)
-#define glUniformMatrix2fvARB GLEW_GET_FUN(__glewUniformMatrix2fvARB)
-#define glUniformMatrix3fvARB GLEW_GET_FUN(__glewUniformMatrix3fvARB)
-#define glUniformMatrix4fvARB GLEW_GET_FUN(__glewUniformMatrix4fvARB)
+#define glUniformMatrix4x42fvARB GLEW_GET_FUN(__glewUniformMatrix4x42fvARB)
+#define glUniformMatrix4x43fvARB GLEW_GET_FUN(__glewUniformMatrix4x43fvARB)
+#define glUniformMatrix4fvARB GLEW_GET_FUN(__glewUniformMatrix4x44fvARB)
 #define glUseProgramObjectARB GLEW_GET_FUN(__glewUseProgramObjectARB)
 #define glValidateProgramARB GLEW_GET_FUN(__glewValidateProgramARB)
 
@@ -5201,29 +5201,29 @@ typedef void (GLAPIENTRY * PFNGLGETQUERYINDEXEDIVPROC) (GLenum target, GLuint in
 
 #endif /* GL_ARB_transform_feedback3 */
 
-/* ------------------------ GL_ARB_transpose_matrix ------------------------ */
+/* ------------------------ GL_ARB_transpose_Matrix4x4 ------------------------ */
 
-#ifndef GL_ARB_transpose_matrix
-#define GL_ARB_transpose_matrix 1
+#ifndef GL_ARB_transpose_Matrix4x4
+#define GL_ARB_transpose_Matrix4x4 1
 
-#define GL_TRANSPOSE_MODELVIEW_MATRIX_ARB 0x84E3
-#define GL_TRANSPOSE_PROJECTION_MATRIX_ARB 0x84E4
-#define GL_TRANSPOSE_TEXTURE_MATRIX_ARB 0x84E5
-#define GL_TRANSPOSE_COLOR_MATRIX_ARB 0x84E6
+#define GL_TRANSPOSE_MODELVIEW_Matrix4x4_ARB 0x84E3
+#define GL_TRANSPOSE_PROJECTION_Matrix4x4_ARB 0x84E4
+#define GL_TRANSPOSE_TEXTURE_Matrix4x4_ARB 0x84E5
+#define GL_TRANSPOSE_COLOR_Matrix4x4_ARB 0x84E6
 
-typedef void (GLAPIENTRY * PFNGLLOADTRANSPOSEMATRIXDARBPROC) (GLdouble m[16]);
-typedef void (GLAPIENTRY * PFNGLLOADTRANSPOSEMATRIXFARBPROC) (GLfloat m[16]);
-typedef void (GLAPIENTRY * PFNGLMULTTRANSPOSEMATRIXDARBPROC) (GLdouble m[16]);
-typedef void (GLAPIENTRY * PFNGLMULTTRANSPOSEMATRIXFARBPROC) (GLfloat m[16]);
+typedef void (GLAPIENTRY * PFNGLLOADTRANSPOSEMatrix4x4DARBPROC) (GLdouble m[16]);
+typedef void (GLAPIENTRY * PFNGLLOADTRANSPOSEMatrix4x4FARBPROC) (GLfloat m[16]);
+typedef void (GLAPIENTRY * PFNGLMULTTRANSPOSEMatrix4x4DARBPROC) (GLdouble m[16]);
+typedef void (GLAPIENTRY * PFNGLMULTTRANSPOSEMatrix4x4FARBPROC) (GLfloat m[16]);
 
-#define glLoadTransposeMatrixdARB GLEW_GET_FUN(__glewLoadTransposeMatrixdARB)
-#define glLoadTransposeMatrixfARB GLEW_GET_FUN(__glewLoadTransposeMatrixfARB)
-#define glMultTransposeMatrixdARB GLEW_GET_FUN(__glewMultTransposeMatrixdARB)
-#define glMultTransposeMatrixfARB GLEW_GET_FUN(__glewMultTransposeMatrixfARB)
+#define glLoadTransposeMatrix4x4dARB GLEW_GET_FUN(__glewLoadTransposeMatrix4x4dARB)
+#define glLoadTransposeMatrix4x4fARB GLEW_GET_FUN(__glewLoadTransposeMatrix4x4fARB)
+#define glMultTransposeMatrix4x4dARB GLEW_GET_FUN(__glewMultTransposeMatrix4x4dARB)
+#define glMultTransposeMatrix4x4fARB GLEW_GET_FUN(__glewMultTransposeMatrix4x4fARB)
 
-#define GLEW_ARB_transpose_matrix GLEW_GET_VAR(__GLEW_ARB_transpose_matrix)
+#define GLEW_ARB_transpose_Matrix4x4 GLEW_GET_VAR(__GLEW_ARB_transpose_Matrix4x4)
 
-#endif /* GL_ARB_transpose_matrix */
+#endif /* GL_ARB_transpose_Matrix4x4 */
 
 /* ---------------------- GL_ARB_uniform_buffer_object --------------------- */
 
@@ -5252,7 +5252,7 @@ typedef void (GLAPIENTRY * PFNGLMULTTRANSPOSEMATRIXFARBPROC) (GLfloat m[16]);
 #define GL_UNIFORM_BLOCK_INDEX 0x8A3A
 #define GL_UNIFORM_OFFSET 0x8A3B
 #define GL_UNIFORM_ARRAY_STRIDE 0x8A3C
-#define GL_UNIFORM_MATRIX_STRIDE 0x8A3D
+#define GL_UNIFORM_Matrix4x4_STRIDE 0x8A3D
 #define GL_UNIFORM_IS_ROW_MAJOR 0x8A3E
 #define GL_UNIFORM_BLOCK_BINDING 0x8A3F
 #define GL_UNIFORM_BLOCK_DATA_SIZE 0x8A40
@@ -5516,10 +5516,10 @@ typedef GLboolean (GLAPIENTRY * PFNGLUNMAPBUFFERARBPROC) (GLenum target);
 #define GL_CURRENT_VERTEX_ATTRIB_ARB 0x8626
 #define GL_PROGRAM_LENGTH_ARB 0x8627
 #define GL_PROGRAM_STRING_ARB 0x8628
-#define GL_MAX_PROGRAM_MATRIX_STACK_DEPTH_ARB 0x862E
+#define GL_MAX_PROGRAM_Matrix4x4_STACK_DEPTH_ARB 0x862E
 #define GL_MAX_PROGRAM_MATRICES_ARB 0x862F
-#define GL_CURRENT_MATRIX_STACK_DEPTH_ARB 0x8640
-#define GL_CURRENT_MATRIX_ARB 0x8641
+#define GL_CURRENT_Matrix4x4_STACK_DEPTH_ARB 0x8640
+#define GL_CURRENT_Matrix4x4_ARB 0x8641
 #define GL_VERTEX_PROGRAM_POINT_SIZE_ARB 0x8642
 #define GL_VERTEX_PROGRAM_TWO_SIDE_ARB 0x8643
 #define GL_VERTEX_ATTRIB_ARRAY_POINTER_ARB 0x8645
@@ -5553,39 +5553,39 @@ typedef GLboolean (GLAPIENTRY * PFNGLUNMAPBUFFERARBPROC) (GLenum target);
 #define GL_MAX_PROGRAM_LOCAL_PARAMETERS_ARB 0x88B4
 #define GL_MAX_PROGRAM_ENV_PARAMETERS_ARB 0x88B5
 #define GL_PROGRAM_UNDER_NATIVE_LIMITS_ARB 0x88B6
-#define GL_TRANSPOSE_CURRENT_MATRIX_ARB 0x88B7
-#define GL_MATRIX0_ARB 0x88C0
-#define GL_MATRIX1_ARB 0x88C1
-#define GL_MATRIX2_ARB 0x88C2
-#define GL_MATRIX3_ARB 0x88C3
-#define GL_MATRIX4_ARB 0x88C4
-#define GL_MATRIX5_ARB 0x88C5
-#define GL_MATRIX6_ARB 0x88C6
-#define GL_MATRIX7_ARB 0x88C7
-#define GL_MATRIX8_ARB 0x88C8
-#define GL_MATRIX9_ARB 0x88C9
-#define GL_MATRIX10_ARB 0x88CA
-#define GL_MATRIX11_ARB 0x88CB
-#define GL_MATRIX12_ARB 0x88CC
-#define GL_MATRIX13_ARB 0x88CD
-#define GL_MATRIX14_ARB 0x88CE
-#define GL_MATRIX15_ARB 0x88CF
-#define GL_MATRIX16_ARB 0x88D0
-#define GL_MATRIX17_ARB 0x88D1
-#define GL_MATRIX18_ARB 0x88D2
-#define GL_MATRIX19_ARB 0x88D3
-#define GL_MATRIX20_ARB 0x88D4
-#define GL_MATRIX21_ARB 0x88D5
-#define GL_MATRIX22_ARB 0x88D6
-#define GL_MATRIX23_ARB 0x88D7
-#define GL_MATRIX24_ARB 0x88D8
-#define GL_MATRIX25_ARB 0x88D9
-#define GL_MATRIX26_ARB 0x88DA
-#define GL_MATRIX27_ARB 0x88DB
-#define GL_MATRIX28_ARB 0x88DC
-#define GL_MATRIX29_ARB 0x88DD
-#define GL_MATRIX30_ARB 0x88DE
-#define GL_MATRIX31_ARB 0x88DF
+#define GL_TRANSPOSE_CURRENT_Matrix4x4_ARB 0x88B7
+#define GL_Matrix4x40_ARB 0x88C0
+#define GL_Matrix4x41_ARB 0x88C1
+#define GL_Matrix4x42_ARB 0x88C2
+#define GL_Matrix4x43_ARB 0x88C3
+#define GL_Matrix4x44_ARB 0x88C4
+#define GL_Matrix4x45_ARB 0x88C5
+#define GL_Matrix4x46_ARB 0x88C6
+#define GL_Matrix4x47_ARB 0x88C7
+#define GL_Matrix4x48_ARB 0x88C8
+#define GL_Matrix4x49_ARB 0x88C9
+#define GL_Matrix4x410_ARB 0x88CA
+#define GL_Matrix4x411_ARB 0x88CB
+#define GL_Matrix4x412_ARB 0x88CC
+#define GL_Matrix4x413_ARB 0x88CD
+#define GL_Matrix4x414_ARB 0x88CE
+#define GL_Matrix4x415_ARB 0x88CF
+#define GL_Matrix4x416_ARB 0x88D0
+#define GL_Matrix4x417_ARB 0x88D1
+#define GL_Matrix4x418_ARB 0x88D2
+#define GL_Matrix4x419_ARB 0x88D3
+#define GL_Matrix4x420_ARB 0x88D4
+#define GL_Matrix4x421_ARB 0x88D5
+#define GL_Matrix4x422_ARB 0x88D6
+#define GL_Matrix4x423_ARB 0x88D7
+#define GL_Matrix4x424_ARB 0x88D8
+#define GL_Matrix4x425_ARB 0x88D9
+#define GL_Matrix4x426_ARB 0x88DA
+#define GL_Matrix4x427_ARB 0x88DB
+#define GL_Matrix4x428_ARB 0x88DC
+#define GL_Matrix4x429_ARB 0x88DD
+#define GL_Matrix4x430_ARB 0x88DE
+#define GL_Matrix4x431_ARB 0x88DF
 
 typedef void (GLAPIENTRY * PFNGLBINDPROGRAMARBPROC) (GLenum target, GLuint program);
 typedef void (GLAPIENTRY * PFNGLDELETEPROGRAMSARBPROC) (GLsizei n, const GLuint* programs);
@@ -6030,8 +6030,8 @@ typedef void (GLAPIENTRY * PFNGLELEMENTPOINTERATIPROC) (GLenum type, const void*
 #ifndef GL_ATI_envmap_bumpmap
 #define GL_ATI_envmap_bumpmap 1
 
-#define GL_BUMP_ROT_MATRIX_ATI 0x8775
-#define GL_BUMP_ROT_MATRIX_SIZE_ATI 0x8776
+#define GL_BUMP_ROT_Matrix4x4_ATI 0x8775
+#define GL_BUMP_ROT_Matrix4x4_SIZE_ATI 0x8776
 #define GL_BUMP_NUM_TEX_UNITS_ATI 0x8777
 #define GL_BUMP_TEX_UNITS_ATI 0x8778
 #define GL_DUDV_ATI 0x8779
@@ -6827,9 +6827,9 @@ typedef void (GLAPIENTRY * PFNGLDEPTHBOUNDSEXTPROC) (GLclampd zmin, GLclampd zma
 #ifndef GL_EXT_direct_state_access
 #define GL_EXT_direct_state_access 1
 
-#define GL_PROGRAM_MATRIX_EXT 0x8E2D
-#define GL_TRANSPOSE_PROGRAM_MATRIX_EXT 0x8E2E
-#define GL_PROGRAM_MATRIX_STACK_DEPTH_EXT 0x8E2F
+#define GL_PROGRAM_Matrix4x4_EXT 0x8E2D
+#define GL_TRANSPOSE_PROGRAM_Matrix4x4_EXT 0x8E2E
+#define GL_PROGRAM_Matrix4x4_STACK_DEPTH_EXT 0x8E2F
 
 typedef void (GLAPIENTRY * PFNGLBINDMULTITEXTUREEXTPROC) (GLenum texunit, GLenum target, GLuint texture);
 typedef GLenum (GLAPIENTRY * PFNGLCHECKNAMEDFRAMEBUFFERSTATUSEXTPROC) (GLuint framebuffer, GLenum target);
@@ -6915,25 +6915,25 @@ typedef void (GLAPIENTRY * PFNGLGETVERTEXARRAYPOINTERI_VEXTPROC) (GLuint vaobj, 
 typedef void (GLAPIENTRY * PFNGLGETVERTEXARRAYPOINTERVEXTPROC) (GLuint vaobj, GLenum pname, GLvoid** param);
 typedef GLvoid * (GLAPIENTRY * PFNGLMAPNAMEDBUFFEREXTPROC) (GLuint buffer, GLenum access);
 typedef GLvoid * (GLAPIENTRY * PFNGLMAPNAMEDBUFFERRANGEEXTPROC) (GLuint buffer, GLintptr offset, GLsizeiptr length, GLbitfield access);
-typedef void (GLAPIENTRY * PFNGLMATRIXFRUSTUMEXTPROC) (GLenum matrixMode, GLdouble l, GLdouble r, GLdouble b, GLdouble t, GLdouble n, GLdouble f);
-typedef void (GLAPIENTRY * PFNGLMATRIXLOADIDENTITYEXTPROC) (GLenum matrixMode);
-typedef void (GLAPIENTRY * PFNGLMATRIXLOADTRANSPOSEDEXTPROC) (GLenum matrixMode, const GLdouble* m);
-typedef void (GLAPIENTRY * PFNGLMATRIXLOADTRANSPOSEFEXTPROC) (GLenum matrixMode, const GLfloat* m);
-typedef void (GLAPIENTRY * PFNGLMATRIXLOADDEXTPROC) (GLenum matrixMode, const GLdouble* m);
-typedef void (GLAPIENTRY * PFNGLMATRIXLOADFEXTPROC) (GLenum matrixMode, const GLfloat* m);
-typedef void (GLAPIENTRY * PFNGLMATRIXMULTTRANSPOSEDEXTPROC) (GLenum matrixMode, const GLdouble* m);
-typedef void (GLAPIENTRY * PFNGLMATRIXMULTTRANSPOSEFEXTPROC) (GLenum matrixMode, const GLfloat* m);
-typedef void (GLAPIENTRY * PFNGLMATRIXMULTDEXTPROC) (GLenum matrixMode, const GLdouble* m);
-typedef void (GLAPIENTRY * PFNGLMATRIXMULTFEXTPROC) (GLenum matrixMode, const GLfloat* m);
-typedef void (GLAPIENTRY * PFNGLMATRIXORTHOEXTPROC) (GLenum matrixMode, GLdouble l, GLdouble r, GLdouble b, GLdouble t, GLdouble n, GLdouble f);
-typedef void (GLAPIENTRY * PFNGLMATRIXPOPEXTPROC) (GLenum matrixMode);
-typedef void (GLAPIENTRY * PFNGLMATRIXPUSHEXTPROC) (GLenum matrixMode);
-typedef void (GLAPIENTRY * PFNGLMATRIXROTATEDEXTPROC) (GLenum matrixMode, GLdouble angle, GLdouble x, GLdouble y, GLdouble z);
-typedef void (GLAPIENTRY * PFNGLMATRIXROTATEFEXTPROC) (GLenum matrixMode, GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
-typedef void (GLAPIENTRY * PFNGLMATRIXSCALEDEXTPROC) (GLenum matrixMode, GLdouble x, GLdouble y, GLdouble z);
-typedef void (GLAPIENTRY * PFNGLMATRIXSCALEFEXTPROC) (GLenum matrixMode, GLfloat x, GLfloat y, GLfloat z);
-typedef void (GLAPIENTRY * PFNGLMATRIXTRANSLATEDEXTPROC) (GLenum matrixMode, GLdouble x, GLdouble y, GLdouble z);
-typedef void (GLAPIENTRY * PFNGLMATRIXTRANSLATEFEXTPROC) (GLenum matrixMode, GLfloat x, GLfloat y, GLfloat z);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4FRUSTUMEXTPROC) (GLenum Matrix4x4Mode, GLdouble l, GLdouble r, GLdouble b, GLdouble t, GLdouble n, GLdouble f);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4LOADIDENTITYEXTPROC) (GLenum Matrix4x4Mode);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4LOADTRANSPOSEDEXTPROC) (GLenum Matrix4x4Mode, const GLdouble* m);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4LOADTRANSPOSEFEXTPROC) (GLenum Matrix4x4Mode, const GLfloat* m);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4LOADDEXTPROC) (GLenum Matrix4x4Mode, const GLdouble* m);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4LOADFEXTPROC) (GLenum Matrix4x4Mode, const GLfloat* m);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4MULTTRANSPOSEDEXTPROC) (GLenum Matrix4x4Mode, const GLdouble* m);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4MULTTRANSPOSEFEXTPROC) (GLenum Matrix4x4Mode, const GLfloat* m);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4MULTDEXTPROC) (GLenum Matrix4x4Mode, const GLdouble* m);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4MULTFEXTPROC) (GLenum Matrix4x4Mode, const GLfloat* m);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4ORTHOEXTPROC) (GLenum Matrix4x4Mode, GLdouble l, GLdouble r, GLdouble b, GLdouble t, GLdouble n, GLdouble f);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4POPEXTPROC) (GLenum Matrix4x4Mode);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4PUSHEXTPROC) (GLenum Matrix4x4Mode);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4ROTATEDEXTPROC) (GLenum Matrix4x4Mode, GLdouble angle, GLdouble x, GLdouble y, GLdouble z);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4ROTATEFEXTPROC) (GLenum Matrix4x4Mode, GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4SCALEDEXTPROC) (GLenum Matrix4x4Mode, GLdouble x, GLdouble y, GLdouble z);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4SCALEFEXTPROC) (GLenum Matrix4x4Mode, GLfloat x, GLfloat y, GLfloat z);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4TRANSLATEDEXTPROC) (GLenum Matrix4x4Mode, GLdouble x, GLdouble y, GLdouble z);
+typedef void (GLAPIENTRY * PFNGLMatrix4x4TRANSLATEFEXTPROC) (GLenum Matrix4x4Mode, GLfloat x, GLfloat y, GLfloat z);
 typedef void (GLAPIENTRY * PFNGLMULTITEXBUFFEREXTPROC) (GLenum texunit, GLenum target, GLenum internalformat, GLuint buffer);
 typedef void (GLAPIENTRY * PFNGLMULTITEXCOORDPOINTEREXTPROC) (GLenum texunit, GLint size, GLenum type, GLsizei stride, const void* pointer);
 typedef void (GLAPIENTRY * PFNGLMULTITEXENVFEXTPROC) (GLenum texunit, GLenum target, GLenum pname, GLfloat param);
@@ -7008,15 +7008,15 @@ typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM4IEXTPROC) (GLuint program, GLint 
 typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM4IVEXTPROC) (GLuint program, GLint location, GLsizei count, const GLint* value);
 typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM4UIEXTPROC) (GLuint program, GLint location, GLuint v0, GLuint v1, GLuint v2, GLuint v3);
 typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORM4UIVEXTPROC) (GLuint program, GLint location, GLsizei count, const GLuint* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2X3FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX2X4FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3X2FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX3X4FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4X2FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
-typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMATRIX4X3FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42X3FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x42X4FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43X2FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x43X4FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44X2FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+typedef void (GLAPIENTRY * PFNGLPROGRAMUNIFORMMatrix4x44X3FVEXTPROC) (GLuint program, GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
 typedef void (GLAPIENTRY * PFNGLPUSHCLIENTATTRIBDEFAULTEXTPROC) (GLbitfield mask);
 typedef void (GLAPIENTRY * PFNGLTEXTUREBUFFEREXTPROC) (GLuint texture, GLenum target, GLenum internalformat, GLuint buffer);
 typedef void (GLAPIENTRY * PFNGLTEXTUREIMAGE1DEXTPROC) (GLuint texture, GLenum target, GLint level, GLint internalformat, GLsizei width, GLint border, GLenum format, GLenum type, const void* pixels);
@@ -7129,25 +7129,25 @@ typedef void (GLAPIENTRY * PFNGLVERTEXARRAYVERTEXOFFSETEXTPROC) (GLuint vaobj, G
 #define glGetVertexArrayPointervEXT GLEW_GET_FUN(__glewGetVertexArrayPointervEXT)
 #define glMapNamedBufferEXT GLEW_GET_FUN(__glewMapNamedBufferEXT)
 #define glMapNamedBufferRangeEXT GLEW_GET_FUN(__glewMapNamedBufferRangeEXT)
-#define glMatrixFrustumEXT GLEW_GET_FUN(__glewMatrixFrustumEXT)
-#define glMatrixLoadIdentityEXT GLEW_GET_FUN(__glewMatrixLoadIdentityEXT)
-#define glMatrixLoadTransposedEXT GLEW_GET_FUN(__glewMatrixLoadTransposedEXT)
-#define glMatrixLoadTransposefEXT GLEW_GET_FUN(__glewMatrixLoadTransposefEXT)
-#define glMatrixLoaddEXT GLEW_GET_FUN(__glewMatrixLoaddEXT)
-#define glMatrixLoadfEXT GLEW_GET_FUN(__glewMatrixLoadfEXT)
-#define glMatrixMultTransposedEXT GLEW_GET_FUN(__glewMatrixMultTransposedEXT)
-#define glMatrixMultTransposefEXT GLEW_GET_FUN(__glewMatrixMultTransposefEXT)
-#define glMatrixMultdEXT GLEW_GET_FUN(__glewMatrixMultdEXT)
-#define glMatrixMultfEXT GLEW_GET_FUN(__glewMatrixMultfEXT)
-#define glMatrixOrthoEXT GLEW_GET_FUN(__glewMatrixOrthoEXT)
-#define glMatrixPopEXT GLEW_GET_FUN(__glewMatrixPopEXT)
-#define glMatrixPushEXT GLEW_GET_FUN(__glewMatrixPushEXT)
-#define glMatrixRotatedEXT GLEW_GET_FUN(__glewMatrixRotatedEXT)
-#define glMatrixRotatefEXT GLEW_GET_FUN(__glewMatrixRotatefEXT)
-#define glMatrixScaledEXT GLEW_GET_FUN(__glewMatrixScaledEXT)
-#define glMatrixScalefEXT GLEW_GET_FUN(__glewMatrixScalefEXT)
-#define glMatrixTranslatedEXT GLEW_GET_FUN(__glewMatrixTranslatedEXT)
-#define glMatrixTranslatefEXT GLEW_GET_FUN(__glewMatrixTranslatefEXT)
+#define glMatrix4x4FrustumEXT GLEW_GET_FUN(__glewMatrix4x4FrustumEXT)
+#define glMatrix4x4LoadIdentityEXT GLEW_GET_FUN(__glewMatrix4x4LoadIdentityEXT)
+#define glMatrix4x4LoadTransposedEXT GLEW_GET_FUN(__glewMatrix4x4LoadTransposedEXT)
+#define glMatrix4x4LoadTransposefEXT GLEW_GET_FUN(__glewMatrix4x4LoadTransposefEXT)
+#define glMatrix4x4LoaddEXT GLEW_GET_FUN(__glewMatrix4x4LoaddEXT)
+#define glMatrix4x4LoadfEXT GLEW_GET_FUN(__glewMatrix4x4LoadfEXT)
+#define glMatrix4x4MultTransposedEXT GLEW_GET_FUN(__glewMatrix4x4MultTransposedEXT)
+#define glMatrix4x4MultTransposefEXT GLEW_GET_FUN(__glewMatrix4x4MultTransposefEXT)
+#define glMatrix4x4MultdEXT GLEW_GET_FUN(__glewMatrix4x4MultdEXT)
+#define glMatrix4x4MultfEXT GLEW_GET_FUN(__glewMatrix4x4MultfEXT)
+#define glMatrix4x4OrthoEXT GLEW_GET_FUN(__glewMatrix4x4OrthoEXT)
+#define glMatrix4x4PopEXT GLEW_GET_FUN(__glewMatrix4x4PopEXT)
+#define glMatrix4x4PushEXT GLEW_GET_FUN(__glewMatrix4x4PushEXT)
+#define glMatrix4x4RotatedEXT GLEW_GET_FUN(__glewMatrix4x4RotatedEXT)
+#define glMatrix4x4RotatefEXT GLEW_GET_FUN(__glewMatrix4x4RotatefEXT)
+#define glMatrix4x4ScaledEXT GLEW_GET_FUN(__glewMatrix4x4ScaledEXT)
+#define glMatrix4x4ScalefEXT GLEW_GET_FUN(__glewMatrix4x4ScalefEXT)
+#define glMatrix4x4TranslatedEXT GLEW_GET_FUN(__glewMatrix4x4TranslatedEXT)
+#define glMatrix4x4TranslatefEXT GLEW_GET_FUN(__glewMatrix4x4TranslatefEXT)
 #define glMultiTexBufferEXT GLEW_GET_FUN(__glewMultiTexBufferEXT)
 #define glMultiTexCoordPointerEXT GLEW_GET_FUN(__glewMultiTexCoordPointerEXT)
 #define glMultiTexEnvfEXT GLEW_GET_FUN(__glewMultiTexEnvfEXT)
@@ -7222,15 +7222,15 @@ typedef void (GLAPIENTRY * PFNGLVERTEXARRAYVERTEXOFFSETEXTPROC) (GLuint vaobj, G
 #define glProgramUniform4ivEXT GLEW_GET_FUN(__glewProgramUniform4ivEXT)
 #define glProgramUniform4uiEXT GLEW_GET_FUN(__glewProgramUniform4uiEXT)
 #define glProgramUniform4uivEXT GLEW_GET_FUN(__glewProgramUniform4uivEXT)
-#define glProgramUniformMatrix2fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix2fvEXT)
-#define glProgramUniformMatrix2x3fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix2x3fvEXT)
-#define glProgramUniformMatrix2x4fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix2x4fvEXT)
-#define glProgramUniformMatrix3fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix3fvEXT)
-#define glProgramUniformMatrix3x2fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix3x2fvEXT)
-#define glProgramUniformMatrix3x4fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix3x4fvEXT)
-#define glProgramUniformMatrix4fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4fvEXT)
-#define glProgramUniformMatrix4x2fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x2fvEXT)
-#define glProgramUniformMatrix4x3fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x3fvEXT)
+#define glProgramUniformMatrix4x42fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x42fvEXT)
+#define glProgramUniformMatrix4x42x3fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x42x3fvEXT)
+#define glProgramUniformMatrix4x42x4fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x42x4fvEXT)
+#define glProgramUniformMatrix4x43fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x43fvEXT)
+#define glProgramUniformMatrix4x43x2fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x43x2fvEXT)
+#define glProgramUniformMatrix4x43x4fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x43x4fvEXT)
+#define glProgramUniformMatrix4x44fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x44fvEXT)
+#define glProgramUniformMatrix4x44x2fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x44x2fvEXT)
+#define glProgramUniformMatrix4x44x3fvEXT GLEW_GET_FUN(__glewProgramUniformMatrix4x44x3fvEXT)
 #define glPushClientAttribDefaultEXT GLEW_GET_FUN(__glewPushClientAttribDefaultEXT)
 #define glTextureBufferEXT GLEW_GET_FUN(__glewTextureBufferEXT)
 #define glTextureImage1DEXT GLEW_GET_FUN(__glewTextureImage1DEXT)
@@ -8000,7 +8000,7 @@ typedef void (GLAPIENTRY * PFNGLGETCOLORTABLEPARAMETERIVEXTPROC) (GLenum target,
 #define GL_AVERAGE_EXT 0x8335
 #define GL_PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT 0x8336
 #define GL_MAX_PIXEL_TRANSFORM_2D_STACK_DEPTH_EXT 0x8337
-#define GL_PIXEL_TRANSFORM_2D_MATRIX_EXT 0x8338
+#define GL_PIXEL_TRANSFORM_2D_Matrix4x4_EXT 0x8338
 
 typedef void (GLAPIENTRY * PFNGLGETPIXELTRANSFORMPARAMETERFVEXTPROC) (GLenum target, GLenum pname, const GLfloat* params);
 typedef void (GLAPIENTRY * PFNGLGETPIXELTRANSFORMPARAMETERIVEXTPROC) (GLenum target, GLenum pname, const GLint* params);
@@ -9071,7 +9071,7 @@ typedef void (GLAPIENTRY * PFNGLVERTEXATTRIBLPOINTEREXTPROC) (GLuint index, GLin
 #define GL_OP_RECIP_SQRT_EXT 0x8795
 #define GL_OP_SUB_EXT 0x8796
 #define GL_OP_CROSS_PRODUCT_EXT 0x8797
-#define GL_OP_MULTIPLY_MATRIX_EXT 0x8798
+#define GL_OP_MULTIPLY_Matrix4x4_EXT 0x8798
 #define GL_OP_MOV_EXT 0x8799
 #define GL_OUTPUT_VERTEX_EXT 0x879A
 #define GL_OUTPUT_COLOR0_EXT 0x879B
@@ -9111,7 +9111,7 @@ typedef void (GLAPIENTRY * PFNGLVERTEXATTRIBLPOINTEREXTPROC) (GLuint index, GLin
 #define GL_OUTPUT_FOG_EXT 0x87BD
 #define GL_SCALAR_EXT 0x87BE
 #define GL_VECTOR_EXT 0x87BF
-#define GL_MATRIX_EXT 0x87C0
+#define GL_Matrix4x4_EXT 0x87C0
 #define GL_VARIANT_EXT 0x87C1
 #define GL_INVARIANT_EXT 0x87C2
 #define GL_LOCAL_CONSTANT_EXT 0x87C3
@@ -9146,7 +9146,7 @@ typedef void (GLAPIENTRY * PFNGLVERTEXATTRIBLPOINTEREXTPROC) (GLuint index, GLin
 #define GL_NORMALIZED_RANGE_EXT 0x87E0
 #define GL_FULL_RANGE_EXT 0x87E1
 #define GL_CURRENT_VERTEX_EXT 0x87E2
-#define GL_MVP_MATRIX_EXT 0x87E3
+#define GL_MVP_Matrix4x4_EXT 0x87E3
 #define GL_VARIANT_VALUE_EXT 0x87E4
 #define GL_VARIANT_DATATYPE_EXT 0x87E5
 #define GL_VARIANT_ARRAY_STRIDE_EXT 0x87E6
@@ -9254,10 +9254,10 @@ typedef void (GLAPIENTRY * PFNGLWRITEMASKEXTPROC) (GLuint res, GLuint in, GLenum
 #define GL_EXT_vertex_weighting 1
 
 #define GL_MODELVIEW0_STACK_DEPTH_EXT 0x0BA3
-#define GL_MODELVIEW0_MATRIX_EXT 0x0BA6
+#define GL_MODELVIEW0_Matrix4x4_EXT 0x0BA6
 #define GL_MODELVIEW0_EXT 0x1700
 #define GL_MODELVIEW1_STACK_DEPTH_EXT 0x8502
-#define GL_MODELVIEW1_MATRIX_EXT 0x8506
+#define GL_MODELVIEW1_Matrix4x4_EXT 0x8506
 #define GL_VERTEX_WEIGHTING_EXT 0x8509
 #define GL_MODELVIEW1_EXT 0x850A
 #define GL_CURRENT_VERTEX_WEIGHT_EXT 0x850B
@@ -10789,8 +10789,8 @@ typedef void (GLAPIENTRY * PFNGLTEXTUREBARRIERNVPROC) (void);
 #define GL_TEXTURE_SHADER_NV 0x86DE
 #define GL_SHADER_OPERATION_NV 0x86DF
 #define GL_CULL_MODES_NV 0x86E0
-#define GL_OFFSET_TEXTURE_2D_MATRIX_NV 0x86E1
-#define GL_OFFSET_TEXTURE_MATRIX_NV 0x86E1
+#define GL_OFFSET_TEXTURE_2D_Matrix4x4_NV 0x86E1
+#define GL_OFFSET_TEXTURE_Matrix4x4_NV 0x86E1
 #define GL_OFFSET_TEXTURE_2D_SCALE_NV 0x86E2
 #define GL_OFFSET_TEXTURE_SCALE_NV 0x86E2
 #define GL_OFFSET_TEXTURE_BIAS_NV 0x86E3
@@ -11211,26 +11211,26 @@ typedef void (GLAPIENTRY * PFNGLVERTEXFORMATNVPROC) (GLint size, GLenum type, GL
 #define GL_INVERSE_NV 0x862B
 #define GL_TRANSPOSE_NV 0x862C
 #define GL_INVERSE_TRANSPOSE_NV 0x862D
-#define GL_MAX_TRACK_MATRIX_STACK_DEPTH_NV 0x862E
+#define GL_MAX_TRACK_Matrix4x4_STACK_DEPTH_NV 0x862E
 #define GL_MAX_TRACK_MATRICES_NV 0x862F
-#define GL_MATRIX0_NV 0x8630
-#define GL_MATRIX1_NV 0x8631
-#define GL_MATRIX2_NV 0x8632
-#define GL_MATRIX3_NV 0x8633
-#define GL_MATRIX4_NV 0x8634
-#define GL_MATRIX5_NV 0x8635
-#define GL_MATRIX6_NV 0x8636
-#define GL_MATRIX7_NV 0x8637
-#define GL_CURRENT_MATRIX_STACK_DEPTH_NV 0x8640
-#define GL_CURRENT_MATRIX_NV 0x8641
+#define GL_Matrix4x40_NV 0x8630
+#define GL_Matrix4x41_NV 0x8631
+#define GL_Matrix4x42_NV 0x8632
+#define GL_Matrix4x43_NV 0x8633
+#define GL_Matrix4x44_NV 0x8634
+#define GL_Matrix4x45_NV 0x8635
+#define GL_Matrix4x46_NV 0x8636
+#define GL_Matrix4x47_NV 0x8637
+#define GL_CURRENT_Matrix4x4_STACK_DEPTH_NV 0x8640
+#define GL_CURRENT_Matrix4x4_NV 0x8641
 #define GL_VERTEX_PROGRAM_POINT_SIZE_NV 0x8642
 #define GL_VERTEX_PROGRAM_TWO_SIDE_NV 0x8643
 #define GL_PROGRAM_PARAMETER_NV 0x8644
 #define GL_ATTRIB_ARRAY_POINTER_NV 0x8645
 #define GL_PROGRAM_TARGET_NV 0x8646
 #define GL_PROGRAM_RESIDENT_NV 0x8647
-#define GL_TRACK_MATRIX_NV 0x8648
-#define GL_TRACK_MATRIX_TRANSFORM_NV 0x8649
+#define GL_TRACK_Matrix4x4_NV 0x8648
+#define GL_TRACK_Matrix4x4_TRANSFORM_NV 0x8649
 #define GL_VERTEX_PROGRAM_BINDING_NV 0x864A
 #define GL_PROGRAM_ERROR_POSITION_NV 0x864B
 #define GL_VERTEX_ATTRIB_ARRAY0_NV 0x8650
@@ -11291,7 +11291,7 @@ typedef void (GLAPIENTRY * PFNGLGETPROGRAMPARAMETERDVNVPROC) (GLenum target, GLu
 typedef void (GLAPIENTRY * PFNGLGETPROGRAMPARAMETERFVNVPROC) (GLenum target, GLuint index, GLenum pname, GLfloat* params);
 typedef void (GLAPIENTRY * PFNGLGETPROGRAMSTRINGNVPROC) (GLuint id, GLenum pname, GLubyte* program);
 typedef void (GLAPIENTRY * PFNGLGETPROGRAMIVNVPROC) (GLuint id, GLenum pname, GLint* params);
-typedef void (GLAPIENTRY * PFNGLGETTRACKMATRIXIVNVPROC) (GLenum target, GLuint address, GLenum pname, GLint* params);
+typedef void (GLAPIENTRY * PFNGLGETTRACKMatrix4x4IVNVPROC) (GLenum target, GLuint address, GLenum pname, GLint* params);
 typedef void (GLAPIENTRY * PFNGLGETVERTEXATTRIBPOINTERVNVPROC) (GLuint index, GLenum pname, GLvoid** pointer);
 typedef void (GLAPIENTRY * PFNGLGETVERTEXATTRIBDVNVPROC) (GLuint index, GLenum pname, GLdouble* params);
 typedef void (GLAPIENTRY * PFNGLGETVERTEXATTRIBFVNVPROC) (GLuint index, GLenum pname, GLfloat* params);
@@ -11305,7 +11305,7 @@ typedef void (GLAPIENTRY * PFNGLPROGRAMPARAMETER4FVNVPROC) (GLenum target, GLuin
 typedef void (GLAPIENTRY * PFNGLPROGRAMPARAMETERS4DVNVPROC) (GLenum target, GLuint index, GLsizei num, const GLdouble* params);
 typedef void (GLAPIENTRY * PFNGLPROGRAMPARAMETERS4FVNVPROC) (GLenum target, GLuint index, GLsizei num, const GLfloat* params);
 typedef void (GLAPIENTRY * PFNGLREQUESTRESIDENTPROGRAMSNVPROC) (GLsizei n, GLuint* ids);
-typedef void (GLAPIENTRY * PFNGLTRACKMATRIXNVPROC) (GLenum target, GLuint address, GLenum matrix, GLenum transform);
+typedef void (GLAPIENTRY * PFNGLTRACKMatrix4x4NVPROC) (GLenum target, GLuint address, GLenum Matrix4x4, GLenum transform);
 typedef void (GLAPIENTRY * PFNGLVERTEXATTRIB1DNVPROC) (GLuint index, GLdouble x);
 typedef void (GLAPIENTRY * PFNGLVERTEXATTRIB1DVNVPROC) (GLuint index, const GLdouble* v);
 typedef void (GLAPIENTRY * PFNGLVERTEXATTRIB1FNVPROC) (GLuint index, GLfloat x);
@@ -11356,7 +11356,7 @@ typedef void (GLAPIENTRY * PFNGLVERTEXATTRIBS4UBVNVPROC) (GLuint index, GLsizei 
 #define glGetProgramParameterfvNV GLEW_GET_FUN(__glewGetProgramParameterfvNV)
 #define glGetProgramStringNV GLEW_GET_FUN(__glewGetProgramStringNV)
 #define glGetProgramivNV GLEW_GET_FUN(__glewGetProgramivNV)
-#define glGetTrackMatrixivNV GLEW_GET_FUN(__glewGetTrackMatrixivNV)
+#define glGetTrackMatrix4x4ivNV GLEW_GET_FUN(__glewGetTrackMatrix4x4ivNV)
 #define glGetVertexAttribPointervNV GLEW_GET_FUN(__glewGetVertexAttribPointervNV)
 #define glGetVertexAttribdvNV GLEW_GET_FUN(__glewGetVertexAttribdvNV)
 #define glGetVertexAttribfvNV GLEW_GET_FUN(__glewGetVertexAttribfvNV)
@@ -11370,7 +11370,7 @@ typedef void (GLAPIENTRY * PFNGLVERTEXATTRIBS4UBVNVPROC) (GLuint index, GLsizei 
 #define glProgramParameters4dvNV GLEW_GET_FUN(__glewProgramParameters4dvNV)
 #define glProgramParameters4fvNV GLEW_GET_FUN(__glewProgramParameters4fvNV)
 #define glRequestResidentProgramsNV GLEW_GET_FUN(__glewRequestResidentProgramsNV)
-#define glTrackMatrixNV GLEW_GET_FUN(__glewTrackMatrixNV)
+#define glTrackMatrix4x4NV GLEW_GET_FUN(__glewTrackMatrix4x4NV)
 #define glVertexAttrib1dNV GLEW_GET_FUN(__glewVertexAttrib1dNV)
 #define glVertexAttrib1dvNV GLEW_GET_FUN(__glewVertexAttrib1dvNV)
 #define glVertexAttrib1fNV GLEW_GET_FUN(__glewVertexAttrib1fNV)
@@ -12336,26 +12336,26 @@ typedef void (GLAPIENTRY * PFNGLTAGSAMPLEBUFFERSGIXPROC) (void);
 
 #endif /* GL_SGIX_ycrcb */
 
-/* -------------------------- GL_SGI_color_matrix -------------------------- */
+/* -------------------------- GL_SGI_color_Matrix4x4 -------------------------- */
 
-#ifndef GL_SGI_color_matrix
-#define GL_SGI_color_matrix 1
+#ifndef GL_SGI_color_Matrix4x4
+#define GL_SGI_color_Matrix4x4 1
 
-#define GL_COLOR_MATRIX_SGI 0x80B1
-#define GL_COLOR_MATRIX_STACK_DEPTH_SGI 0x80B2
-#define GL_MAX_COLOR_MATRIX_STACK_DEPTH_SGI 0x80B3
-#define GL_POST_COLOR_MATRIX_RED_SCALE_SGI 0x80B4
-#define GL_POST_COLOR_MATRIX_GREEN_SCALE_SGI 0x80B5
-#define GL_POST_COLOR_MATRIX_BLUE_SCALE_SGI 0x80B6
-#define GL_POST_COLOR_MATRIX_ALPHA_SCALE_SGI 0x80B7
-#define GL_POST_COLOR_MATRIX_RED_BIAS_SGI 0x80B8
-#define GL_POST_COLOR_MATRIX_GREEN_BIAS_SGI 0x80B9
-#define GL_POST_COLOR_MATRIX_BLUE_BIAS_SGI 0x80BA
-#define GL_POST_COLOR_MATRIX_ALPHA_BIAS_SGI 0x80BB
+#define GL_COLOR_Matrix4x4_SGI 0x80B1
+#define GL_COLOR_Matrix4x4_STACK_DEPTH_SGI 0x80B2
+#define GL_MAX_COLOR_Matrix4x4_STACK_DEPTH_SGI 0x80B3
+#define GL_POST_COLOR_Matrix4x4_RED_SCALE_SGI 0x80B4
+#define GL_POST_COLOR_Matrix4x4_GREEN_SCALE_SGI 0x80B5
+#define GL_POST_COLOR_Matrix4x4_BLUE_SCALE_SGI 0x80B6
+#define GL_POST_COLOR_Matrix4x4_ALPHA_SCALE_SGI 0x80B7
+#define GL_POST_COLOR_Matrix4x4_RED_BIAS_SGI 0x80B8
+#define GL_POST_COLOR_Matrix4x4_GREEN_BIAS_SGI 0x80B9
+#define GL_POST_COLOR_Matrix4x4_BLUE_BIAS_SGI 0x80BA
+#define GL_POST_COLOR_Matrix4x4_ALPHA_BIAS_SGI 0x80BB
 
-#define GLEW_SGI_color_matrix GLEW_GET_VAR(__GLEW_SGI_color_matrix)
+#define GLEW_SGI_color_Matrix4x4 GLEW_GET_VAR(__GLEW_SGI_color_Matrix4x4)
 
-#endif /* GL_SGI_color_matrix */
+#endif /* GL_SGI_color_Matrix4x4 */
 
 /* --------------------------- GL_SGI_color_table -------------------------- */
 
@@ -12364,10 +12364,10 @@ typedef void (GLAPIENTRY * PFNGLTAGSAMPLEBUFFERSGIXPROC) (void);
 
 #define GL_COLOR_TABLE_SGI 0x80D0
 #define GL_POST_CONVOLUTION_COLOR_TABLE_SGI 0x80D1
-#define GL_POST_COLOR_MATRIX_COLOR_TABLE_SGI 0x80D2
+#define GL_POST_COLOR_Matrix4x4_COLOR_TABLE_SGI 0x80D2
 #define GL_PROXY_COLOR_TABLE_SGI 0x80D3
 #define GL_PROXY_POST_CONVOLUTION_COLOR_TABLE_SGI 0x80D4
-#define GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE_SGI 0x80D5
+#define GL_PROXY_POST_COLOR_Matrix4x4_COLOR_TABLE_SGI 0x80D5
 #define GL_COLOR_TABLE_SCALE_SGI 0x80D6
 #define GL_COLOR_TABLE_BIAS_SGI 0x80D7
 #define GL_COLOR_TABLE_FORMAT_SGI 0x80D8
@@ -12707,10 +12707,10 @@ GLEW_FUN_EXPORT PFNGLCOMPRESSEDTEXSUBIMAGE1DPROC __glewCompressedTexSubImage1D;
 GLEW_FUN_EXPORT PFNGLCOMPRESSEDTEXSUBIMAGE2DPROC __glewCompressedTexSubImage2D;
 GLEW_FUN_EXPORT PFNGLCOMPRESSEDTEXSUBIMAGE3DPROC __glewCompressedTexSubImage3D;
 GLEW_FUN_EXPORT PFNGLGETCOMPRESSEDTEXIMAGEPROC __glewGetCompressedTexImage;
-GLEW_FUN_EXPORT PFNGLLOADTRANSPOSEMATRIXDPROC __glewLoadTransposeMatrixd;
-GLEW_FUN_EXPORT PFNGLLOADTRANSPOSEMATRIXFPROC __glewLoadTransposeMatrixf;
-GLEW_FUN_EXPORT PFNGLMULTTRANSPOSEMATRIXDPROC __glewMultTransposeMatrixd;
-GLEW_FUN_EXPORT PFNGLMULTTRANSPOSEMATRIXFPROC __glewMultTransposeMatrixf;
+GLEW_FUN_EXPORT PFNGLLOADTRANSPOSEMatrix4x4DPROC __glewLoadTransposeMatrix4x4d;
+GLEW_FUN_EXPORT PFNGLLOADTRANSPOSEMatrix4x4FPROC __glewLoadTransposeMatrix4x4f;
+GLEW_FUN_EXPORT PFNGLMULTTRANSPOSEMatrix4x4DPROC __glewMultTransposeMatrix4x4d;
+GLEW_FUN_EXPORT PFNGLMULTTRANSPOSEMatrix4x4FPROC __glewMultTransposeMatrix4x4f;
 GLEW_FUN_EXPORT PFNGLMULTITEXCOORD1DPROC __glewMultiTexCoord1d;
 GLEW_FUN_EXPORT PFNGLMULTITEXCOORD1DVPROC __glewMultiTexCoord1dv;
 GLEW_FUN_EXPORT PFNGLMULTITEXCOORD1FPROC __glewMultiTexCoord1f;
@@ -12864,9 +12864,9 @@ GLEW_FUN_EXPORT PFNGLUNIFORM4FPROC __glewUniform4f;
 GLEW_FUN_EXPORT PFNGLUNIFORM4FVPROC __glewUniform4fv;
 GLEW_FUN_EXPORT PFNGLUNIFORM4IPROC __glewUniform4i;
 GLEW_FUN_EXPORT PFNGLUNIFORM4IVPROC __glewUniform4iv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX2FVPROC __glewUniformMatrix2fv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX3FVPROC __glewUniformMatrix3fv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX4FVPROC __glewUniformMatrix4fv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x42FVPROC __glewUniformMatrix4x42fv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x43FVPROC __glewUniformMatrix4x43fv;
+GLEW_FUN_EXPORT PFNglUniformMatrix4fvPROC __glewUniformMatrix4x44fv;
 GLEW_FUN_EXPORT PFNGLUSEPROGRAMPROC __glewUseProgram;
 GLEW_FUN_EXPORT PFNGLVALIDATEPROGRAMPROC __glewValidateProgram;
 GLEW_FUN_EXPORT PFNGLVERTEXATTRIB1DPROC __glewVertexAttrib1d;
@@ -12907,12 +12907,12 @@ GLEW_FUN_EXPORT PFNGLVERTEXATTRIB4UIVPROC __glewVertexAttrib4uiv;
 GLEW_FUN_EXPORT PFNGLVERTEXATTRIB4USVPROC __glewVertexAttrib4usv;
 GLEW_FUN_EXPORT PFNGLVERTEXATTRIBPOINTERPROC __glewVertexAttribPointer;
 
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX2X3FVPROC __glewUniformMatrix2x3fv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX2X4FVPROC __glewUniformMatrix2x4fv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX3X2FVPROC __glewUniformMatrix3x2fv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX3X4FVPROC __glewUniformMatrix3x4fv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX4X2FVPROC __glewUniformMatrix4x2fv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX4X3FVPROC __glewUniformMatrix4x3fv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x42X3FVPROC __glewUniformMatrix4x42x3fv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x42X4FVPROC __glewUniformMatrix4x42x4fv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x43X2FVPROC __glewUniformMatrix4x43x2fv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x43X4FVPROC __glewUniformMatrix4x43x4fv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x44X2FVPROC __glewUniformMatrix4x44x2fv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x44X3FVPROC __glewUniformMatrix4x44x3fv;
 
 GLEW_FUN_EXPORT PFNGLBEGINCONDITIONALRENDERPROC __glewBeginConditionalRender;
 GLEW_FUN_EXPORT PFNGLBEGINTRANSFORMFEEDBACKPROC __glewBeginTransformFeedback;
@@ -13137,15 +13137,15 @@ GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM3DEXTPROC __glewProgramUniform3dEXT;
 GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM3DVEXTPROC __glewProgramUniform3dvEXT;
 GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM4DEXTPROC __glewProgramUniform4dEXT;
 GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM4DVEXTPROC __glewProgramUniform4dvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2DVEXTPROC __glewProgramUniformMatrix2dvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2X3DVEXTPROC __glewProgramUniformMatrix2x3dvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2X4DVEXTPROC __glewProgramUniformMatrix2x4dvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3DVEXTPROC __glewProgramUniformMatrix3dvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3X2DVEXTPROC __glewProgramUniformMatrix3x2dvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3X4DVEXTPROC __glewProgramUniformMatrix3x4dvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4DVEXTPROC __glewProgramUniformMatrix4dvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4X2DVEXTPROC __glewProgramUniformMatrix4x2dvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4X3DVEXTPROC __glewProgramUniformMatrix4x3dvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42DVEXTPROC __glewProgramUniformMatrix4x42dvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42X3DVEXTPROC __glewProgramUniformMatrix4x42x3dvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42X4DVEXTPROC __glewProgramUniformMatrix4x42x4dvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43DVEXTPROC __glewProgramUniformMatrix4x43dvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43X2DVEXTPROC __glewProgramUniformMatrix4x43x2dvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43X4DVEXTPROC __glewProgramUniformMatrix4x43x4dvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44DVEXTPROC __glewProgramUniformMatrix4x44dvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44X2DVEXTPROC __glewProgramUniformMatrix4x44x2dvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44X3DVEXTPROC __glewProgramUniformMatrix4x44x3dvEXT;
 GLEW_FUN_EXPORT PFNGLUNIFORM1DPROC __glewUniform1d;
 GLEW_FUN_EXPORT PFNGLUNIFORM1DVPROC __glewUniform1dv;
 GLEW_FUN_EXPORT PFNGLUNIFORM2DPROC __glewUniform2d;
@@ -13154,15 +13154,15 @@ GLEW_FUN_EXPORT PFNGLUNIFORM3DPROC __glewUniform3d;
 GLEW_FUN_EXPORT PFNGLUNIFORM3DVPROC __glewUniform3dv;
 GLEW_FUN_EXPORT PFNGLUNIFORM4DPROC __glewUniform4d;
 GLEW_FUN_EXPORT PFNGLUNIFORM4DVPROC __glewUniform4dv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX2DVPROC __glewUniformMatrix2dv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX2X3DVPROC __glewUniformMatrix2x3dv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX2X4DVPROC __glewUniformMatrix2x4dv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX3DVPROC __glewUniformMatrix3dv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX3X2DVPROC __glewUniformMatrix3x2dv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX3X4DVPROC __glewUniformMatrix3x4dv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX4DVPROC __glewUniformMatrix4dv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX4X2DVPROC __glewUniformMatrix4x2dv;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX4X3DVPROC __glewUniformMatrix4x3dv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x42DVPROC __glewUniformMatrix4x42dv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x42X3DVPROC __glewUniformMatrix4x42x3dv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x42X4DVPROC __glewUniformMatrix4x42x4dv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x43DVPROC __glewUniformMatrix4x43dv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x43X2DVPROC __glewUniformMatrix4x43x2dv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x43X4DVPROC __glewUniformMatrix4x43x4dv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x44DVPROC __glewUniformMatrix4x44dv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x44X2DVPROC __glewUniformMatrix4x44x2dv;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x44X3DVPROC __glewUniformMatrix4x44x3dv;
 
 GLEW_FUN_EXPORT PFNGLCOLORSUBTABLEPROC __glewColorSubTable;
 GLEW_FUN_EXPORT PFNGLCOLORTABLEPROC __glewColorTable;
@@ -13202,11 +13202,11 @@ GLEW_FUN_EXPORT PFNGLVERTEXATTRIBDIVISORARBPROC __glewVertexAttribDivisorARB;
 GLEW_FUN_EXPORT PFNGLFLUSHMAPPEDBUFFERRANGEPROC __glewFlushMappedBufferRange;
 GLEW_FUN_EXPORT PFNGLMAPBUFFERRANGEPROC __glewMapBufferRange;
 
-GLEW_FUN_EXPORT PFNGLCURRENTPALETTEMATRIXARBPROC __glewCurrentPaletteMatrixARB;
-GLEW_FUN_EXPORT PFNGLMATRIXINDEXPOINTERARBPROC __glewMatrixIndexPointerARB;
-GLEW_FUN_EXPORT PFNGLMATRIXINDEXUBVARBPROC __glewMatrixIndexubvARB;
-GLEW_FUN_EXPORT PFNGLMATRIXINDEXUIVARBPROC __glewMatrixIndexuivARB;
-GLEW_FUN_EXPORT PFNGLMATRIXINDEXUSVARBPROC __glewMatrixIndexusvARB;
+GLEW_FUN_EXPORT PFNGLCURRENTPALETTEMatrix4x4ARBPROC __glewCurrentPaletteMatrix4x4ARB;
+GLEW_FUN_EXPORT PFNGLMatrix4x4INDEXPOINTERARBPROC __glewMatrix4x4IndexPointerARB;
+GLEW_FUN_EXPORT PFNGLMatrix4x4INDEXUBVARBPROC __glewMatrix4x4IndexubvARB;
+GLEW_FUN_EXPORT PFNGLMatrix4x4INDEXUIVARBPROC __glewMatrix4x4IndexuivARB;
+GLEW_FUN_EXPORT PFNGLMatrix4x4INDEXUSVARBPROC __glewMatrix4x4IndexusvARB;
 
 GLEW_FUN_EXPORT PFNGLSAMPLECOVERAGEARBPROC __glewSampleCoverageARB;
 
@@ -13336,24 +13336,24 @@ GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM4IPROC __glewProgramUniform4i;
 GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM4IVPROC __glewProgramUniform4iv;
 GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM4UIPROC __glewProgramUniform4ui;
 GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM4UIVPROC __glewProgramUniform4uiv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2DVPROC __glewProgramUniformMatrix2dv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2FVPROC __glewProgramUniformMatrix2fv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2X3DVPROC __glewProgramUniformMatrix2x3dv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2X3FVPROC __glewProgramUniformMatrix2x3fv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2X4DVPROC __glewProgramUniformMatrix2x4dv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2X4FVPROC __glewProgramUniformMatrix2x4fv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3DVPROC __glewProgramUniformMatrix3dv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3FVPROC __glewProgramUniformMatrix3fv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3X2DVPROC __glewProgramUniformMatrix3x2dv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3X2FVPROC __glewProgramUniformMatrix3x2fv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3X4DVPROC __glewProgramUniformMatrix3x4dv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3X4FVPROC __glewProgramUniformMatrix3x4fv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4DVPROC __glewProgramUniformMatrix4dv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4FVPROC __glewProgramUniformMatrix4fv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4X2DVPROC __glewProgramUniformMatrix4x2dv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4X2FVPROC __glewProgramUniformMatrix4x2fv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4X3DVPROC __glewProgramUniformMatrix4x3dv;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4X3FVPROC __glewProgramUniformMatrix4x3fv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42DVPROC __glewProgramUniformMatrix4x42dv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42FVPROC __glewProgramUniformMatrix4x42fv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42X3DVPROC __glewProgramUniformMatrix4x42x3dv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42X3FVPROC __glewProgramUniformMatrix4x42x3fv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42X4DVPROC __glewProgramUniformMatrix4x42x4dv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42X4FVPROC __glewProgramUniformMatrix4x42x4fv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43DVPROC __glewProgramUniformMatrix4x43dv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43FVPROC __glewProgramUniformMatrix4x43fv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43X2DVPROC __glewProgramUniformMatrix4x43x2dv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43X2FVPROC __glewProgramUniformMatrix4x43x2fv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43X4DVPROC __glewProgramUniformMatrix4x43x4dv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43X4FVPROC __glewProgramUniformMatrix4x43x4fv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44DVPROC __glewProgramUniformMatrix4x44dv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44FVPROC __glewProgramUniformMatrix4x44fv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44X2DVPROC __glewProgramUniformMatrix4x44x2dv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44X2FVPROC __glewProgramUniformMatrix4x44x2fv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44X3DVPROC __glewProgramUniformMatrix4x44x3dv;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44X3FVPROC __glewProgramUniformMatrix4x44x3fv;
 GLEW_FUN_EXPORT PFNGLUSEPROGRAMSTAGESPROC __glewUseProgramStages;
 GLEW_FUN_EXPORT PFNGLVALIDATEPROGRAMPIPELINEPROC __glewValidateProgramPipeline;
 
@@ -13391,9 +13391,9 @@ GLEW_FUN_EXPORT PFNGLUNIFORM4FARBPROC __glewUniform4fARB;
 GLEW_FUN_EXPORT PFNGLUNIFORM4FVARBPROC __glewUniform4fvARB;
 GLEW_FUN_EXPORT PFNGLUNIFORM4IARBPROC __glewUniform4iARB;
 GLEW_FUN_EXPORT PFNGLUNIFORM4IVARBPROC __glewUniform4ivARB;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX2FVARBPROC __glewUniformMatrix2fvARB;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX3FVARBPROC __glewUniformMatrix3fvARB;
-GLEW_FUN_EXPORT PFNGLUNIFORMMATRIX4FVARBPROC __glewUniformMatrix4fvARB;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x42FVARBPROC __glewUniformMatrix4x42fvARB;
+GLEW_FUN_EXPORT PFNGLUNIFORMMatrix4x43FVARBPROC __glewUniformMatrix4x43fvARB;
+GLEW_FUN_EXPORT PFNglUniformMatrix4fvARBPROC __glewUniformMatrix4x44fvARB;
 GLEW_FUN_EXPORT PFNGLUSEPROGRAMOBJECTARBPROC __glewUseProgramObjectARB;
 GLEW_FUN_EXPORT PFNGLVALIDATEPROGRAMARBPROC __glewValidateProgramARB;
 
@@ -13456,10 +13456,10 @@ GLEW_FUN_EXPORT PFNGLDRAWTRANSFORMFEEDBACKSTREAMPROC __glewDrawTransformFeedback
 GLEW_FUN_EXPORT PFNGLENDQUERYINDEXEDPROC __glewEndQueryIndexed;
 GLEW_FUN_EXPORT PFNGLGETQUERYINDEXEDIVPROC __glewGetQueryIndexediv;
 
-GLEW_FUN_EXPORT PFNGLLOADTRANSPOSEMATRIXDARBPROC __glewLoadTransposeMatrixdARB;
-GLEW_FUN_EXPORT PFNGLLOADTRANSPOSEMATRIXFARBPROC __glewLoadTransposeMatrixfARB;
-GLEW_FUN_EXPORT PFNGLMULTTRANSPOSEMATRIXDARBPROC __glewMultTransposeMatrixdARB;
-GLEW_FUN_EXPORT PFNGLMULTTRANSPOSEMATRIXFARBPROC __glewMultTransposeMatrixfARB;
+GLEW_FUN_EXPORT PFNGLLOADTRANSPOSEMatrix4x4DARBPROC __glewLoadTransposeMatrix4x4dARB;
+GLEW_FUN_EXPORT PFNGLLOADTRANSPOSEMatrix4x4FARBPROC __glewLoadTransposeMatrix4x4fARB;
+GLEW_FUN_EXPORT PFNGLMULTTRANSPOSEMatrix4x4DARBPROC __glewMultTransposeMatrix4x4dARB;
+GLEW_FUN_EXPORT PFNGLMULTTRANSPOSEMatrix4x4FARBPROC __glewMultTransposeMatrix4x4fARB;
 
 GLEW_FUN_EXPORT PFNGLBINDBUFFERBASEPROC __glewBindBufferBase;
 GLEW_FUN_EXPORT PFNGLBINDBUFFERRANGEPROC __glewBindBufferRange;
@@ -13865,25 +13865,25 @@ GLEW_FUN_EXPORT PFNGLGETVERTEXARRAYPOINTERI_VEXTPROC __glewGetVertexArrayPointer
 GLEW_FUN_EXPORT PFNGLGETVERTEXARRAYPOINTERVEXTPROC __glewGetVertexArrayPointervEXT;
 GLEW_FUN_EXPORT PFNGLMAPNAMEDBUFFEREXTPROC __glewMapNamedBufferEXT;
 GLEW_FUN_EXPORT PFNGLMAPNAMEDBUFFERRANGEEXTPROC __glewMapNamedBufferRangeEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXFRUSTUMEXTPROC __glewMatrixFrustumEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXLOADIDENTITYEXTPROC __glewMatrixLoadIdentityEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXLOADTRANSPOSEDEXTPROC __glewMatrixLoadTransposedEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXLOADTRANSPOSEFEXTPROC __glewMatrixLoadTransposefEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXLOADDEXTPROC __glewMatrixLoaddEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXLOADFEXTPROC __glewMatrixLoadfEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXMULTTRANSPOSEDEXTPROC __glewMatrixMultTransposedEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXMULTTRANSPOSEFEXTPROC __glewMatrixMultTransposefEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXMULTDEXTPROC __glewMatrixMultdEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXMULTFEXTPROC __glewMatrixMultfEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXORTHOEXTPROC __glewMatrixOrthoEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXPOPEXTPROC __glewMatrixPopEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXPUSHEXTPROC __glewMatrixPushEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXROTATEDEXTPROC __glewMatrixRotatedEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXROTATEFEXTPROC __glewMatrixRotatefEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXSCALEDEXTPROC __glewMatrixScaledEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXSCALEFEXTPROC __glewMatrixScalefEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXTRANSLATEDEXTPROC __glewMatrixTranslatedEXT;
-GLEW_FUN_EXPORT PFNGLMATRIXTRANSLATEFEXTPROC __glewMatrixTranslatefEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4FRUSTUMEXTPROC __glewMatrix4x4FrustumEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4LOADIDENTITYEXTPROC __glewMatrix4x4LoadIdentityEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4LOADTRANSPOSEDEXTPROC __glewMatrix4x4LoadTransposedEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4LOADTRANSPOSEFEXTPROC __glewMatrix4x4LoadTransposefEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4LOADDEXTPROC __glewMatrix4x4LoaddEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4LOADFEXTPROC __glewMatrix4x4LoadfEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4MULTTRANSPOSEDEXTPROC __glewMatrix4x4MultTransposedEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4MULTTRANSPOSEFEXTPROC __glewMatrix4x4MultTransposefEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4MULTDEXTPROC __glewMatrix4x4MultdEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4MULTFEXTPROC __glewMatrix4x4MultfEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4ORTHOEXTPROC __glewMatrix4x4OrthoEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4POPEXTPROC __glewMatrix4x4PopEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4PUSHEXTPROC __glewMatrix4x4PushEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4ROTATEDEXTPROC __glewMatrix4x4RotatedEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4ROTATEFEXTPROC __glewMatrix4x4RotatefEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4SCALEDEXTPROC __glewMatrix4x4ScaledEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4SCALEFEXTPROC __glewMatrix4x4ScalefEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4TRANSLATEDEXTPROC __glewMatrix4x4TranslatedEXT;
+GLEW_FUN_EXPORT PFNGLMatrix4x4TRANSLATEFEXTPROC __glewMatrix4x4TranslatefEXT;
 GLEW_FUN_EXPORT PFNGLMULTITEXBUFFEREXTPROC __glewMultiTexBufferEXT;
 GLEW_FUN_EXPORT PFNGLMULTITEXCOORDPOINTEREXTPROC __glewMultiTexCoordPointerEXT;
 GLEW_FUN_EXPORT PFNGLMULTITEXENVFEXTPROC __glewMultiTexEnvfEXT;
@@ -13958,15 +13958,15 @@ GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM4IEXTPROC __glewProgramUniform4iEXT;
 GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM4IVEXTPROC __glewProgramUniform4ivEXT;
 GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM4UIEXTPROC __glewProgramUniform4uiEXT;
 GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORM4UIVEXTPROC __glewProgramUniform4uivEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2FVEXTPROC __glewProgramUniformMatrix2fvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2X3FVEXTPROC __glewProgramUniformMatrix2x3fvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX2X4FVEXTPROC __glewProgramUniformMatrix2x4fvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3FVEXTPROC __glewProgramUniformMatrix3fvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3X2FVEXTPROC __glewProgramUniformMatrix3x2fvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX3X4FVEXTPROC __glewProgramUniformMatrix3x4fvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4FVEXTPROC __glewProgramUniformMatrix4fvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4X2FVEXTPROC __glewProgramUniformMatrix4x2fvEXT;
-GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMATRIX4X3FVEXTPROC __glewProgramUniformMatrix4x3fvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42FVEXTPROC __glewProgramUniformMatrix4x42fvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42X3FVEXTPROC __glewProgramUniformMatrix4x42x3fvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x42X4FVEXTPROC __glewProgramUniformMatrix4x42x4fvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43FVEXTPROC __glewProgramUniformMatrix4x43fvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43X2FVEXTPROC __glewProgramUniformMatrix4x43x2fvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x43X4FVEXTPROC __glewProgramUniformMatrix4x43x4fvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44FVEXTPROC __glewProgramUniformMatrix4x44fvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44X2FVEXTPROC __glewProgramUniformMatrix4x44x2fvEXT;
+GLEW_FUN_EXPORT PFNGLPROGRAMUNIFORMMatrix4x44X3FVEXTPROC __glewProgramUniformMatrix4x44x3fvEXT;
 GLEW_FUN_EXPORT PFNGLPUSHCLIENTATTRIBDEFAULTEXTPROC __glewPushClientAttribDefaultEXT;
 GLEW_FUN_EXPORT PFNGLTEXTUREBUFFEREXTPROC __glewTextureBufferEXT;
 GLEW_FUN_EXPORT PFNGLTEXTUREIMAGE1DEXTPROC __glewTextureImage1DEXT;
@@ -14612,7 +14612,7 @@ GLEW_FUN_EXPORT PFNGLGETPROGRAMPARAMETERDVNVPROC __glewGetProgramParameterdvNV;
 GLEW_FUN_EXPORT PFNGLGETPROGRAMPARAMETERFVNVPROC __glewGetProgramParameterfvNV;
 GLEW_FUN_EXPORT PFNGLGETPROGRAMSTRINGNVPROC __glewGetProgramStringNV;
 GLEW_FUN_EXPORT PFNGLGETPROGRAMIVNVPROC __glewGetProgramivNV;
-GLEW_FUN_EXPORT PFNGLGETTRACKMATRIXIVNVPROC __glewGetTrackMatrixivNV;
+GLEW_FUN_EXPORT PFNGLGETTRACKMatrix4x4IVNVPROC __glewGetTrackMatrix4x4ivNV;
 GLEW_FUN_EXPORT PFNGLGETVERTEXATTRIBPOINTERVNVPROC __glewGetVertexAttribPointervNV;
 GLEW_FUN_EXPORT PFNGLGETVERTEXATTRIBDVNVPROC __glewGetVertexAttribdvNV;
 GLEW_FUN_EXPORT PFNGLGETVERTEXATTRIBFVNVPROC __glewGetVertexAttribfvNV;
@@ -14626,7 +14626,7 @@ GLEW_FUN_EXPORT PFNGLPROGRAMPARAMETER4FVNVPROC __glewProgramParameter4fvNV;
 GLEW_FUN_EXPORT PFNGLPROGRAMPARAMETERS4DVNVPROC __glewProgramParameters4dvNV;
 GLEW_FUN_EXPORT PFNGLPROGRAMPARAMETERS4FVNVPROC __glewProgramParameters4fvNV;
 GLEW_FUN_EXPORT PFNGLREQUESTRESIDENTPROGRAMSNVPROC __glewRequestResidentProgramsNV;
-GLEW_FUN_EXPORT PFNGLTRACKMATRIXNVPROC __glewTrackMatrixNV;
+GLEW_FUN_EXPORT PFNGLTRACKMatrix4x4NVPROC __glewTrackMatrix4x4NV;
 GLEW_FUN_EXPORT PFNGLVERTEXATTRIB1DNVPROC __glewVertexAttrib1dNV;
 GLEW_FUN_EXPORT PFNGLVERTEXATTRIB1DVNVPROC __glewVertexAttrib1dvNV;
 GLEW_FUN_EXPORT PFNGLVERTEXATTRIB1FNVPROC __glewVertexAttrib1fNV;
@@ -14887,7 +14887,7 @@ GLEW_VAR_EXPORT GLboolean __GLEW_ARB_half_float_vertex;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_imaging;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_instanced_arrays;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_map_buffer_range;
-GLEW_VAR_EXPORT GLboolean __GLEW_ARB_matrix_palette;
+GLEW_VAR_EXPORT GLboolean __GLEW_ARB_Matrix4x4_palette;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_multisample;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_multitexture;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_occlusion_query;
@@ -14938,7 +14938,7 @@ GLEW_VAR_EXPORT GLboolean __GLEW_ARB_texture_swizzle;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_timer_query;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_transform_feedback2;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_transform_feedback3;
-GLEW_VAR_EXPORT GLboolean __GLEW_ARB_transpose_matrix;
+GLEW_VAR_EXPORT GLboolean __GLEW_ARB_transpose_Matrix4x4;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_uniform_buffer_object;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_vertex_array_bgra;
 GLEW_VAR_EXPORT GLboolean __GLEW_ARB_vertex_array_object;
@@ -15209,7 +15209,7 @@ GLEW_VAR_EXPORT GLboolean __GLEW_SGIX_texture_scale_bias;
 GLEW_VAR_EXPORT GLboolean __GLEW_SGIX_vertex_preclip;
 GLEW_VAR_EXPORT GLboolean __GLEW_SGIX_vertex_preclip_hint;
 GLEW_VAR_EXPORT GLboolean __GLEW_SGIX_ycrcb;
-GLEW_VAR_EXPORT GLboolean __GLEW_SGI_color_matrix;
+GLEW_VAR_EXPORT GLboolean __GLEW_SGI_color_Matrix4x4;
 GLEW_VAR_EXPORT GLboolean __GLEW_SGI_color_table;
 GLEW_VAR_EXPORT GLboolean __GLEW_SGI_texture_color_table;
 GLEW_VAR_EXPORT GLboolean __GLEW_SUNX_constant_data;
