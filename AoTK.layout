@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="include\AoTK\externals\glew.h" open="1" top="0" tabpos="0">
+	<File name="include\AoTK\externals\glew.h" open="0" top="0" tabpos="0">
 		<Cursor position="6500" topLine="165" />
 	</File>
 	<File name="include\AoTK\externals\wglew.h" open="0" top="0" tabpos="0">
 		<Cursor position="3389" topLine="64" />
 	</File>
-	<File name="include\AoTK\window_handler.h" open="1" top="0" tabpos="0">
-		<Cursor position="0" topLine="0" />
+	<File name="include\AoTK\math.h" open="1" top="0" tabpos="5">
+		<Cursor position="1195" topLine="87" />
 	</File>
-	<File name="src\externals\glew.c" open="1" top="1" tabpos="0">
-		<Cursor position="1827" topLine="21" />
+	<File name="include\AoTK\math\vector3.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="805" topLine="28" />
+	</File>
+	<File name="include\AoTK\mesh.h" open="1" top="0" tabpos="4">
+		<Cursor position="1553" topLine="46" />
+	</File>
+	<File name="include\AoTK\window_handler.h" open="0" top="0" tabpos="0">
+		<Cursor position="218" topLine="3" />
+	</File>
+	<File name="src\externals\glew.c" open="0" top="0" tabpos="0">
+		<Cursor position="3170" topLine="57" />
+	</File>
+	<File name="src\mesh\mesh.cpp" open="1" top="1" tabpos="2">
+		<Cursor position="5008" topLine="150" />
 	</File>
 	<File name="src\window\window.cpp" open="1" top="0" tabpos="0">
-		<Cursor position="4549" topLine="102" />
+		<Cursor position="405" topLine="0" />
+	</File>
+	<File name="src\window\window_win.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="15102" topLine="0" />
 	</File>
 	<File name="src\window\window_win.cpp" open="1" top="0" tabpos="0">
-		<Cursor position="12238" topLine="350" />
+		<Cursor position="0" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
