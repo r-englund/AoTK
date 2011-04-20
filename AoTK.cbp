@@ -4,23 +4,25 @@
 	<Project>
 		<Option title="AoTK" />
 		<Option pch_mode="2" />
-		<Option compiler="gcc_beta" />
+		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin\Debug\AoTK" prefix_auto="1" extension_auto="1" />
+				<Option output="bin\Debug\libAoTK" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
 				<Option object_output="obj\Debug\" />
-				<Option type="1" />
-				<Option compiler="gcc_beta" />
+				<Option type="2" />
+				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-DDEBUG" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin\Release\AoTK" prefix_auto="1" extension_auto="1" />
+				<Option output="bin\Release\libAoTK" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
 				<Option object_output="obj\Release\" />
-				<Option type="1" />
-				<Option compiler="gcc_beta" />
+				<Option type="2" />
+				<Option compiler="gcc" />
 				<Linker>
 					<Add option="-s" />
 				</Linker>
@@ -35,11 +37,7 @@
 			<Add option="-Wswitch-default" />
 			<Add option="-std=c++0x" />
 			<Add option="-Wall" />
-			<Add option="-DGLEW_STATIC" />
-			<Add directory="C:\Users\rickard\Documents\c++\AoTK\include" />
-			<Add directory="..\AoTK_Image\include" />
-			<Add directory="..\AoTK_Math\include" />
-			<Add directory="..\AoTK_Colume\include" />
+			<Add directory="include" />
 		</Compiler>
 		<Linker>
 			<Add library="libopengl32.a" />
@@ -47,62 +45,17 @@
 			<Add library="kernel32" />
 			<Add library="user32" />
 		</Linker>
-		<Unit filename="Test.cpp" />
-		<Unit filename="include\AoTK\Error.h" />
-		<Unit filename="include\AoTK\Fbo.h" />
-		<Unit filename="include\AoTK\aotk.h" />
-		<Unit filename="include\AoTK\camera.h" />
-		<Unit filename="include\AoTK\enums.h" />
-		<Unit filename="include\AoTK\error.h" />
 		<Unit filename="include\AoTK\externals\glew.h" />
 		<Unit filename="include\AoTK\externals\glxew.h" />
 		<Unit filename="include\AoTK\externals\wglew.h" />
-		<Unit filename="include\AoTK\fbo.h" />
-		<Unit filename="include\AoTK\glsl.h" />
-		<Unit filename="include\AoTK\image.h" />
-		<Unit filename="include\AoTK\light.h" />
-		<Unit filename="include\AoTK\listeners.h" />
-		<Unit filename="include\AoTK\math.h" />
-		<Unit filename="include\AoTK\object.h" />
-		<Unit filename="include\AoTK\sample_objects\dvr.h" />
-		<Unit filename="include\AoTK\sample_objects\sphere.h" />
-		<Unit filename="include\AoTK\scene.h" />
-		<Unit filename="include\AoTK\texture.h" />
-		<Unit filename="include\AoTK\viewport.h" />
-		<Unit filename="include\AoTK\volume.h" />
-		<Unit filename="include\AoTK\window.h" />
-		<Unit filename="shaders\dvr_frag.glsl" />
-		<Unit filename="shaders\dvr_vert.glsl" />
-		<Unit filename="shaders\quad_frag.glsl" />
-		<Unit filename="shaders\quad_vert.glsl" />
-		<Unit filename="src\aotk.cpp" />
-		<Unit filename="src\camera.cpp" />
-		<Unit filename="src\error.cpp" />
+		<Unit filename="include\AoTK\window\listeners.h" />
+		<Unit filename="include\AoTK\window\window.h" />
+		<Unit filename="include\AoTK\window_handler.h" />
 		<Unit filename="src\externals\glew.c">
 			<Option compilerVar="CC" />
-			<Option weight="100" />
-			<Option compiler="gcc" use="1" buildCommand="$compiler $options -w $includes -c $file -o $object" />
 		</Unit>
-		<Unit filename="src\fbo.cpp" />
-		<Unit filename="src\glsl.cpp" />
-		<Unit filename="src\img\Image.cpp" />
-		<Unit filename="src\img\Image_BMP.cpp" />
-		<Unit filename="src\img\Image_GIF.cpp" />
-		<Unit filename="src\img\Image_JPG.cpp" />
-		<Unit filename="src\img\Image_PNG.cpp" />
-		<Unit filename="src\light.cpp" />
-		<Unit filename="src\listeners.cpp" />
-		<Unit filename="src\math.cpp" />
-		<Unit filename="src\matrix.cpp" />
-		<Unit filename="src\object.cpp" />
-		<Unit filename="src\sample_objects\dvr.cpp" />
-		<Unit filename="src\sample_objects\sphere.cpp" />
-		<Unit filename="src\scene.cpp" />
-		<Unit filename="src\texture.cpp" />
-		<Unit filename="src\viewport.cpp" />
-		<Unit filename="src\volume.cpp" />
-		<Unit filename="src\window.cpp" />
-		<Unit filename="src\window_win32.cpp" />
+		<Unit filename="src\window\window.cpp" />
+		<Unit filename="src\window\window_win.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

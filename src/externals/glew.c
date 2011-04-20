@@ -29,11 +29,11 @@
 ** THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <GL/glew.h>
+#include <AoTK/externals/glew.h>
 #if defined(_WIN32)
-#  include <GL/wglew.h>
+#  include <AoTK/externals/wglew.h>
 #elif !defined(__APPLE__) || defined(GLEW_APPLE_GLX)
-#  include <GL/glxew.h>
+#  include <AoTK/externals/glxew.h>
 #endif
 
 /*
@@ -64,6 +64,17 @@
 #  define GLXEW_CONTEXT_ARG_DEF_INIT void
 #  define GLXEW_CONTEXT_ARG_DEF_LIST void
 #endif /* GLEW_MX */
+
+#if !defined(GLEW_MX)
+#if defined(_WIN32)
+extern GLenum wglewContextInit (void);
+#elif !defined(__APPLE__) || defined(GLEW_APPLE_GLX) /* _UNIX */
+extern GLenum glxewContextInit (void);
+#endif /* _WIN32 */
+#endif /* !GLEW_MX */
+
+
+
 
 #if defined(__sgi) || defined (__sun) || defined(GLEW_APPLE_GLX)
 #include <dlfcn.h>
@@ -11369,11 +11380,11 @@ GLboolean glewExperimental = GL_FALSE;
 
 #if !defined(GLEW_MX)
 
-#if defined(_WIN32)
-extern GLenum wglewContextInit (void);
-#elif !defined(__APPLE__) || defined(GLEW_APPLE_GLX) /* _UNIX */
-extern GLenum glxewContextInit (void);
-#endif /* _WIN32 */
+//#if defined(_WIN32)
+//extern GLenum wglewContextInit (void);
+//#elif !defined(__APPLE__) || defined(GLEW_APPLE_GLX) /* _UNIX */
+//extern GLenum glxewContextInit (void);
+//#endif /* _WIN32 */
 
 GLenum glewInit ()
 {
