@@ -78,11 +78,11 @@ float Mesh::triangleArea(uint32_t i){
     return e1.cross(e2).getLength()*0.5;
 }
 
-std::map<std::string,Mesh::Material> Mesh::LoadFromWavefrontMaterials(const char * filename){
+void Mesh::loadFromWavefrontMaterials(const char * filename){
     std::ifstream f;
     f.open(filename);
     assert(f.good());
-    std::map<std::string,Material> materials;
+
     std::string s,current;
 
     do{
@@ -116,29 +116,29 @@ std::map<std::string,Mesh::Material> Mesh::LoadFromWavefrontMaterials(const char
             std::cout << "Unhandled material parameter: " << s << std::endl;
         }
     }while(!f.eof());
-    return materials;
 }
-Mesh Mesh::LoadFromWavefront(char * folder,char * filename){
+
+void Mesh::loadFromWavefront(char * folder,char * filename,Matrix4x4<float> transform){
+    if(transform != Matrix4x4<float>()){
+        std::cerr << "loadFromWavefront with transform matrix is not yet supported in " << __FILE__ << " at line " << __LINE__ << std::endl;
+    }
     std::ifstream f;
     std::stringstream ss;
     ss << folder << "/" << filename;
     f.open(ss.str().c_str());
     assert(f.good());
-
     std::string s,current_mat = "default";
-    Mesh m;
     std::vector<Vector3<float>> vertices;
     vertices.push_back(Vector3<float>()); //Add dummy vert since indices start at 1 (not zero) in wavefron file format
     f >> s;
+
     while(!f.eof()){
         if(s.compare("mtllib") == 0){
             std::string mat_filename;
             f >> mat_filename;
             std::stringstream ss;
             ss << folder << "/" << mat_filename;
-            std::map<std::string,Material> materials = LoadFromWavefrontMaterials(ss.str().c_str());
-            for(auto i = materials.begin();i!=materials.end();++i)
-                m.materials[i->first] = i->second;
+            loadFromWavefrontMaterials(ss.str().c_str());
         }
         else if(s.compare("usemtl") == 0){
             f >> current_mat;
@@ -157,6 +157,7 @@ Mesh Mesh::LoadFromWavefront(char * folder,char * filename){
                 f >> v.x;
                 f >> v.y;
                 f >> v.z;
+//                v = transform * v;
                 vertices.push_back(v);
             }
             else if(s[0] == 'f'){
@@ -172,7 +173,7 @@ Mesh Mesh::LoadFromWavefront(char * folder,char * filename){
 //                    std::cout << "Found Quad" << std::endl;
 //                    positions.push_back(vertices[i]);
 //                }
-                m.addFace(positions,current_mat);
+                this->addFace(positions,current_mat);
             }else{
                 std::cout << s << std::endl;
             }
@@ -188,14 +189,13 @@ Mesh Mesh::LoadFromWavefront(char * folder,char * filename){
 //    std::cout << m.vertices.size() << std::endl;
 //    std::cout << m.triangles.size() << std::endl;
 
-    if(m.materials.size() == 0){
-        m.materials["default"] = Material();
+    if(this->materials.size() == 0){
+        this->materials["default"] = Material();
     }
 
     f.close();
-    m.calculateFaceNormals();
-    m.calculateVertexNormals();
-    return m;
+    this->calculateFaceNormals();
+    this->calculateVertexNormals();
 }
 
 

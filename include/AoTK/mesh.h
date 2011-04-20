@@ -54,9 +54,10 @@ namespace AoTK{
         virtual void calculateVertexNormals();
         virtual void calculateFaceNormals();
 
-        static Mesh LoadFromWavefront(char * folder,char * filename);
+        void loadFromWavefront(char * folder,char * filename,Matrix4x4<float> transform = Matrix4x4<float>());
+
 private:
-        static std::map<std::string,Material> LoadFromWavefrontMaterials(const char * filename);
+        void loadFromWavefrontMaterials(const char * filename);
 
         std::map<std::string,Material> materials;
         std::vector<Vertex> vertices;
