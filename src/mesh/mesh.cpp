@@ -5,77 +5,118 @@
 
 namespace AoTK{
 
-uint32_t Mesh::addFace(std::vector<Vector3<float>> positions,std::string mat){
+float Triangle::triangleArea(){
+    Vector3<float> e1 = v1->pos-v0->pos;
+    Vector3<float> e2 = v2->pos-v0->pos;
+    return e1.cross(e2).getLength()*0.5;
+}
+
+Mesh::Mesh(){}
+Mesh::~Mesh(){}
+
+Face* Mesh::addFace(std::vector<Vector3<float>> positions,std::string mat){
     assert(positions.size() == 3 || positions.size() == 4);
-    assert(positions.size() != 4 && "Quad meshes not yet supported");
 
-
-
-    uint32_t v0,v1,v2,v3;
+    Vertex *v0,*v1,*v2,*v3;
     v0 = addVertex(positions[0],mat);
     v1 = addVertex(positions[1],mat);
     v2 = addVertex(positions[2],mat);
 
-    Triangle t;
-    t.v0 = v0;
-    t.v1 = v1;
-    t.v2 = v2;
+    Vector3<float> e1 = positions[1] - positions[0];
+    Vector3<float> e2 = positions[2] - positions[1];
+    Vector3<float> normal = e1.cross(e2);
+    normal.normalize();
 
-    triangles.push_back(t);
 
-    return triangles.size()-1;
+    if(positions.size() == 4){
+        v3 = addVertex(positions[3],mat);
+        Quad *q = new Quad();
+        q->v0 = v0;
+        q->v1 = v1;
+        q->v2 = v2;
+        q->v3 = v3;
+        q->normal = normal;
+        faces[mat].push_back(q);
+    }else{
+        Triangle *t = new Triangle();
+        t->v0 = v0;
+        t->v1 = v1;
+        t->v2 = v2;
+        t->normal = normal;
+        faces[mat].push_back(t);
+    }
+
 }
-uint32_t Mesh::addVertex(Vector3<float> position,std::string mat){
-    for(uint32_t i = 0;i<vertices.size();i++){
-        if((vertices[i].pos-position).getLength()<0.00001){
-            return i;
+Vertex* Mesh::addVertex(Vector3<float> position,std::string mat){
+    for(auto i = vertices.begin();i<vertices.end();++i){
+        if(((*i)->pos-position).getLength()<0.00001){
+            return *i;
         }
     }
 
-    Vertex v;
-    v.pos = position;
-    v.normal = AoTK::Vector3<float>(0,1,0);
-    v.material = mat;
-//    v.color = AoTK::Vector4<float>(0.7,0.7,0.7,1.0);
+    Vertex *v = new Vertex();
+    v->pos = position;
+    v->normal = AoTK::Vector3<float>(0,1,0);
+    v->material = mat;
 
     vertices.push_back(v);
-    return vertices.size()-1;
+    return v;
 }
 
 
 void Mesh::calculateVertexNormals(){
     for(auto v = vertices.begin();v!=vertices.end();++v){
-        v->normal = Vector3<float>(0,0,0);
+        (*v)->normal = Vector3<float>(0,0,0);
     }
 
-    for(auto t = triangles.begin();t!=triangles.end();++t){
-        vertices[t->v0].normal += t->normal;
-        vertices[t->v1].normal += t->normal;
-        vertices[t->v2].normal += t->normal;
+    for(auto m = faces.begin();m!=faces.end();++m)
+    for(auto f = m->second.begin();f!=m->second.end();++f){
+        Triangle* t = dynamic_cast<Triangle*>(*f);
+        Quad* q = dynamic_cast<Quad*>(*f);
+        if(t){
+            t->v0->normal += t->normal;
+            t->v1->normal += t->normal;
+            t->v2->normal += t->normal;
+        }else if(q){
+            q->v0->normal += q->normal;
+            q->v1->normal += q->normal;
+            q->v2->normal += q->normal;
+            q->v3->normal += q->normal;
+            std::cout << "q" << std::endl;
+        }else{
+            std::cout << ".";
+        }
     }
 
     for(auto v = vertices.begin();v!=vertices.end();++v){
-        v->normal.normalize();
+        (*v)->normal.normalize();
     }
 }
 
 void Mesh::calculateFaceNormals(){
-    for(auto t = triangles.begin();t != triangles.end();++t){
-//    for(Triangle t : triangles){
-        Vector3<float> e1,e2;
-        e1 = vertices[t->v1].pos - vertices[t->v0].pos;
-        e2 = vertices[t->v2].pos - vertices[t->v1].pos;
-        e1.normalize();
-        e2.normalize();
-        t->normal = e1.cross(e2);
-        t->normal.normalize();
+    for(auto m = faces.begin();m!=faces.end();++m)
+    for(auto f = m->second.begin();f!=m->second.end();++f){
+        Triangle* t = dynamic_cast<Triangle*>(*f);
+        Quad* q = dynamic_cast<Quad*>(*f);
+        if(t){
+            Vector3<float> e1,e2;
+            e1 = t->v1->pos - t->v0->pos;
+            e2 = t->v2->pos - t->v1->pos;
+            e1.normalize();
+            e2.normalize();
+            t->normal = e1.cross(e2);
+            t->normal.normalize();
+        }else if(q){
+            Vector3<float> e1,e2;
+            e1 = q->v1->pos - q->v0->pos;
+            e2 = q->v2->pos - q->v1->pos;
+            e1.normalize();
+            e2.normalize();
+            q->normal = e1.cross(e2);
+            q->normal.normalize();
+            q->v3->normal += q->normal;
+        }
     }
-}
-
-float Mesh::triangleArea(uint32_t i){
-    Vector3<float> e1 = vertices[triangles[i].v1].pos-vertices[triangles[i].v0].pos;
-    Vector3<float> e2 = vertices[triangles[i].v2].pos-vertices[triangles[i].v0].pos;
-    return e1.cross(e2).getLength()*0.5;
 }
 
 void Mesh::loadFromWavefrontMaterials(const char * filename){
