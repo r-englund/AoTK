@@ -16,9 +16,9 @@ namespace AoTK{
         float specularity;
 
         Material():
-        ambient_color(Vector4<float>(0.7,0.7,0.7,1.0)),
-        diffuse_color(Vector4<float>(0.7,0.7,0.7,1.0)),
-        specular_color(Vector4<float>(1,1,1,1)),
+        ambient_color(Vector4<float>(0.2,0.2,0.2,1.0)),
+        diffuse_color(Vector4<float>(0.8,0.8,0.8,1.0)),
+        specular_color(Vector4<float>(0.3,0.3,0.3,1)),
         emission_color(Vector4<float>(0,0,0,0)){}
     };
 
