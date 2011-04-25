@@ -76,8 +76,6 @@
 		</Unit>
 		<Unit filename="src\mesh\mesh.cpp" />
 		<Unit filename="src\window\window.cpp" />
-		<Unit filename="src\window\window.cpp" />
-		<Unit filename="src\window\window_win.cpp" />
 		<Unit filename="src\window\window_win.cpp" />
 		<Extensions>
 			<code_completion />
