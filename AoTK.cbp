@@ -68,6 +68,7 @@
 		<Unit filename="include\AoTK\math\vector3.hpp" />
 		<Unit filename="include\AoTK\math\vector4.hpp" />
 		<Unit filename="include\AoTK\mesh.h" />
+		<Unit filename="include\AoTK\shader.h" />
 		<Unit filename="include\AoTK\window\listeners.h" />
 		<Unit filename="include\AoTK\window\window.h" />
 		<Unit filename="include\AoTK\window_handler.h" />
@@ -75,6 +76,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\mesh\mesh.cpp" />
+		<Unit filename="src\shader.cpp" />
 		<Unit filename="src\window\window.cpp" />
 		<Unit filename="src\window\window_win.cpp" />
 		<Extensions>
