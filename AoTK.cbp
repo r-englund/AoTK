@@ -48,6 +48,7 @@
 		<Unit filename="include\AoTK\externals\glew.h" />
 		<Unit filename="include\AoTK\externals\glxew.h" />
 		<Unit filename="include\AoTK\externals\wglew.h" />
+		<Unit filename="include\AoTK\fbo.h" />
 		<Unit filename="include\AoTK\image.h" />
 		<Unit filename="include\AoTK\img\Image.hpp" />
 		<Unit filename="include\AoTK\img\Image_BMP.hpp" />
@@ -75,6 +76,7 @@
 		<Unit filename="src\externals\glew.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\fbo.cpp" />
 		<Unit filename="src\mesh\mesh.cpp" />
 		<Unit filename="src\shader.cpp" />
 		<Unit filename="src\window\window.cpp" />
