@@ -29,47 +29,47 @@ template<typename T> /*template<typename T2>*/ Matrix4x4<T>::Matrix4x4(const Mat
     }
 }
 
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::operator+(const Matrix4x4<T2> &_m) const{
+template<typename T> Matrix4x4<T> Matrix4x4<T>::operator+(const Matrix4x4<T> &_m) const{
     Matrix4x4<T> m(*this);
     for(int i = 0;i<16;i++){
         m._1d[i] += _m._1d[i];
     }
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::operator-(const Matrix4x4<T2> &_m) const{
+template<typename T> Matrix4x4<T> Matrix4x4<T>::operator-(const Matrix4x4<T> &_m) const{
     Matrix4x4<T> m(*this);
     for(int i = 0;i<16;i++){
         m._1d[i] -= _m._1d[i];
     }
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::operator*(const Matrix4x4<T2> &_m) const{
+template<typename T> Matrix4x4<T> Matrix4x4<T>::operator*(const Matrix4x4<T> &_m) const{
     Matrix4x4 m(*this);
     m *= _m;
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::operator+(T2 f) const{
+template<typename T> Matrix4x4<T> Matrix4x4<T>::operator+(T f) const{
     Matrix4x4<T> m(*this);
     for(int i = 0;i<16;i++){
         m._1d[i] += f;
     }
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::operator-(T2 f) const{
+template<typename T> Matrix4x4<T> Matrix4x4<T>::operator-(T f) const{
     Matrix4x4<T> m(*this);
     for(int i = 0;i<16;i++){
         m._1d[i] -= f;
     }
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::operator*(T2 f) const{
+template<typename T> Matrix4x4<T> Matrix4x4<T>::operator*(T f) const{
     Matrix4x4<T> m(*this);
     for(int i = 0;i<16;i++){
         m._1d[i] *= f;
     }
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::operator/(T2 f) const{
+template<typename T> Matrix4x4<T> Matrix4x4<T>::operator/(T f) const{
     Matrix4x4<T> m(*this);
     for(int i = 0;i<16;i++){
         m._1d[i] /= f;
@@ -77,26 +77,26 @@ template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::operator/(
     return m;
 }
 
-template<typename T> template<typename T2> Matrix4x4<T>& Matrix4x4<T>::operator=(const Matrix4x4<T2> &m){
+template<typename T> Matrix4x4<T>& Matrix4x4<T>::operator=(const Matrix4x4<T> &m){
     for(int i = 0;i<16;i++){
         _1d[i] = m._1d[i];
     }
     return *this;
 }
 
-template<typename T> template<typename T2> Matrix4x4<T>& Matrix4x4<T>::operator+=(const Matrix4x4<T2> &m){
+template<typename T> Matrix4x4<T>& Matrix4x4<T>::operator+=(const Matrix4x4<T> &m){
     for(int i = 0;i<16;i++){
         _1d[i] += m._1d[i];
     }
     return *this;
 }
-template<typename T> template<typename T2> Matrix4x4<T>& Matrix4x4<T>::operator-=(const Matrix4x4<T2> &m){
+template<typename T> Matrix4x4<T>& Matrix4x4<T>::operator-=(const Matrix4x4<T> &m){
     for(int i = 0;i<16;i++){
         _1d[i] -= m._1d[i];
     }
     return *this;
 }
-template<typename T> template<typename T2> Matrix4x4<T>& Matrix4x4<T>::operator*=(const Matrix4x4<T2> &m){
+template<typename T> Matrix4x4<T>& Matrix4x4<T>::operator*=(const Matrix4x4<T> &m){
     Matrix4x4 tmp(*this);
     for(int row = 0;row<4;row++)for(int col = 0;col<4;col++){
         _2d[col][row] = 0;
@@ -106,25 +106,25 @@ template<typename T> template<typename T2> Matrix4x4<T>& Matrix4x4<T>::operator*
     }
     return *this; //TODO test this
 }
-template<typename T> template<typename T2> Matrix4x4<T>& Matrix4x4<T>::operator+=(T2 f){
+template<typename T> Matrix4x4<T>& Matrix4x4<T>::operator+=(T f){
     for(int i = 0;i<16;i++){
         _1d[i] +=f;
     }
     return *this;
 }
-template<typename T> template<typename T2> Matrix4x4<T>& Matrix4x4<T>::operator-=(T2 f){
+template<typename T> Matrix4x4<T>& Matrix4x4<T>::operator-=(T f){
     for(int i = 0;i<16;i++){
         _1d[i] -=f;
     }
     return *this;
 }
-template<typename T> template<typename T2> Matrix4x4<T>& Matrix4x4<T>::operator*=(T2 f){
+template<typename T> Matrix4x4<T>& Matrix4x4<T>::operator*=(T f){
     for(int i = 0;i<16;i++){
         _1d[i] *=f;
     }
     return *this;
 }
-template<typename T> template<typename T2> Matrix4x4<T>& Matrix4x4<T>::operator/=(T2 f){
+template<typename T> Matrix4x4<T>& Matrix4x4<T>::operator/=(T f){
     for(int i = 0;i<16;i++){
         _1d[i] /=f;
     }
@@ -140,7 +140,7 @@ template<typename T> template<typename T2> bool Matrix4x4<T>::operator==(const M
 }
 template<typename T> template<typename T2> bool Matrix4x4<T>::operator!=(const Matrix4x4<T2> &m){return !(*this == m);}
 
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::perspectiveProjection(T2 fovy,T2 aspc,T2 nearPlane,T2 farPlane){
+template<typename T> Matrix4x4<T> Matrix4x4<T>::perspectiveProjection(T fovy,T aspc,T nearPlane,T farPlane){
     T e = 1.0/tan((fovy*0.0174532925/2));
     Matrix4x4<T> m;
     m._2d[0][0] = e;
@@ -151,7 +151,7 @@ template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::perspectiv
     m._2d[3][3] = 0;
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::orthogonalProjection(T2 left, T2 right, T2 bottom, T2 top, T2 nearPlane, T2 farPlane){
+template<typename T> Matrix4x4<T> Matrix4x4<T>::orthogonalProjection(T left, T right, T bottom, T top, T nearPlane, T farPlane){
     Matrix4x4<T> m;
     m._2d[0][0] = 2.0/(right-left);
     m._2d[1][1] = 2.0/(top-bottom);
@@ -162,12 +162,12 @@ template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::orthogonal
     m._2d[3][2] = -(farPlane+nearPlane)/(farPlane-nearPlane);
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::lookAt(Vector3<T2> pos,Vector3<T2> at,Vector3<T2> up){
-    Vector3<T2> center(pos);
-    Vector3<T2> view_dir = at - pos;
+template<typename T> Matrix4x4<T> Matrix4x4<T>::lookAt(Vector3<T> pos,Vector3<T> at,Vector3<T> up){
+    Vector3<T> center(pos);
+    Vector3<T> view_dir = at - pos;
     view_dir.normalize();
 
-    Vector3<T2> side = up.cross(view_dir);
+    Vector3<T> side = up.cross(view_dir);
     side.normalize();
     up = view_dir.cross(side);
     Matrix4x4<T> m;
@@ -191,7 +191,7 @@ template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::lookAt(Vec
     return m;
 }
 
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::rotateX(T2 deg){
+template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateX(T deg){
     Matrix4x4<T> m;
     m.yy = cos(deg);
     m.zz = cos(deg);
@@ -199,7 +199,7 @@ template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::rotateX(T2
     m.yz = sin(deg);
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::rotateY(T2 deg){
+template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateY(T deg){
     Matrix4x4<T> m;
     m.xx = cos(deg);
     m.zz = cos(deg);
@@ -207,7 +207,7 @@ template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::rotateY(T2
     m.zx = sin(deg);
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::rotateZ(T2 deg){
+template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateZ(T deg){
     Matrix4x4<T> m;
     m.xx = cos(deg);
     m.yy = cos(deg);
@@ -215,7 +215,7 @@ template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::rotateZ(T2
     m.xy = sin(deg);
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::rotateAxis(T2 deg,T2 x,T2 y,T2 z){
+template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateAxis(T deg,T x,T y,T z){
     Matrix4x4<T> m;
     float c = cos(deg);
     float s = sin(deg);
@@ -233,11 +233,11 @@ template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::rotateAxis
 
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::rotateAxis(T2 deg,const Vector3<T2> &_v){
+template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateAxis(T deg,const Vector3<T> &_v){
     return rotateAxis(deg,_v.x,_v.y,_v.z);
 }
 
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::translate(T2 x,T2 y,T2 z){
+template<typename T> Matrix4x4<T> Matrix4x4<T>::translate(T x,T y,T z){
     Matrix4x4<T> m;
     m.wx = x;
     m.wy = y;
@@ -245,7 +245,7 @@ template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::translate(
 
     return m;
 }
-template<typename T> template<typename T2> Matrix4x4<T> Matrix4x4<T>::scale(T2 x,T2 y,T2 z){
+template<typename T> Matrix4x4<T> Matrix4x4<T>::scale(T x,T y,T z){
     Matrix4x4<T> m;
     m.xx = x;
     m.yy = y;

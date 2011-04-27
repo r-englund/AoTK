@@ -105,40 +105,40 @@ namespace AoTK{
 //        template<typename T2> Matrix4x4(const Matrix4x4<T2> &m);
         virtual ~Matrix4x4(){}
 
-        template<typename T2> Matrix4x4 operator+(const Matrix4x4<T2>  &m) const;
-        template<typename T2> Matrix4x4 operator-(const Matrix4x4<T2>  &m) const;
-        template<typename T2> Matrix4x4 operator*(const Matrix4x4<T2>  &m) const;
-        template<typename T2> Matrix4x4 operator+(T2 f) const;
-        template<typename T2> Matrix4x4 operator-(T2 f) const;
-        template<typename T2> Matrix4x4 operator*(T2 f) const;
-        template<typename T2> Matrix4x4 operator/(T2 f) const;
+        Matrix4x4 operator+(const Matrix4x4  &m) const;
+        Matrix4x4 operator-(const Matrix4x4  &m) const;
+        Matrix4x4 operator*(const Matrix4x4  &m) const;
+        Matrix4x4 operator+(T f) const;
+        Matrix4x4 operator-(T f) const;
+        Matrix4x4 operator*(T f) const;
+        Matrix4x4 operator/(T f) const;
 
-        template<typename T2> Matrix4x4 &operator=(const Matrix4x4<T2>  &m);
+        Matrix4x4 &operator=(const Matrix4x4  &m);
 
-        template<typename T2> Matrix4x4 &operator+=(const Matrix4x4<T2>  &m);
-        template<typename T2> Matrix4x4 &operator-=(const Matrix4x4<T2>  &m);
-        template<typename T2> Matrix4x4 &operator*=(const Matrix4x4<T2>  &m);
-        template<typename T2> Matrix4x4 &operator+=(T2 f);
-        template<typename T2> Matrix4x4 &operator-=(T2 f);
-        template<typename T2> Matrix4x4 &operator*=(T2 f);
-        template<typename T2> Matrix4x4 &operator/=(T2 f);
+        Matrix4x4 &operator+=(const Matrix4x4  &m);
+        Matrix4x4 &operator-=(const Matrix4x4  &m);
+        Matrix4x4 &operator*=(const Matrix4x4  &m);
+        Matrix4x4 &operator+=(T f);
+        Matrix4x4 &operator-=(T f);
+        Matrix4x4 &operator*=(T f);
+        Matrix4x4 &operator/=(T f);
 
         template<typename T2> bool operator==(const Matrix4x4<T2>  &m);
         template<typename T2> bool operator!=(const Matrix4x4<T2> &m);
 
-        template<typename T2> static Matrix4x4 perspectiveProjection(T2 fovy,T2 aspc,T2 near,T2 far);
-        template<typename T2> static Matrix4x4 orthogonalProjection(T2 left, T2 right, T2 bottom, T2 top, T2 near, T2 far);
-        template<typename T2> static Matrix4x4 lookAt(Vector3<T2> pos,Vector3<T2> at,Vector3<T2> up);
+        static Matrix4x4 perspectiveProjection(T fovy,T aspc,T near,T far);
+        static Matrix4x4 orthogonalProjection(T left, T right, T bottom, T top, T near, T far);
+        static Matrix4x4 lookAt(Vector3<T> pos,Vector3<T> at,Vector3<T> up);
 
-        template<typename T2> static Matrix4x4 rotateX(T2 deg);
-        template<typename T2> static Matrix4x4 rotateY(T2 deg);
-        template<typename T2> static Matrix4x4 rotateZ(T2 deg);
-        template<typename T2> static Matrix4x4 rotateAxis(T2 deg,T2 x,T2 y,T2 z);
-        template<typename T2> static Matrix4x4 rotateAxis(T2 deg,const Vector3<T2> &_v);
+        static Matrix4x4 rotateX(T deg);
+        static Matrix4x4 rotateY(T deg);
+        static Matrix4x4 rotateZ(T deg);
+        static Matrix4x4 rotateAxis(T deg,T x,T y,T z);
+        static Matrix4x4 rotateAxis(T deg,const Vector3<T> &_v);
 
-        template<typename T2> static Matrix4x4 translate(T2 x,T2 y,T2 z);
-        template<typename T2> static Matrix4x4 scale(T2 x,T2 y,T2 z);
-        template<typename T2> static Matrix4x4 scale(T2 x){
+        static Matrix4x4 translate(T x,T y,T z);
+        static Matrix4x4 scale(T x,T y,T z);
+        static Matrix4x4 scale(T x){
             return scale(x,x,x);
         }
 
