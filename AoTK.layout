@@ -4,6 +4,9 @@
 	<File name="include\AoTK\shader.h" open="1" top="0" tabpos="0">
 		<Cursor position="0" topLine="0" />
 	</File>
+	<File name="src\fbo.cpp" open="1" top="1" tabpos="0">
+		<Cursor position="0" topLine="0" />
+	</File>
 	<File name="src\shader.cpp" open="1" top="0" tabpos="0">
 		<Cursor position="0" topLine="0" />
 	</File>
