@@ -12,6 +12,9 @@ class Shader
     public:
         Shader();
         virtual ~Shader();
+
+        void init();
+
         void setSrc(std::string src);
         void appendSrc(std::string src);
         void prependSrc(std::string src);

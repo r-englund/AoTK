@@ -1,3 +1,4 @@
+#include <AoTK/window_handler.h>
 #include <AoTK/shader.h>
 
 #include <fstream>
@@ -11,11 +12,15 @@ Shader::~Shader()
 }
 
 Shader::Shader(){
-    createShader();
 }
 void Shader::setSrc(std::string _src){
     this->src = _src;
 }
+
+void Shader::init(){
+    createShader();
+}
+
 void Shader::appendSrc(std::string _src){
     this->src.append(_src);
 }
