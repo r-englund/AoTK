@@ -45,6 +45,17 @@ namespace AoTK{
     struct Quad : public Face{
         Vertex *v0,*v1,*v2,*v3;
         virtual ~Quad(){}
+        std::pair<Triangle,Triangle> split(){
+            std::pair<Triangle,Triangle> t;
+            t.first.v0 = v0;
+            t.first.v1 = v1;
+            t.first.v2 = v2;
+            t.second.v0 = v3;
+            t.second.v1 = v1;
+            t.second.v2 = v2;
+            std::cout << "Check if correct and in right order (CCW) " << __FILE__ << ":"<<__LINE__<<std::endl;
+            return t;
+        }
     };
 
     class Mesh{

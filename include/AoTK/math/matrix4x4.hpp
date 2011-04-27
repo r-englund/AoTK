@@ -131,14 +131,14 @@ template<typename T> Matrix4x4<T>& Matrix4x4<T>::operator/=(T f){
     return *this;
 }
 
-template<typename T> template<typename T2> bool Matrix4x4<T>::operator==(const Matrix4x4<T2> &m){
+template<typename T> bool Matrix4x4<T>::operator==(const Matrix4x4<T> &m){
     for(int i = 0;i<16;i++){
         if(_1d[i] != m._1d[i])
             return false;
     }
     return true;
 }
-template<typename T> template<typename T2> bool Matrix4x4<T>::operator!=(const Matrix4x4<T2> &m){return !(*this == m);}
+template<typename T> bool Matrix4x4<T>::operator!=(const Matrix4x4<T> &m){return !(*this == m);}
 
 template<typename T> Matrix4x4<T> Matrix4x4<T>::perspectiveProjection(T fovy,T aspc,T nearPlane,T farPlane){
     T e = 1.0/tan((fovy*0.0174532925/2));
@@ -151,6 +151,7 @@ template<typename T> Matrix4x4<T> Matrix4x4<T>::perspectiveProjection(T fovy,T a
     m._2d[3][3] = 0;
     return m;
 }
+
 template<typename T> Matrix4x4<T> Matrix4x4<T>::orthogonalProjection(T left, T right, T bottom, T top, T nearPlane, T farPlane){
     Matrix4x4<T> m;
     m._2d[0][0] = 2.0/(right-left);
@@ -162,6 +163,7 @@ template<typename T> Matrix4x4<T> Matrix4x4<T>::orthogonalProjection(T left, T r
     m._2d[3][2] = -(farPlane+nearPlane)/(farPlane-nearPlane);
     return m;
 }
+
 template<typename T> Matrix4x4<T> Matrix4x4<T>::lookAt(Vector3<T> pos,Vector3<T> at,Vector3<T> up){
     Vector3<T> center(pos);
     Vector3<T> view_dir = at - pos;
@@ -199,6 +201,7 @@ template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateX(T deg){
     m.yz = sin(deg);
     return m;
 }
+
 template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateY(T deg){
     Matrix4x4<T> m;
     m.xx = cos(deg);
@@ -207,6 +210,7 @@ template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateY(T deg){
     m.zx = sin(deg);
     return m;
 }
+
 template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateZ(T deg){
     Matrix4x4<T> m;
     m.xx = cos(deg);

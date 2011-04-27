@@ -123,8 +123,8 @@ namespace AoTK{
         Matrix4x4 &operator*=(T f);
         Matrix4x4 &operator/=(T f);
 
-        template<typename T2> bool operator==(const Matrix4x4<T2>  &m);
-        template<typename T2> bool operator!=(const Matrix4x4<T2> &m);
+        bool operator==(const Matrix4x4<T>  &m);
+        bool operator!=(const Matrix4x4<T> &m);
 
         static Matrix4x4 perspectiveProjection(T fovy,T aspc,T near,T far);
         static Matrix4x4 orthogonalProjection(T left, T right, T bottom, T top, T near, T far);
