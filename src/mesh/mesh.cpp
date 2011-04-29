@@ -12,7 +12,20 @@ float Triangle::triangleArea(){
 }
 
 Mesh::Mesh(){}
-Mesh::~Mesh(){}
+Mesh::~Mesh(){
+    for(int i = 0;i<vertices.size();i++){
+        delete vertices[i];
+    }
+    vertices.clear();
+    for(auto m = faces.begin();m!=faces.end();++m){
+        for(int i = 0;i<m->second.size();i++){
+            delete m->second[i];
+        }
+        m->second.clear();
+    }
+    faces.clear();
+    materials.clear();
+}
 
 Face* Mesh::addFace(std::vector<Vector3<float>> positions,std::string mat){
     assert(positions.size() == 3 || positions.size() == 4);
