@@ -61,6 +61,8 @@ class ShaderProgram{
         void link();
         void use(){glUseProgram(pgm);}
 
+        GLuint getProgram(){return pgm;}
+
     protected:
         std::vector<Shader*> shaders;
         GLuint pgm;
