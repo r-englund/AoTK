@@ -9,6 +9,7 @@
 Shader::~Shader()
 {
     glDeleteShader(gl_shader);
+    GLERRORS();
 }
 
 Shader::Shader(){
@@ -19,6 +20,7 @@ void Shader::setSrc(std::string _src){
 
 void Shader::init(){
     createShader();
+    GLERRORS();
 }
 
 void Shader::appendSrc(std::string _src){
@@ -44,8 +46,27 @@ void Shader::prependSrcFromFile(std::string filename){
 }
 
 void Shader::compile()const{
+
+    glShaderSource(gl_shader, 1, (const GLchar**)&src, NULL);
+
     glCompileShader(gl_shader);
-    std::cout << "Compiled shader but check for error " << __FILE__ << ":" << __LINE__ << std::endl;
+    GLint err;
+    glGetObjectParameterivARB(gl_shader, GL_COMPILE_STATUS, &err);
+    if(!err){
+        GLERRORS();
+        int maxL;
+        glGetShaderiv(gl_shader, GL_INFO_LOG_LENGTH, &maxL);
+        char * log = new char[maxL];
+        glGetShaderInfoLog(gl_shader, maxL, &maxL, log);
+        std::cout << "Could not compile shader: " <<std::endl << src << std::endl;
+        std::cout << log << std::endl;
+        delete [] log;
+        GLERRORS();
+    }
+    #ifdef DEBUG
+    else
+        std::cout << "Shader compiled ok" << std::endl;
+    #endif
 }
 
 std::string Shader::loadFromFile(std::string filename){
@@ -65,15 +86,17 @@ std::string Shader::loadFromFile(std::string filename){
     fclose(f);
     std::string s = buf;
     delete buf;
-    return buf;
+    return s;
 }
 
 
 ShaderProgram::ShaderProgram(){
     pgm = glCreateProgram();
+    GLERRORS();
 }
 ShaderProgram::~ShaderProgram(){
     glDeleteProgram(pgm);
+    GLERRORS();
     pgm = 0;
 }
 void ShaderProgram::attachShader(Shader *s){
@@ -81,16 +104,42 @@ void ShaderProgram::attachShader(Shader *s){
     if(it != shaders.end())
         return;
     shaders.push_back(s);
+
     glAttachShader(pgm,s->gl_shader);
+    GLERRORS();
 }
 void ShaderProgram::deteachShader(Shader *s){
     auto it = std::find(shaders.begin(),shaders.end(),s);
     if(it != shaders.end())
         shaders.erase(it);
     glDetachShader(pgm,s->gl_shader);
+    GLERRORS();
 }
 
 void ShaderProgram::link(){
+
+//    int i;
+//    GLuint* shaders = new GLuint[100];
+//    glGetAttachedShaders(pgm,10,&i,shaders);
+//    delete shaders;
+
     glLinkProgram(pgm);
+    GLint err;
+    glGetProgramiv(pgm, GL_LINK_STATUS, &err);
+    this->shaders.size();
+    if(!err){
+        int maxL;
+        glGetProgramiv(pgm, GL_INFO_LOG_LENGTH, &maxL);
+        char * log = new char[maxL];
+        glGetProgramInfoLog(pgm, maxL, &maxL, log);
+        std::cout << "Could not Link shaders: " << std::endl;
+        std::cout << log << std::endl;
+        delete [] log;
+        GLERRORS();
+    }
+    #ifdef DEBUG
+    else
+        std::cout << "ShaderProgram linked ok" << std::endl;
+    #endif
 }
 
