@@ -6,9 +6,9 @@
 namespace AoTK{
     class Window{
         std::vector<KeyboardListener*> keyboardListeners;
-        std::map<int,void (*)(KEY key)> keyboardUpListenerFunctions; unsigned int __keyUpId;
-        std::map<int,void (*)(KEY key)> keyboardDownListenerFunctions; unsigned int __keyDownId;
-        std::map<int,void (*)(unsigned char key)> keyboardImpuleListenerFunctions; unsigned int __keyImpulseId;
+        std::map<int,void (*)(KEY key)> keyUpListenerFunctions; unsigned int __keyUpId;
+        std::map<int,void (*)(KEY key)> keyDownListenerFunctions; unsigned int __keyDownId;
+        std::map<int,void (*)(unsigned char key)> keyImpuleListenerFunctions; unsigned int __keyImpulseId;
 
         std::vector<ResizeListener*> resizeListeners;
         std::map<int,void (*)(unsigned int, unsigned int)> resizeListenerFunctions;  unsigned int __resizeId;
@@ -87,9 +87,9 @@ namespace AoTK{
 
     public:
         void addKeyboardListener(KeyboardListener *l);
-        unsigned int addKeyboardUpListener(void (*keyUp)(KEY key));
-        unsigned int addKeyboardDownListener(void (*keyDown)(KEY key));
-        unsigned int addKeyboardImpulseListener(void (*keyImpulse)(unsigned char key));
+        unsigned int addKeyUpListener(void (*keyUp)(KEY key));
+        unsigned int addKeyDownListener(void (*keyDown)(KEY key));
+        unsigned int addKeyImpulseListener(void (*keyImpulse)(unsigned char key));
 
         void addResizeListener(ResizeListener *l);
         unsigned int addResizeListener(void (*resize)(unsigned int, unsigned int));
@@ -111,9 +111,9 @@ namespace AoTK{
         void removeMouseMotionListener(MouseMotionListener *l);
         void removeScrollListener(ScrollListener *l);
 
-        void removeKeyboardUpListener(unsigned int id);
-        void removeKeyboardDownListener(unsigned int id);
-        void removeKeyboardImpulseListener(unsigned int id);
+        void removeKeyUpListener(unsigned int id);
+        void removeKeyDownListener(unsigned int id);
+        void removeKeyImpulseListener(unsigned int id);
         void removeResizeListener(unsigned int id);
         void removeMousePressListener(unsigned int id);
         void removeMouseReleaseListener(unsigned int id);

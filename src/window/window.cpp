@@ -2,6 +2,11 @@
 
 namespace AoTK{
 Window *__window;
+
+Window * Window::getWindow(){
+    return __window;
+}
+
 void Window::start(){
     std::cout << "starting" << std::endl;
     __run = true;
@@ -30,17 +35,17 @@ void Window::addKeyboardListener(KeyboardListener *l){
     if(std::count(keyboardListeners.begin(),keyboardListeners.end(),l) == 0)
         keyboardListeners.push_back(l);
 }
-unsigned int Window::addKeyboardUpListener(void (*l)(KEY key)){
-    keyboardUpListenerFunctions[__keyUpId] = l;
+unsigned int Window::addKeyUpListener(void (*l)(KEY key)){
+    keyUpListenerFunctions[__keyUpId] = l;
     return __keyUpId++;
 }
-unsigned int Window::addKeyboardDownListener(void (*l)(KEY key)){
-    keyboardDownListenerFunctions[__keyDownId] = l;
+unsigned int Window::addKeyDownListener(void (*l)(KEY key)){
+    keyDownListenerFunctions[__keyDownId] = l;
     return __keyDownId++;
 }
 
-unsigned int Window::addKeyboardImpulseListener(void (*l)(unsigned char key)){
-    keyboardImpuleListenerFunctions[__keyImpulseId] = l;
+unsigned int Window::addKeyImpulseListener(void (*l)(unsigned char key)){
+    keyImpuleListenerFunctions[__keyImpulseId] = l;
     return __keyImpulseId++;
 }
 
@@ -112,20 +117,20 @@ void Window::removeScrollListener(ScrollListener *l){
         scrollListeners.erase(std::find(scrollListeners.begin(),scrollListeners.end(),l));
 }
 
-void Window::removeKeyboardUpListener(unsigned int id){
-    auto it = keyboardUpListenerFunctions.find(id);
-    if(it != keyboardUpListenerFunctions.end())
-        keyboardUpListenerFunctions.erase(it);
+void Window::removeKeyUpListener(unsigned int id){
+    auto it = keyUpListenerFunctions.find(id);
+    if(it != keyUpListenerFunctions.end())
+        keyUpListenerFunctions.erase(it);
 }
-void Window::removeKeyboardDownListener(unsigned int id){
-    auto it = keyboardDownListenerFunctions.find(id);
-    if(it != keyboardDownListenerFunctions.end())
-        keyboardDownListenerFunctions.erase(it);
+void Window::removeKeyDownListener(unsigned int id){
+    auto it = keyDownListenerFunctions.find(id);
+    if(it != keyDownListenerFunctions.end())
+        keyDownListenerFunctions.erase(it);
 }
-void Window::removeKeyboardImpulseListener(unsigned int id){
-    auto it = keyboardImpuleListenerFunctions.find(id);
-    if(it != keyboardImpuleListenerFunctions.end())
-        keyboardImpuleListenerFunctions.erase(it);
+void Window::removeKeyImpulseListener(unsigned int id){
+    auto it = keyImpuleListenerFunctions.find(id);
+    if(it != keyImpuleListenerFunctions.end())
+        keyImpuleListenerFunctions.erase(it);
 }
 void Window::removeResizeListener(unsigned int id){
     auto it = resizeListenerFunctions.find(id);
@@ -163,19 +168,19 @@ void Window::removeScrollListener(unsigned int id){
 void Window::keyDownEvent(KEY key){
 	for(auto l = keyboardListeners.begin();l != keyboardListeners.end();++l)
         (*l)->keyDown(key);
-    for(auto l = keyboardUpListenerFunctions.begin();l != keyboardUpListenerFunctions.end();++l)
+    for(auto l = keyUpListenerFunctions.begin();l != keyUpListenerFunctions.end();++l)
         (l->second)(key);
 }
 void Window::keyUpEvent(KEY key){
 	for(auto l = keyboardListeners.begin();l != keyboardListeners.end();++l)
         (*l)->keyUp(key);
-    for(auto l = keyboardDownListenerFunctions.begin();l != keyboardDownListenerFunctions.end();++l)
+    for(auto l = keyDownListenerFunctions.begin();l != keyDownListenerFunctions.end();++l)
         (l->second)(key);
 }
 void Window::keyImpulseEvent(unsigned char key){
     for(auto l = keyboardListeners.begin();l != keyboardListeners.end();++l)
         (*l)->keyImpulse(key);
-    for(auto l = keyboardImpuleListenerFunctions.begin();l != keyboardImpuleListenerFunctions.end();++l)
+    for(auto l = keyImpuleListenerFunctions.begin();l != keyImpuleListenerFunctions.end();++l)
         (l->second)(key);
 }
 void Window::resizeEvent(unsigned int w,unsigned int h){
