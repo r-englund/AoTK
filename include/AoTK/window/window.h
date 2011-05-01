@@ -1,16 +1,30 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-
+#include <map>
 
 namespace AoTK{
     class Window{
         std::vector<KeyboardListener*> keyboardListeners;
+        std::map<int,void (*)(KEY key)> keyboardUpListenerFunctions; unsigned int __keyUpId;
+        std::map<int,void (*)(KEY key)> keyboardDownListenerFunctions; unsigned int __keyDownId;
+        std::map<int,void (*)(unsigned char key)> keyboardImpuleListenerFunctions; unsigned int __keyImpulseId;
+
         std::vector<ResizeListener*> resizeListeners;
+        std::map<int,void (*)(unsigned int, unsigned int)> resizeListenerFunctions;  unsigned int __resizeId;
+
         std::vector<MouseListener*> mouseListeners;
+        std::map<int,void (*)(MOUSE_BUTTON mb,unsigned int x,unsigned int y)> mousePressListenerFunctions;  unsigned int __mousePressId;
+        std::map<int,void (*)(MOUSE_BUTTON mb,unsigned int x,unsigned int y)> mouseReleaseListenerFunctions;  unsigned int __mouseReleaseId;
+
+
         std::vector<MouseMotionListener*> mouseMotionListeners;
+        std::map<int,void (*)(int dx,int dy)> mouseMotionListenerFunctions;  unsigned int __mouseMotionId;
+        std::map<int,void (*)(int dx,int dy)> passiveMouseMotionListenerFunctions;  unsigned int __mousePassiveMotionId;
+
+
         std::vector<ScrollListener*> scrollListeners;
-        std::vector<RedrawListener*> redrawListeners;
+        std::map<int,void (*)(int p)> scrollListenerFunctions;  unsigned int __scrollId;
 
         uint16_t width,height;
         std::string title;
@@ -21,7 +35,6 @@ namespace AoTK{
         mouseListeners(),
         mouseMotionListeners(),
         scrollListeners(),
-        redrawListeners(),
         width(0),
         height(0),
         title(""),
@@ -34,8 +47,17 @@ namespace AoTK{
         pixelformat(),
         wincl(),
         hDC(),
-        hRC()
+        hRC(),
         #endif
+        __keyUpId(0),
+        __keyDownId(0),
+        __keyImpulseId(0),
+        __resizeId(0),
+        __mousePressId(0),
+        __mouseReleaseId(0),
+        __mouseMotionId(0),
+        __mousePassiveMotionId(0),
+        __scrollId(0)
         {
         }
         Window(const Window &w);
@@ -65,18 +87,40 @@ namespace AoTK{
 
     public:
         void addKeyboardListener(KeyboardListener *l);
+        unsigned int addKeyboardUpListener(void (*keyUp)(KEY key));
+        unsigned int addKeyboardDownListener(void (*keyDown)(KEY key));
+        unsigned int addKeyboardImpulseListener(void (*keyImpulse)(unsigned char key));
+
         void addResizeListener(ResizeListener *l);
+        unsigned int addResizeListener(void (*resize)(unsigned int, unsigned int));
+
         void addMouseListener(MouseListener *l);
+        unsigned int addMousePressListener(void (*)(MOUSE_BUTTON mb,unsigned int x,unsigned int y));
+        unsigned int addMouseReleaseListener(void (*)(MOUSE_BUTTON mb,unsigned int x,unsigned int y));
+
         void addMouseMotionListener(MouseMotionListener *l);
+        unsigned int addMouseMotionListener(void (*)(int dx,int dy));
+        unsigned int addPassiveMouseMotionListener(void (*)(int dx,int dy));
+
         void addScrollListener(ScrollListener *l);
-        void addRedrawListener(RedrawListener *l);
+        unsigned int addScrollListener(void (*)(int p));
 
         void removeKeyboardListener(KeyboardListener *l);
         void removeResizeListener(ResizeListener *l);
         void removeMouseListener(MouseListener *l);
         void removeMouseMotionListener(MouseMotionListener *l);
         void removeScrollListener(ScrollListener *l);
-        void removeRedrawListener(RedrawListener *l);
+
+        void removeKeyboardUpListener(unsigned int id);
+        void removeKeyboardDownListener(unsigned int id);
+        void removeKeyboardImpulseListener(unsigned int id);
+        void removeResizeListener(unsigned int id);
+        void removeMousePressListener(unsigned int id);
+        void removeMouseReleaseListener(unsigned int id);
+        void removeMouseMotionListener(unsigned int id);
+        void removePassiveMouseMotionListener(unsigned int id);
+        void removeScrollListener(unsigned int id);
+
 
         void keyDownEvent(KEY key);
         void keyUpEvent(KEY key);

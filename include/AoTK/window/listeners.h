@@ -28,15 +28,6 @@ public:
     virtual void mouseRelease(MOUSE_BUTTON mb,unsigned int x,unsigned int y) = 0;
 };
 
-class RedrawListener{
-public:
-    virtual void preDraw() = 0;
-    virtual void draw() = 0;
-    virtual void postDraw() = 0;
-    RedrawListener(){}
-    virtual ~RedrawListener(){}
-};
-
 class MouseMotionListener{
 public:
     MouseMotionListener(){}

@@ -10,11 +10,7 @@ void Window::start(){
 
         if(__dispFunc != NULL){
             __dispFunc();
-        }else{
-            for(auto l = redrawListeners.begin();l != redrawListeners.end();++l)
-                (*l)->draw();
         }
-
 //        getAllError("Main Loop",-1);
         swapBuffers();
     }
@@ -34,24 +30,62 @@ void Window::addKeyboardListener(KeyboardListener *l){
     if(std::count(keyboardListeners.begin(),keyboardListeners.end(),l) == 0)
         keyboardListeners.push_back(l);
 }
+unsigned int Window::addKeyboardUpListener(void (*l)(KEY key)){
+    keyboardUpListenerFunctions[__keyUpId] = l;
+    return __keyUpId++;
+}
+unsigned int Window::addKeyboardDownListener(void (*l)(KEY key)){
+    keyboardDownListenerFunctions[__keyDownId] = l;
+    return __keyDownId++;
+}
 
-void Window::addRedrawListener(RedrawListener *l){
-    if(std::count(redrawListeners.begin(),redrawListeners.end(),l) == 0)
-        redrawListeners.push_back(l);
+unsigned int Window::addKeyboardImpulseListener(void (*l)(unsigned char key)){
+    keyboardImpuleListenerFunctions[__keyImpulseId] = l;
+    return __keyImpulseId++;
 }
 
 void Window::addResizeListener(ResizeListener *l){
     if(std::count(resizeListeners.begin(),resizeListeners.end(),l) == 0)
         resizeListeners.push_back(l);
 }
+
+unsigned int Window::addResizeListener(void (l)(unsigned int, unsigned int)){
+    resizeListenerFunctions[__resizeId] = l;
+    return __resizeId++;
+}
+
+
 void Window::addMouseListener(MouseListener *l){
     if(std::count(mouseListeners.begin(),mouseListeners.end(),l) == 0)
         mouseListeners.push_back(l);
 }
+
+unsigned int Window::addMousePressListener(void (*l)(MOUSE_BUTTON mb,unsigned int x,unsigned int y)){
+    mousePressListenerFunctions[__mousePressId] = l;
+    return __mousePressId++;
+}
+
+unsigned int Window::addMouseReleaseListener(void (*l)(MOUSE_BUTTON mb,unsigned int x,unsigned int y)){
+    mouseReleaseListenerFunctions[__mouseReleaseId] = l;
+    return __mouseReleaseId++;
+}
+
+
 void Window::addMouseMotionListener(MouseMotionListener *l){
     if(std::count(mouseMotionListeners.begin(),mouseMotionListeners.end(),l) == 0)
         mouseMotionListeners.push_back(l);
 }
+
+unsigned int Window::addMouseMotionListener(void (*l)(int dx,int dy)){
+    mouseMotionListenerFunctions[__mouseMotionId] = l;
+    return __mouseMotionId++;
+}
+
+unsigned int Window::addPassiveMouseMotionListener(void (*l)(int dx,int dy)){
+    passiveMouseMotionListenerFunctions[__mousePassiveMotionId] = l;
+    return __mousePassiveMotionId++;
+}
+
 void Window::addScrollListener(ScrollListener *l){
     if(std::count(scrollListeners.begin(),scrollListeners.end(),l) == 0)
         scrollListeners.push_back(l);
@@ -78,48 +112,108 @@ void Window::removeScrollListener(ScrollListener *l){
         scrollListeners.erase(std::find(scrollListeners.begin(),scrollListeners.end(),l));
 }
 
-void Window::removeRedrawListener(RedrawListener *l){
-    while(std::count(redrawListeners.begin(),redrawListeners.end(),l) != 0)
-        redrawListeners.erase(std::find(redrawListeners.begin(),redrawListeners.end(),l));
+void Window::removeKeyboardUpListener(unsigned int id){
+    auto it = keyboardUpListenerFunctions.find(id);
+    if(it != keyboardUpListenerFunctions.end())
+        keyboardUpListenerFunctions.erase(it);
 }
+void Window::removeKeyboardDownListener(unsigned int id){
+    auto it = keyboardDownListenerFunctions.find(id);
+    if(it != keyboardDownListenerFunctions.end())
+        keyboardDownListenerFunctions.erase(it);
+}
+void Window::removeKeyboardImpulseListener(unsigned int id){
+    auto it = keyboardImpuleListenerFunctions.find(id);
+    if(it != keyboardImpuleListenerFunctions.end())
+        keyboardImpuleListenerFunctions.erase(it);
+}
+void Window::removeResizeListener(unsigned int id){
+    auto it = resizeListenerFunctions.find(id);
+    if(it != resizeListenerFunctions.end())
+        resizeListenerFunctions.erase(it);
+}
+void Window::removeMousePressListener(unsigned int id){
+    auto it = mousePressListenerFunctions.find(id);
+    if(it != mousePressListenerFunctions.end())
+        mousePressListenerFunctions.erase(it);
+}
+void Window::removeMouseReleaseListener(unsigned int id){
+    auto it = mouseReleaseListenerFunctions.find(id);
+    if(it != mouseReleaseListenerFunctions.end())
+        mouseReleaseListenerFunctions.erase(it);
+}
+void Window::removeMouseMotionListener(unsigned int id){
+    auto it = mouseMotionListenerFunctions.find(id);
+    if(it != mouseMotionListenerFunctions.end())
+        mouseMotionListenerFunctions.erase(it);
+}
+void Window::removePassiveMouseMotionListener(unsigned int id){
+    auto it = passiveMouseMotionListenerFunctions.find(id);
+    if(it != passiveMouseMotionListenerFunctions.end())
+        passiveMouseMotionListenerFunctions.erase(it);
+}
+void Window::removeScrollListener(unsigned int id){
+    auto it = scrollListenerFunctions.find(id);
+    if(it != scrollListenerFunctions.end())
+        scrollListenerFunctions.erase(it);
+}
+
 
 
 void Window::keyDownEvent(KEY key){
 	for(auto l = keyboardListeners.begin();l != keyboardListeners.end();++l)
         (*l)->keyDown(key);
+    for(auto l = keyboardUpListenerFunctions.begin();l != keyboardUpListenerFunctions.end();++l)
+        (l->second)(key);
 }
 void Window::keyUpEvent(KEY key){
 	for(auto l = keyboardListeners.begin();l != keyboardListeners.end();++l)
         (*l)->keyUp(key);
+    for(auto l = keyboardDownListenerFunctions.begin();l != keyboardDownListenerFunctions.end();++l)
+        (l->second)(key);
 }
 void Window::keyImpulseEvent(unsigned char key){
     for(auto l = keyboardListeners.begin();l != keyboardListeners.end();++l)
         (*l)->keyImpulse(key);
+    for(auto l = keyboardImpuleListenerFunctions.begin();l != keyboardImpuleListenerFunctions.end();++l)
+        (l->second)(key);
 }
 void Window::resizeEvent(unsigned int w,unsigned int h){
     for(auto l = resizeListeners.begin();l != resizeListeners.end();++l)
         (*l)->resize(w,h);
+    for(auto l = resizeListenerFunctions.begin();l != resizeListenerFunctions.end();++l)
+        (l->second)(w,h);
 }
 void Window::mousePressEvent(MOUSE_BUTTON mb,unsigned int x,unsigned int y){
     for(auto l = mouseListeners.begin();l != mouseListeners.end();++l)
         (*l)->mousePress(mb,x,y);
+    for(auto l = mousePressListenerFunctions.begin();l != mousePressListenerFunctions.end();++l)
+        (l->second)(mb,x,y);
 }
 void Window::mouseReleaseEvent(MOUSE_BUTTON mb,unsigned int x,unsigned int y){
     for(auto l = mouseListeners.begin();l != mouseListeners.end();++l)
         (*l)->mouseRelease(mb,x,y);
+    for(auto l = mouseReleaseListenerFunctions.begin();l != mouseReleaseListenerFunctions.end();++l)
+        (l->second)(mb,x,y);
 }
 
 void Window::mousemotionEvent(int dx,int dy){
 	for(auto l = mouseMotionListeners.begin();l != mouseMotionListeners.end();++l)
         (*l)->mousemotion(dx,dy);
+    for(auto l = mouseMotionListenerFunctions.begin();l != mouseMotionListenerFunctions.end();++l)
+        (l->second)(dx,dy);
 }
 void Window::passiveMousemotionEvent(int dx,int dy){
     for(auto l = mouseMotionListeners.begin();l != mouseMotionListeners.end();++l)
         (*l)->passiveMousemotion(dx,dy);
+    for(auto l = passiveMouseMotionListenerFunctions.begin();l != passiveMouseMotionListenerFunctions.end();++l)
+        (l->second)(dx,dy);
 }
 void Window::scrollEvent(int p){
 	for(auto l = scrollListeners.begin();l != scrollListeners.end();++l)
         (*l)->scroll(p);
+    for(auto l = scrollListenerFunctions.begin();l != scrollListenerFunctions.end();++l)
+        (l->second)(p);
 }
 
 
