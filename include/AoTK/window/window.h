@@ -26,6 +26,9 @@ namespace AoTK{
         std::vector<ScrollListener*> scrollListeners;
         std::map<int,void (*)(int p)> scrollListenerFunctions;  unsigned int __scrollId;
 
+        std::vector<IdleListener*> idleListeners;
+        std::map<int,void (*)()> idleListenerFunctions;  unsigned int __idleId;
+
         uint16_t width,height;
         std::string title;
 
@@ -39,9 +42,9 @@ namespace AoTK{
         height(0),
         title(""),
         __run(false),
-        __dispFunc(false)
+        __dispFunc(false),
         #ifdef _WIN32
-        ,hwndConsole(NULL),
+        hwndConsole(NULL),
         hwnd(),
         hInst(),
         pixelformat(),
@@ -57,7 +60,8 @@ namespace AoTK{
         __mouseReleaseId(0),
         __mouseMotionId(0),
         __mousePassiveMotionId(0),
-        __scrollId(0)
+        __scrollId(0),
+        __idleId(0)
         {
         }
         Window(const Window &w);
@@ -105,11 +109,15 @@ namespace AoTK{
         void addScrollListener(ScrollListener *l);
         unsigned int addScrollListener(void (*)(int p));
 
+        void addIdleListener(IdleListener *l);
+        unsigned int addIdleListener(void (*)());
+
         void removeKeyboardListener(KeyboardListener *l);
         void removeResizeListener(ResizeListener *l);
         void removeMouseListener(MouseListener *l);
         void removeMouseMotionListener(MouseMotionListener *l);
         void removeScrollListener(ScrollListener *l);
+        void removeIdleListener(IdleListener *l);
 
         void removeKeyUpListener(unsigned int id);
         void removeKeyDownListener(unsigned int id);
@@ -120,6 +128,7 @@ namespace AoTK{
         void removeMouseMotionListener(unsigned int id);
         void removePassiveMouseMotionListener(unsigned int id);
         void removeScrollListener(unsigned int id);
+        void removeIdleListener(unsigned int id);
 
 
         void keyDownEvent(KEY key);
@@ -131,6 +140,7 @@ namespace AoTK{
         void mousemotionEvent(int dx,int dy);
         void passiveMousemotionEvent(int dx,int dy);
         void scrollEvent(int p);
+        void idleEvent();
 
         void start();
         void stop();

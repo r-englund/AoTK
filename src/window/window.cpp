@@ -12,7 +12,7 @@ void Window::start(){
     __run = true;
     while(__run){
         checkForMessages();
-
+        idleEvent();
         if(__dispFunc != NULL){
             __dispFunc();
         }
@@ -91,9 +91,25 @@ unsigned int Window::addPassiveMouseMotionListener(void (*l)(int dx,int dy)){
     return __mousePassiveMotionId++;
 }
 
+
 void Window::addScrollListener(ScrollListener *l){
     if(std::count(scrollListeners.begin(),scrollListeners.end(),l) == 0)
         scrollListeners.push_back(l);
+}
+
+unsigned int Window::addScrollListener(void (*l)(int p)){
+    scrollListenerFunctions[__scrollId] = l;
+    return __scrollId++;
+}
+
+void Window::addIdleListener(IdleListener *l){
+    if(std::count(idleListeners.begin(),idleListeners.end(),l) == 0)
+        idleListeners.push_back(l);
+}
+
+unsigned int Window::addIdleListener(void (*l)()){
+    idleListenerFunctions[__idleId] = l;
+    return __idleId++;
 }
 
 void Window::removeKeyboardListener(KeyboardListener *l){
@@ -163,6 +179,12 @@ void Window::removeScrollListener(unsigned int id){
         scrollListenerFunctions.erase(it);
 }
 
+void Window::removeIdleListener(unsigned int id){
+    auto it = idleListenerFunctions.find(id);
+    if(it != idleListenerFunctions.end())
+        idleListenerFunctions.erase(it);
+}
+
 
 
 void Window::keyDownEvent(KEY key){
@@ -219,6 +241,13 @@ void Window::scrollEvent(int p){
         (*l)->scroll(p);
     for(auto l = scrollListenerFunctions.begin();l != scrollListenerFunctions.end();++l)
         (l->second)(p);
+}
+
+void Window::idleEvent(){
+	for(auto l = idleListeners.begin();l != idleListeners.end();++l)
+        (*l)->idle();
+    for(auto l = idleListenerFunctions.begin();l != idleListenerFunctions.end();++l)
+        (l->second)();
 }
 
 
