@@ -31,6 +31,52 @@ namespace AoTK{
         return tex;
     }
 
+
+    template<>
+    GLuint Image<float>::toGLTexture(){
+        GLuint tex;
+        glGenTextures(1,&tex);
+        glBindTexture(GL_TEXTURE_2D,tex);
+
+        glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
+        glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_REPEAT);
+        glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_REPEAT);
+        glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_R,GL_REPEAT);
+
+        //float *glData = (float*)malloc(sizeof(float)*width*height*3);
+        GLfloat *glData = (GLfloat*)malloc(sizeof(GLfloat)*width*height*4);
+        std::cout << width << " " << height << std::endl;
+        for(int i = 0;i<width*height;i++){
+            if(channels == 3){
+                glData[i*4+0] = data[0][i];
+                glData[i*4+1] = data[1][i];
+                glData[i*4+2] = data[2][i];
+                glData[i*4+3] = 1.0;
+            }else if(channels == 4){
+                glData[i*4+0] = data[0][i]/data[3][i];
+                glData[i*4+1] = data[1][i]/data[3][i];
+                glData[i*4+2] = data[2][i]/data[3][i];
+                glData[i*4+3] = data[3][i]/data[3][i];
+            }else if(channels == 1){
+                glData[i*4+0] = data[0][i];
+                glData[i*4+1] = data[0][i];
+                glData[i*4+2] = data[0][i];
+                glData[i*4+3] = 1.0;
+            }
+        }
+
+        glTexImage2D(GL_TEXTURE_2D,0,4,width,height,0,GL_RGBA,GL_FLOAT,glData);
+
+        free(glData);
+
+        glBindTexture(GL_TEXTURE_2D,0);
+
+        return tex;
+    }
+
+
     template<>
     Image<uint8_t> Image<uint8_t>::FromCurrentGLContext(){
         uint16_t w,h;
