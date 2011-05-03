@@ -255,6 +255,9 @@ void getAllError(std::string file, int line){
     int i = 0;
     GLenum err = glGetError();
     while(err != GL_NO_ERROR){
+//        static int i = 0;
+//        if(i++)
+//            return;
         switch (err){
             case GL_NO_ERROR:
                 break;
@@ -278,6 +281,9 @@ void getAllError(std::string file, int line){
                 break;
             case GL_TABLE_TOO_LARGE:
                 std::cerr <<i++  << "GL_TABLE_TOO_LARGE @ " << file <<":"<<line  << ": The specified table exceeds the implementation's maximum supported table size. The offending command is ignored and has no other side effect than to set the error flag." << std::endl;
+                break;
+            case GL_INVALID_FRAMEBUFFER_OPERATION:
+                std::cerr <<i++  << "GL_INVALID_FRAMEBUFFER_OPERATION @ " << file <<":"<<line  << ": The framebuffer object is not complete. The offending command is ignored and has no other side effect than to set the error flag." << std::endl;
                 break;
             default:
                 std::cerr <<i++  << "GL_ERROR @ " << file <<":"<<line  << ": Unkown error:" << err << std::endl;
