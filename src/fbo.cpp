@@ -16,25 +16,30 @@ void FBO::init(){
     if(isInit)
         return;
     isInit = true;
-    glGenFramebuffersEXT(1, &_fbo);
+    glGenFramebuffers(1, &_fbo);GLERRORS();
 
-    glGenTextures(1, &_depthtex);
-    glBindTexture(GL_TEXTURE_2D, _depthtex);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glGenTextures(1, &_depthtex);GLERRORS();
+    glBindTexture(GL_TEXTURE_2D, _depthtex);GLERRORS();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);GLERRORS();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);GLERRORS();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);GLERRORS();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);GLERRORS();
 
-    glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);
+    glTexParameteri(GL_TEXTURE_2D, GL_DEPTH_TEXTURE_MODE, GL_INTENSITY);GLERRORS();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE);GLERRORS();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LEQUAL);GLERRORS();
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, _w, _h, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, _w, _h, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, 0);GLERRORS();
 
-    bind();
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, _depthtex, 0);
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);GLERRORS();
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _depthtex, 0);GLERRORS();GLERRORS();
 
-
+    std::cout << GL_FRAMEBUFFER << std::endl;
+    std::cout << GL_DEPTH_ATTACHMENT_EXT << std::endl;
+    std::cout << GL_TEXTURE_2D << std::endl;
+    std::cout << _depthtex << std::endl;
+    std::cout << "asdf"<< std::endl;
+//    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, _fbo);GLERRORS();
 //    glGenRenderbuffers(1, &_depth);
 //
 //    glBindRenderbuffer(GL_RENDERBUFFER, _depth);
@@ -45,7 +50,7 @@ void FBO::init(){
 //                              GL_RENDERBUFFER,
 //                              _depthtex);
 
-    unbind();
+    unbind();GLERRORS();
 }
 
 void FBO::setSize(uint16_t w,uint16_t h){
@@ -66,7 +71,7 @@ uint8_t FBO::createAttachment(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _w, _h, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _w, _h, 0, GL_RGBA, GL_FLOAT, 0);
     bind();
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+index, GL_TEXTURE_2D, attachment[index], 0);
 
@@ -83,10 +88,21 @@ GLuint FBO::getTexture(uint8_t attatchemntID){return attachment[attatchemntID];}
 GLuint FBO::getDepthTexture(){return _depthtex;}
 
 void FBO::bind(uint8_t attatchemntID){
-    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, _fbo);
-    glDrawBuffer(GL_COLOR_ATTACHMENT0_EXT + attatchemntID);
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+    glDrawBuffer(GL_COLOR_ATTACHMENT0 + attatchemntID);
 }
 
+void FBO::clear(uint8_t attatchemntID){
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+    glDrawBuffer(GL_COLOR_ATTACHMENT0 + attatchemntID);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void FBO::clear(uint8_t* attatchemntIDs,uint8_t num_attachemnts){
+    for(int i = 0;i<num_attachemnts;i++){
+        clear(attatchemntIDs[i]);
+    }
+}
 void FBO::bind(uint8_t* attatchemntIDs,uint8_t num_attachemnts){
     GLenum * mrt = new GLenum[num_attachemnts];
     for(int i = 0; i<num_attachemnts;i++)
@@ -97,6 +113,7 @@ void FBO::bind(uint8_t* attatchemntIDs,uint8_t num_attachemnts){
 }
 void FBO::unbind(){
     glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+    glDrawBuffer(GL_BACK);
 }
 
 
@@ -107,6 +124,7 @@ void FBO::render(uint8_t attatchemntID)
 	glPushMatrix();
 	glEnable(GL_TEXTURE_2D);
 	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_LIGHTING);
 	glColor4f(1.f, 1.f, 1.f, 1.f);
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();

@@ -25,6 +25,8 @@ namespace AoTK{
 
         void bind(uint8_t attatchemntID = 0);
         void bind(uint8_t* attatchemntIDs,uint8_t num_attachemnts);
+        void clear(uint8_t attatchemntID = 0);
+        void clear(uint8_t* attatchemntIDs,uint8_t num_attachemnts);
         void unbind();
 
         void fboerror();
