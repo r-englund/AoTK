@@ -45,6 +45,7 @@
 			<Add library="kernel32" />
 			<Add library="user32" />
 		</Linker>
+		<Unit filename="include\AoTK\aotk.h" />
 		<Unit filename="include\AoTK\externals\glew.h" />
 		<Unit filename="include\AoTK\externals\glxew.h" />
 		<Unit filename="include\AoTK\externals\wglew.h" />
