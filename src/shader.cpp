@@ -6,6 +6,7 @@
 #include <cstring>
 #include <algorithm>
 
+namespace AoTK{
 Shader::~Shader()
 {
     glDeleteShader(gl_shader);
@@ -142,4 +143,5 @@ void ShaderProgram::link(){
         std::cout << "ShaderProgram linked ok" << std::endl;
     #endif
 }
+};
 

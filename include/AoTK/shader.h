@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 
+namespace AoTK{
 class Shader
 {
     friend class ShaderProgram;
@@ -66,6 +67,7 @@ class ShaderProgram{
     protected:
         std::vector<Shader*> shaders;
         GLuint pgm;
+};
 };
 
 #endif // SHADER_H
