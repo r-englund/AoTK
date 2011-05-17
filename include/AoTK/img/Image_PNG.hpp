@@ -1,6 +1,7 @@
 
 
 namespace AoTK{
+namespace IMG{
 
 template<typename T>
 Image<T> Image<T>::LoadPNG(std::string filename){assert(false && "LoadPNG not yet implemented");}
@@ -10,4 +11,5 @@ void Image<T>::savePNG(std::string filename){assert(false && "SavePNG not yet im
 
 
 
+};
 };

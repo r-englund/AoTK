@@ -14,6 +14,7 @@
 
 
 namespace AoTK{
+namespace Math{
     template<int num_rows,int num_cols,typename T> struct Matrix{
         static_assert(num_rows>0 && num_cols>0,"Num_rows and num_cols cant be zero or negativ");
        template<int AA,int BB,typename TT>  friend struct Matrix;
@@ -265,4 +266,5 @@ namespace AoTK{
     }
 
 
+};
 };

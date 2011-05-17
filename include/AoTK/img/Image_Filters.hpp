@@ -1,5 +1,6 @@
 
 namespace AoTK{
+namespace IMG{
 template<typename T>
 template<typename T2> Image<T> Image<T>::convolution(const Image<T2> &img,_FILTER_WRAP wrap)const{
     if(!(std::is_same<T,float>::value || std::is_same<T,double>::value)){
@@ -41,4 +42,5 @@ template<typename T2> Image<T> Image<T>::correlation(const Image<T2> &img,_FILTE
 
 
 
+};
 };

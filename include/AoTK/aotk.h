@@ -6,6 +6,7 @@
 #include "image.h"
 #include "shader.h"
 #include "fbo.h"
+#include "geometry.h"
 #include "mesh.h"
 
 

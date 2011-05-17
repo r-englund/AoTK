@@ -7,31 +7,32 @@
 #include <map>
 
 namespace AoTK{
+namespace Mesh{
 
     struct Material{
-        Vector4<float> ambient_color;
-        Vector4<float> diffuse_color;
-        Vector4<float> specular_color;
-        Vector4<float> emission_color;
+        Math::Vector4<float> ambient_color;
+        Math::Vector4<float> diffuse_color;
+        Math::Vector4<float> specular_color;
+        Math::Vector4<float> emission_color;
         float specularity;
 
         Material():
-        ambient_color(Vector4<float>(0.2,0.2,0.2,1.0)),
-        diffuse_color(Vector4<float>(0.8,0.8,0.8,1.0)),
-        specular_color(Vector4<float>(0.3,0.3,0.3,1)),
-        emission_color(Vector4<float>(0,0,0,0)),
+        ambient_color(Math::Vector4<float>(0.2,0.2,0.2,1.0)),
+        diffuse_color(Math::Vector4<float>(0.8,0.8,0.8,1.0)),
+        specular_color(Math::Vector4<float>(0.3,0.3,0.3,1)),
+        emission_color(Math::Vector4<float>(0,0,0,0)),
         specularity(0)
         {}
     };
 
     struct Vertex{
-        Vector3<float> pos;
-        Vector3<float> normal;
+        Math::Vector3<float> pos;
+        Math::Vector3<float> normal;
         std::string material;
     };
 
     struct Face{
-        Vector3<float> normal;
+        Math::Vector3<float> normal;
         virtual ~Face(){}
     };
 
@@ -65,13 +66,13 @@ namespace AoTK{
         Mesh();
         virtual ~Mesh();
 
-        virtual bool addFace(std::vector<Vector3<float>> positions,std::string mat = "default");
-        virtual unsigned int addVertex(Vector3<float> position,std::string mat);
+        virtual bool addFace(std::vector<Math::Vector3<float>> positions,std::string mat = "default");
+        virtual unsigned int addVertex(Math::Vector3<float> position,std::string mat);
 
         virtual void calculateVertexNormals();
         virtual void calculateFaceNormals();
 
-        void loadFromWavefront(char * folder,char * filename,Matrix4x4<float> transform = Matrix4x4<float>());
+        void loadFromWavefront(char * folder,char * filename,Math::Matrix4x4<float> transform = Math::Matrix4x4<float>());
 
 protected:
         void loadFromWavefrontMaterials(const char * filename);
@@ -85,6 +86,7 @@ protected:
 
 
     };
+};
 };
 
 #endif

@@ -13,11 +13,14 @@ void Window::start(){
     while(__run){
         checkForMessages();
         idleEvent();
-        if(__dispFunc != NULL){
+        if(redisplay){
+            if(__dispFunc != NULL){
             __dispFunc();
         }
 //        getAllError("Main Loop",-1);
         swapBuffers();
+        redisplay = false;
+        }
     }
 
 }
@@ -31,7 +34,7 @@ void Window::stop(){
     __run = false;
 }
 
-void Window::addKeyboardListener(KeyboardListener *l){
+void Window::addKeyboardListener(Listeners::KeyboardListener *l){
     if(std::count(keyboardListeners.begin(),keyboardListeners.end(),l) == 0)
         keyboardListeners.push_back(l);
 }
@@ -49,7 +52,7 @@ unsigned int Window::addKeyImpulseListener(void (*l)(unsigned char key)){
     return __keyImpulseId++;
 }
 
-void Window::addResizeListener(ResizeListener *l){
+void Window::addResizeListener(Listeners::ResizeListener *l){
     if(std::count(resizeListeners.begin(),resizeListeners.end(),l) == 0)
         resizeListeners.push_back(l);
 }
@@ -60,7 +63,7 @@ unsigned int Window::addResizeListener(void (l)(unsigned int, unsigned int)){
 }
 
 
-void Window::addMouseListener(MouseListener *l){
+void Window::addMouseListener(Listeners::MouseListener *l){
     if(std::count(mouseListeners.begin(),mouseListeners.end(),l) == 0)
         mouseListeners.push_back(l);
 }
@@ -76,7 +79,7 @@ unsigned int Window::addMouseReleaseListener(void (*l)(MOUSE_BUTTON mb,unsigned 
 }
 
 
-void Window::addMouseMotionListener(MouseMotionListener *l){
+void Window::addMouseMotionListener(Listeners::MouseMotionListener *l){
     if(std::count(mouseMotionListeners.begin(),mouseMotionListeners.end(),l) == 0)
         mouseMotionListeners.push_back(l);
 }
@@ -92,7 +95,7 @@ unsigned int Window::addPassiveMouseMotionListener(void (*l)(int dx,int dy)){
 }
 
 
-void Window::addScrollListener(ScrollListener *l){
+void Window::addScrollListener(Listeners::ScrollListener *l){
     if(std::count(scrollListeners.begin(),scrollListeners.end(),l) == 0)
         scrollListeners.push_back(l);
 }
@@ -102,7 +105,7 @@ unsigned int Window::addScrollListener(void (*l)(int p)){
     return __scrollId++;
 }
 
-void Window::addIdleListener(IdleListener *l){
+void Window::addIdleListener(Listeners::IdleListener *l){
     if(std::count(idleListeners.begin(),idleListeners.end(),l) == 0)
         idleListeners.push_back(l);
 }
@@ -112,23 +115,23 @@ unsigned int Window::addIdleListener(void (*l)()){
     return __idleId++;
 }
 
-void Window::removeKeyboardListener(KeyboardListener *l){
+void Window::removeKeyboardListener(Listeners::KeyboardListener *l){
     while(std::count(keyboardListeners.begin(),keyboardListeners.end(),l) != 0)
         keyboardListeners.erase(std::find(keyboardListeners.begin(),keyboardListeners.end(),l));
 }
-void Window::removeResizeListener(ResizeListener *l){
+void Window::removeResizeListener(Listeners::ResizeListener *l){
     while(std::count(resizeListeners.begin(),resizeListeners.end(),l) != 0)
         resizeListeners.erase(std::find(resizeListeners.begin(),resizeListeners.end(),l));
 }
-void Window::removeMouseListener(MouseListener *l){
+void Window::removeMouseListener(Listeners::MouseListener *l){
     while(std::count(mouseListeners.begin(),mouseListeners.end(),l) != 0)
         mouseListeners.erase(std::find(mouseListeners.begin(),mouseListeners.end(),l));
 }
-void Window::removeMouseMotionListener(MouseMotionListener *l){
+void Window::removeMouseMotionListener(Listeners::MouseMotionListener *l){
     while(std::count(mouseMotionListeners.begin(),mouseMotionListeners.end(),l) != 0)
         mouseMotionListeners.erase(std::find(mouseMotionListeners.begin(),mouseMotionListeners.end(),l));
 }
-void Window::removeScrollListener(ScrollListener *l){
+void Window::removeScrollListener(Listeners::ScrollListener *l){
     while(std::count(scrollListeners.begin(),scrollListeners.end(),l) != 0)
         scrollListeners.erase(std::find(scrollListeners.begin(),scrollListeners.end(),l));
 }
@@ -255,9 +258,9 @@ void getAllError(std::string file, int line){
     int i = 0;
     GLenum err = glGetError();
     while(err != GL_NO_ERROR){
-//        static int i = 0;
-//        if(i++)
-//            return;
+        static int i = 0;
+        if(i++)
+            return;
         switch (err){
             case GL_NO_ERROR:
                 break;

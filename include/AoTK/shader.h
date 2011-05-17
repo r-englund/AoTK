@@ -7,6 +7,7 @@
 #include <vector>
 
 namespace AoTK{
+namespace GPU{
 class Shader
 {
     friend class ShaderProgram;
@@ -67,7 +68,8 @@ class ShaderProgram{
     protected:
         std::vector<Shader*> shaders;
         GLuint pgm;
-};
-};
+};//END CLASS
+};//END NAMESPACE GPU
+};//END NAMESPACE AOTK
 
 #endif // SHADER_H

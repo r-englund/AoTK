@@ -1,5 +1,6 @@
 
 namespace AoTK{
+namespace Math{
 
 template<typename T> Matrix4x4<T>::Matrix4x4(T a[16]){
     for(int i = 0;i<16;i++){
@@ -280,4 +281,5 @@ template<typename T> std::ostream &operator<<(std::ostream &os,const Matrix4x4<T
 
 
 
+};
 };

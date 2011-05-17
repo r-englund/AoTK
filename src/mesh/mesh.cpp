@@ -5,19 +5,22 @@
 #include <assert.h>
 
 namespace AoTK{
+namespace Mesh{
 
 float Triangle::triangleArea(const Vertex &v0,const Vertex &v1,const Vertex &v2){
-    Vector3<float> e1 = v1.pos-v0.pos;
-    Vector3<float> e2 = v2.pos-v0.pos;
+    Math::Vector3<float> e1 = v1.pos-v0.pos;
+    Math::Vector3<float> e2 = v2.pos-v0.pos;
     return e1.cross(e2).getLength()*0.5;
 }
 
-Mesh::Mesh(){}
+Mesh::Mesh(){
+
+}
 Mesh::~Mesh(){
     //TODO update
 }
 
-bool Mesh::addFace(std::vector<Vector3<float>> positions,std::string mat){
+bool Mesh::addFace(std::vector<Math::Vector3<float>> positions,std::string mat){
     assert(positions.size() == 3 || positions.size() == 4);
 
     unsigned int v0,v1,v2,v3;
@@ -25,9 +28,9 @@ bool Mesh::addFace(std::vector<Vector3<float>> positions,std::string mat){
     v1 = addVertex(positions[1],mat);
     v2 = addVertex(positions[2],mat);
 
-    Vector3<float> e1 = positions[1] - positions[0];
-    Vector3<float> e2 = positions[2] - positions[1];
-    Vector3<float> normal = e1.cross(e2);
+    Math::Vector3<float> e1 = positions[1] - positions[0];
+    Math::Vector3<float> e2 = positions[2] - positions[1];
+    Math::Vector3<float> normal = e1.cross(e2);
     normal.normalize();
 
 
@@ -52,19 +55,19 @@ bool Mesh::addFace(std::vector<Vector3<float>> positions,std::string mat){
     }
     return false;
 }
-unsigned int Mesh::addVertex(Vector3<float> position,std::string mat){
-    int a = 0;
-    for(auto i = vertices.begin();i<vertices.end();++i){
-        if((i->pos-position).getLength()<0.00001){
-            assert(a == ((int)&*i - (int)&*vertices.begin())/sizeof(Vertex));
-            return a;
-        }
-        a++;
-    }
+unsigned int Mesh::addVertex(Math::Vector3<float> position,std::string mat){
+//    int a = 0;
+//    for(auto i = vertices.begin();i<vertices.end();++i){
+//        if((i->pos-position).getLength()<0.00001){
+//            assert(a == ((int)&*i - (int)&*vertices.begin())/sizeof(Vertex));
+//            return a;
+//        }
+//        a++;
+//    }
 
     Vertex v;
     v.pos = position;
-    v.normal = AoTK::Vector3<float>(0,1,0);
+    v.normal = AoTK::Math::Vector3<float>(0,1,0);
     v.material = mat;
 
     vertices.push_back(v);
@@ -74,7 +77,7 @@ unsigned int Mesh::addVertex(Vector3<float> position,std::string mat){
 
 void Mesh::calculateVertexNormals(){
     for(auto v = vertices.begin();v!=vertices.end();++v){
-        v->normal = Vector3<float>(0,0,0);
+        v->normal = Math::Vector3<float>(0,0,0);
     }
 
     for(auto m = triangles.begin();m!=triangles.end();++m)
@@ -99,7 +102,7 @@ void Mesh::calculateVertexNormals(){
 void Mesh::calculateFaceNormals(){
     for(auto m = triangles.begin();m!=triangles.end();++m)
     for(auto t = m->second.begin();t!=m->second.end();++t){
-        Vector3<float> e1,e2;
+        Math::Vector3<float> e1,e2;
         e1 = v(t->v1).pos - v(t->v0).pos;
         e2 = v(t->v2).pos - v(t->v1).pos;
         e1.normalize();
@@ -109,7 +112,7 @@ void Mesh::calculateFaceNormals(){
     }
     for(auto m = quads.begin();m!=quads.end();++m)
     for(auto t = m->second.begin();t!=m->second.end();++t){
-        Vector3<float> e1,e2;
+        Math::Vector3<float> e1,e2;
         e1 = v(t->v1).pos - v(t->v0).pos;
         e2 = v(t->v2).pos - v(t->v1).pos;
         e1.normalize();
@@ -159,8 +162,8 @@ void Mesh::loadFromWavefrontMaterials(const char * filename){
     }while(!f.eof());
 }
 
-void Mesh::loadFromWavefront(char * folder,char * filename,Matrix4x4<float> transform){
-    if(transform != Matrix4x4<float>()){
+void Mesh::loadFromWavefront(char * folder,char * filename,Math::Matrix4x4<float> transform){
+    if(transform != Math::Matrix4x4<float>()){
         std::cerr << "loadFromWavefront with transform matrix is not yet supported in " << __FILE__ << " at line " << __LINE__ << std::endl;
     }
     std::ifstream f;
@@ -169,8 +172,8 @@ void Mesh::loadFromWavefront(char * folder,char * filename,Matrix4x4<float> tran
     f.open(ss.str().c_str());
     assert(f.good());
     std::string s,current_mat = "default";
-    std::vector<Vector3<float>> vertices;
-    vertices.push_back(Vector3<float>()); //Add dummy vert since indices start at 1 (not zero) in wavefron file format
+    std::vector<Math::Vector3<float>> vertices;
+    vertices.push_back(Math::Vector3<float>()); //Add dummy vert since indices start at 1 (not zero) in wavefron file format
     f >> s;
 
     while(!f.eof()){
@@ -194,15 +197,23 @@ void Mesh::loadFromWavefront(char * folder,char * filename,Matrix4x4<float> tran
 //                std::cout << "Comment: " << c << std::endl;
             }
             else if(s[0] == 'v'){
-                Vector3<float> v;
+                Math::Vector3<float> v;
                 f >> v.x;
                 f >> v.y;
                 f >> v.z;
-//                v = transform * v;
+//                Vector4<float> v4;
+//                v4.x = v.x;
+//                v4.y = v.y;
+//                v4.z = v.z;
+//                v4.w = 1.0;
+//                v4 = transform * v4;
+//                v.x = v4.x;
+//                v.y = v4.y;
+//                v.z = v4.z;
                 vertices.push_back(v);
             }
             else if(s[0] == 'f'){
-                std::vector<Vector3<float>> positions;
+                std::vector<Math::Vector3<float>> positions;
                 uint32_t i;
                 f >> i;
                 positions.push_back(vertices[i]);
@@ -240,4 +251,5 @@ void Mesh::loadFromWavefront(char * folder,char * filename,Matrix4x4<float> tran
 }
 
 
+};
 };

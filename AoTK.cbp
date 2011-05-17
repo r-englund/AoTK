@@ -50,6 +50,11 @@
 		<Unit filename="include\AoTK\externals\glxew.h" />
 		<Unit filename="include\AoTK\externals\wglew.h" />
 		<Unit filename="include\AoTK\fbo.h" />
+		<Unit filename="include\AoTK\geometry.h" />
+		<Unit filename="include\AoTK\geometry\line.hpp" />
+		<Unit filename="include\AoTK\geometry\plane.hpp" />
+		<Unit filename="include\AoTK\geometry\ray.hpp" />
+		<Unit filename="include\AoTK\geometry\sphere.hpp" />
 		<Unit filename="include\AoTK\image.h" />
 		<Unit filename="include\AoTK\img\Image.hpp" />
 		<Unit filename="include\AoTK\img\Image_BMP.hpp" />

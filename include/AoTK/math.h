@@ -55,6 +55,7 @@
 #endif
 
 namespace AoTK{
+namespace Math{
     template<int,int,typename T> struct Matrix;
     template<typename T = float> struct Matrix4x4;
     template<typename T = float> struct Vector2;
@@ -287,25 +288,7 @@ namespace AoTK{
 
 
     };
-
-//    template<typename V> std::ostream &operator<<(std::ostream &os,const Vector2<V> &v){}
-//    template<typename V> std::ostream &operator<<(std::ostream &os,const Vector3<V> &v){}
-//    template<typename V> std::ostream &operator<<(std::ostream &os,const Vector4<V> &v){}
-
-//    template<typename T,typename T2> Vector2<T> operator*(T2 t,const Vector2<T> &v);
-//    template<typename T,typename T2> Vector2<T> operator+(T2 t,const Vector2<T> &v);
-//    template<typename T,typename T2> Vector2<T> operator-(T2 t,const Vector2<T> &v);
-//    template<typename T,typename T2> Vector2<T> operator/(T2 t,const Vector2<T> &v);
-//
-//    template<typename T,typename T2> Vector3<T> operator*(T2 t,const Vector3<T> &v);
-////    template<typename T,typename T2> Vector3<T> operator+(T2 t,const Vector3<T> &v);
-//    template<typename T,typename T2> Vector3<T> operator-(T2 t,const Vector3<T> &v);
-//    template<typename T,typename T2> Vector3<T> operator/(T2 t,const Vector3<T> &v);
-//
-//    template<typename T,typename T2> Vector4<T> operator*(T2 t,const Vector4<T> &v);
-//    template<typename T,typename T2> Vector4<T> operator+(T2 t,const Vector4<T> &v);
-//    template<typename T,typename T2> Vector4<T> operator-(T2 t,const Vector4<T> &v);
-//    template<typename T,typename T2> Vector4<T> operator/(T2 t,const Vector4<T> &v);
+};
 };
 
 //#ifndef AOTK_MATH_ONLY_TYPES

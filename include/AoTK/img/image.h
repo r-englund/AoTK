@@ -65,6 +65,7 @@
 
 
 namespace AoTK{
+namespace IMG{
     enum INTERPOLATION{
         NEAREST_NEIGHBOUR,
         LINEAR
@@ -163,6 +164,7 @@ namespace AoTK{
 
     };
 
+};
 };
 
 #include "Image.hpp"

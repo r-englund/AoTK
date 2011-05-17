@@ -2,6 +2,7 @@
 
 
 namespace AoTK{
+namespace IMG{
 
 template<> template<> Image<float>::Image(const Image<uint8_t> &img):
     width(img.width),
@@ -32,4 +33,5 @@ template<> template<> Image<float>::Image(const Image<double> &img):
     }
 }
 
+};
 };

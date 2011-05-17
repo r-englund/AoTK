@@ -2,6 +2,7 @@
 
 
 namespace AoTK{
+namespace IMG{
 
 
 template<typename T> Image<T> Image<T>::SobelXKernel(uint16_t size){
@@ -81,4 +82,5 @@ template<typename T> Image<T> Image<T>::random(uint16_t w,uint16_t h,uint16_t c)
 
 
 
+};
 };

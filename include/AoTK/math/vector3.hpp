@@ -1,5 +1,6 @@
 
 namespace AoTK{
+namespace Math{
 
 template<typename T> Vector3<T>::Vector3(T _x,T _y, T _z){
     x = _x;
@@ -204,4 +205,5 @@ template<typename T2> inline bool Vector3<T>::operator>=(const Vector3<T2> &m)co
 //}
 
 
+};
 };
