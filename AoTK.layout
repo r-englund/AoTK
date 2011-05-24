@@ -1,103 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="" />
-	<File name="include\AoTK\aotk.h" open="1" top="0" tabpos="6">
-		<Cursor position="159" topLine="0" />
-	</File>
-	<File name="include\AoTK\fbo.h" open="0" top="0" tabpos="0">
-		<Cursor position="968" topLine="17" />
-	</File>
-	<File name="include\AoTK\geometry.h" open="1" top="0" tabpos="5">
-		<Cursor position="188" topLine="0" />
-	</File>
-	<File name="include\AoTK\geometry\line.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="126" topLine="0" />
-	</File>
-	<File name="include\AoTK\geometry\plane.hpp" open="1" top="1" tabpos="8">
-		<Cursor position="771" topLine="6" />
-	</File>
-	<File name="include\AoTK\geometry\ray.hpp" open="1" top="0" tabpos="9">
-		<Cursor position="326" topLine="3" />
-	</File>
-	<File name="include\AoTK\geometry\sphere.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="1285" topLine="12" />
-	</File>
-	<File name="include\AoTK\img\Image.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="9160" topLine="287" />
-	</File>
-	<File name="include\AoTK\img\Image_BMP.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="5926" topLine="186" />
-	</File>
-	<File name="include\AoTK\img\Image_Filters.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="1911" topLine="23" />
-	</File>
-	<File name="include\AoTK\img\Image_GIF.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="36" topLine="0" />
-	</File>
-	<File name="include\AoTK\img\Image_GL.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="8229" topLine="241" />
-	</File>
-	<File name="include\AoTK\img\Image_JPG.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="277" topLine="0" />
-	</File>
-	<File name="include\AoTK\img\Image_PNG.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="287" topLine="0" />
-	</File>
-	<File name="include\AoTK\img\Image_Static_Functions.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="2642" topLine="62" />
-	</File>
-	<File name="include\AoTK\img\Image_float.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="833" topLine="14" />
-	</File>
-	<File name="include\AoTK\img\Image_uint8.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="842" topLine="0" />
-	</File>
-	<File name="include\AoTK\img\image.h" open="0" top="0" tabpos="0">
-		<Cursor position="5001" topLine="161" />
-	</File>
-	<File name="include\AoTK\math.h" open="1" top="0" tabpos="4">
-		<Cursor position="9392" topLine="279" />
-	</File>
-	<File name="include\AoTK\math\matrix.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="8191" topLine="246" />
-	</File>
-	<File name="include\AoTK\math\matrix4x4.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="7047" topLine="261" />
-	</File>
-	<File name="include\AoTK\math\vector2.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="4534" topLine="161" />
-	</File>
-	<File name="include\AoTK\math\vector3.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="5167" topLine="185" />
-	</File>
-	<File name="include\AoTK\math\vector4.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="5229" topLine="188" />
-	</File>
-	<File name="include\AoTK\mesh.h" open="0" top="0" tabpos="0">
-		<Cursor position="615" topLine="12" />
-	</File>
-	<File name="include\AoTK\shader.h" open="0" top="0" tabpos="0">
-		<Cursor position="1371" topLine="42" />
-	</File>
-	<File name="include\AoTK\window\listeners.h" open="0" top="0" tabpos="0">
-		<Cursor position="1209" topLine="0" />
-	</File>
 	<File name="include\AoTK\window\window.h" open="0" top="0" tabpos="0">
-		<Cursor position="4661" topLine="142" />
+		<Cursor position="5545" topLine="132" />
 	</File>
 	<File name="include\AoTK\window_handler.h" open="0" top="0" tabpos="0">
-		<Cursor position="486" topLine="21" />
+		<Cursor position="216" topLine="46" />
 	</File>
-	<File name="src\fbo.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="6067" topLine="164" />
-	</File>
-	<File name="src\mesh\mesh.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="7950" topLine="231" />
-	</File>
-	<File name="src\shader.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3488" topLine="126" />
+	<File name="src\fbo.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="2462" topLine="60" />
 	</File>
 	<File name="src\window\window.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4402" topLine="136" />
+		<Cursor position="7603" topLine="203" />
+	</File>
+	<File name="src\window\window_win.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5962" topLine="195" />
 	</File>
 </CodeBlocks_layout_file>

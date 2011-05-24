@@ -25,9 +25,13 @@ void Window::start(){
 
 }
 
-void Window::getSize(uint16_t &w,uint16_t &h)const{
-    w = this->width;
-    h = this->height;
+void Window::getClientSize(uint16_t &w,uint16_t &h)const{
+    w = this->client_width;
+    h = this->client_height;
+}
+void Window::getWindowSize(uint16_t &w,uint16_t &h)const{
+    w = this->window_width;
+    h = this->window_height;
 }
 
 void Window::stop(){
@@ -208,11 +212,12 @@ void Window::keyImpulseEvent(unsigned char key){
     for(auto l = keyImpuleListenerFunctions.begin();l != keyImpuleListenerFunctions.end();++l)
         (l->second)(key);
 }
-void Window::resizeEvent(unsigned int w,unsigned int h){
+void Window::resizeEvent(){
+    setSizes();
     for(auto l = resizeListeners.begin();l != resizeListeners.end();++l)
-        (*l)->resize(w,h);
+        (*l)->resize(client_width,client_height);
     for(auto l = resizeListenerFunctions.begin();l != resizeListenerFunctions.end();++l)
-        (l->second)(w,h);
+        (l->second)(client_width,client_height);
 }
 void Window::mousePressEvent(MOUSE_BUTTON mb,unsigned int x,unsigned int y){
     for(auto l = mouseListeners.begin();l != mouseListeners.end();++l)

@@ -204,7 +204,8 @@ KEY translateKEY(WPARAM w);
                 __window->keyImpulseEvent((unsigned char)wParam);
                 break;
             case WM_SIZE:
-                __window->resizeEvent(LOWORD(lParam),HIWORD(lParam));
+                __window->resizeEvent();
+//                __window->resizeEvent(LOWORD(lParam),HIWORD(lParam));
                 break;
             case WM_LBUTTONUP:
                 __window->mouseReleaseEvent(LEFT_BUTTON,LOWORD(lParam),HIWORD(lParam));
@@ -355,8 +356,8 @@ KEY translateKEY(WPARAM w);
 
     Window* Window::createWindow(uint16_t width,uint16_t height,std::string title,bool force32){
         __window = new Window();
-        __window->width = width;
-        __window->height = height;
+        __window->window_width = width;
+        __window->window_height = height;
         char t[500];
         GetConsoleTitleA( t, 500 );
         __window->hwndConsole = FindWindowA( NULL, t );;
@@ -481,7 +482,20 @@ KEY translateKEY(WPARAM w);
         else
             std::cout << "VBO suport: NOT OK" << std::endl;
 
+        __window->setSizes();
+
         return __window;
+    }
+
+    void Window::setSizes(){
+        RECT lpRect;
+        GetClientRect(hwnd,&lpRect);
+        client_width = lpRect.right-lpRect.left;
+        client_height = lpRect.bottom - lpRect.top;
+
+        GetWindowRect(hwnd,&lpRect);
+        window_width = lpRect.right-lpRect.left;
+        window_height = lpRect.bottom - lpRect.top;
     }
 
     void Window::checkForMessages(){

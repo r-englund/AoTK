@@ -29,7 +29,8 @@ namespace AoTK{
         std::vector<Listeners::IdleListener*> idleListeners;
         std::map<int,void (*)()> idleListenerFunctions;  unsigned int __idleId;
 
-        uint16_t width,height;
+        uint16_t window_width,window_height;
+        uint16_t client_width,client_height;
         std::string title;
 
         bool redisplay;
@@ -41,8 +42,10 @@ namespace AoTK{
         mouseListeners(),
         mouseMotionListeners(),
         scrollListeners(),
-        width(0),
-        height(0),
+        window_width(0),
+        window_height(0),
+        client_width(0),
+        client_height(0),
         title(""),
         __run(false),
         __dispFunc(false),
@@ -73,6 +76,7 @@ namespace AoTK{
 
         void checkForMessages();
         void swapBuffers();
+        void setSizes();
 
 
         bool __run;
@@ -139,7 +143,7 @@ namespace AoTK{
         void keyDownEvent(KEY key);
         void keyUpEvent(KEY key);
         void keyImpulseEvent(unsigned char key);
-        void resizeEvent(unsigned int w,unsigned int h);
+        void resizeEvent();
         void mousePressEvent(MOUSE_BUTTON mb,unsigned int x,unsigned int y);
         void mouseReleaseEvent(MOUSE_BUTTON mb,unsigned int x,unsigned int y);
         void mousemotionEvent(int dx,int dy);
@@ -157,7 +161,8 @@ namespace AoTK{
             __dispFunc = dispFunc;
         }
 
-        void getSize(uint16_t &width,uint16_t &height)const;
+        void getWindowSize(uint16_t &width,uint16_t &height)const;
+        void getClientSize(uint16_t &width,uint16_t &height)const;
     };
 };
 
