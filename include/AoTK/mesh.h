@@ -66,13 +66,13 @@ namespace Mesh{
         Mesh();
         virtual ~Mesh();
 
-        virtual bool addFace(std::vector<Math::Vector3<float>> positions,std::string mat = "default");
-        virtual unsigned int addVertex(Math::Vector3<float> position,std::string mat);
+        virtual bool addFace(std::vector<Math::Vector3<float>> positions,std::string mat = "default",bool smooth = true);
+        virtual unsigned int addVertex(Math::Vector3<float> position,std::string mat,bool smooth = true);
 
         virtual void calculateVertexNormals();
         virtual void calculateFaceNormals();
 
-        void loadFromWavefront(char * folder,char * filename,Math::Matrix4x4<float> transform = Math::Matrix4x4<float>());
+        void loadFromWavefront(char * folder,char * filename, bool smooth,Math::Matrix4x4<float> transform = Math::Matrix4x4<float>());
 
 protected:
         void loadFromWavefrontMaterials(const char * filename);

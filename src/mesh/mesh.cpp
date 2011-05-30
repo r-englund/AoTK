@@ -20,13 +20,13 @@ Mesh::~Mesh(){
     //TODO update
 }
 
-bool Mesh::addFace(std::vector<Math::Vector3<float>> positions,std::string mat){
+bool Mesh::addFace(std::vector<Math::Vector3<float>> positions,std::string mat,bool smooth){
     assert(positions.size() == 3 || positions.size() == 4);
 
     unsigned int v0,v1,v2,v3;
-    v0 = addVertex(positions[0],mat);
-    v1 = addVertex(positions[1],mat);
-    v2 = addVertex(positions[2],mat);
+    v0 = addVertex(positions[0],mat,smooth);
+    v1 = addVertex(positions[1],mat,smooth);
+    v2 = addVertex(positions[2],mat,smooth);
 
     Math::Vector3<float> e1 = positions[1] - positions[0];
     Math::Vector3<float> e2 = positions[2] - positions[1];
@@ -35,7 +35,7 @@ bool Mesh::addFace(std::vector<Math::Vector3<float>> positions,std::string mat){
 
 
     if(positions.size() == 4){
-        v3 = addVertex(positions[3],mat);
+        v3 = addVertex(positions[3],mat,smooth);
         Quad q;
         q.v0 = v0;
         q.v1 = v1;
@@ -55,15 +55,15 @@ bool Mesh::addFace(std::vector<Math::Vector3<float>> positions,std::string mat){
     }
     return false;
 }
-unsigned int Mesh::addVertex(Math::Vector3<float> position,std::string mat){
-//    int a = 0;
-//    for(auto i = vertices.begin();i<vertices.end();++i){
-//        if((i->pos-position).getLength()<0.00001){
-//            assert(a == ((int)&*i - (int)&*vertices.begin())/sizeof(Vertex));
-//            return a;
-//        }
-//        a++;
-//    }
+unsigned int Mesh::addVertex(Math::Vector3<float> position,std::string mat,bool smooth){
+    int a = 0;
+    for(auto i = vertices.begin();i<vertices.end()&&smooth;++i){
+        if((i->pos-position).getLength()<0.00001){
+            assert(a == ((int)&*i - (int)&*vertices.begin())/sizeof(Vertex));
+            return a;
+        }
+        a++;
+    }
 
     Vertex v;
     v.pos = position;
@@ -73,7 +73,6 @@ unsigned int Mesh::addVertex(Math::Vector3<float> position,std::string mat){
     vertices.push_back(v);
     return vertices.size()-1;
 }
-
 
 void Mesh::calculateVertexNormals(){
     for(auto v = vertices.begin();v!=vertices.end();++v){
@@ -162,7 +161,7 @@ void Mesh::loadFromWavefrontMaterials(const char * filename){
     }while(!f.eof());
 }
 
-void Mesh::loadFromWavefront(char * folder,char * filename,Math::Matrix4x4<float> transform){
+void Mesh::loadFromWavefront(char * folder,char * filename, bool smooth,Math::Matrix4x4<float> transform){
     if(transform != Math::Matrix4x4<float>()){
         std::cerr << "loadFromWavefront with transform matrix is not yet supported in " << __FILE__ << " at line " << __LINE__ << std::endl;
     }
@@ -225,7 +224,7 @@ void Mesh::loadFromWavefront(char * folder,char * filename,Math::Matrix4x4<float
 //                    std::cout << "Found Quad" << std::endl;
 //                    positions.push_back(vertices[i]);
 //                }
-                this->addFace(positions,current_mat);
+                this->addFace(positions,current_mat,smooth);
             }else{
                 std::cout << s << std::endl;
             }
