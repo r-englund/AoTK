@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="" />
-	<File name="include\AoTK\window\window.h" open="0" top="0" tabpos="0">
-		<Cursor position="5545" topLine="132" />
+	<File name="include\AoTK\mesh.h" open="0" top="0" tabpos="0">
+		<Cursor position="2119" topLine="68" />
 	</File>
-	<File name="include\AoTK\window_handler.h" open="0" top="0" tabpos="0">
-		<Cursor position="216" topLine="46" />
-	</File>
-	<File name="src\fbo.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="2462" topLine="60" />
-	</File>
-	<File name="src\window\window.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="7603" topLine="203" />
-	</File>
-	<File name="src\window\window_win.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="5962" topLine="195" />
+	<File name="src\mesh\mesh.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="7382" topLine="208" />
 	</File>
 </CodeBlocks_layout_file>
