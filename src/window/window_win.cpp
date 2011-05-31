@@ -1,8 +1,8 @@
 
-
-#ifdef _WIN32
-
 #include <AoTK/window_handler.h>
+
+#ifdef AoTK_WIN
+
 
 #include <assert.h>
 

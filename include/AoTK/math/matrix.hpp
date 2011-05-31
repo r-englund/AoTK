@@ -1,3 +1,6 @@
+#ifndef _AOTK_MATRIX_HPP_
+#define _AOTK_MATRIX_HPP_
+
 /**
 *@file
 *@author Rickard Englund (rickard@r-englund.com)
@@ -268,3 +271,4 @@ namespace Math{
 
 };
 };
+#endif

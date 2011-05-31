@@ -1,8 +1,7 @@
 #include <AoTK/window_handler.h>
+#include <AoTK/math.h>
 
 #ifdef AoTK_GLUT
-
-#include <AoTK/window_handler.h>
 
 #include <assert.h>
 #include <string.h>
@@ -43,6 +42,8 @@ namespace AoTK{
     }
 
     void resize(int w, int h){Window::getWindow()->resizeEvent();}
+    AoTK::Math::Vector2<float> oldPassive(-1,-1),oldActive(-1,-1);
+
     void mouseClick(int button, int state, int x, int y){
         if(state == GLUT_DOWN){
             switch(button){
@@ -56,6 +57,8 @@ namespace AoTK{
                     Window::getWindow()->mousePressEvent(AoTK::MOUSE_BUTTON::MIDDLE_BUTTON,x,y);
                     break;
             }
+            oldActive.x = x;
+            oldActive.y = y;
         }else{
             switch(button){
                 case GLUT_LEFT_BUTTON:
@@ -68,13 +71,38 @@ namespace AoTK{
                     Window::getWindow()->mouseReleaseEvent(AoTK::MOUSE_BUTTON::MIDDLE_BUTTON,x,y);
                     break;
             }
+            oldPassive.x = x;
+            oldPassive.y = y;
         }
     }
     void passiveMotion(int x, int y){
-        std::cout << "Passive motion not yet supported" << std::endl;
+        if(oldPassive.x == -1 || oldPassive.y == -1){
+            oldPassive.x = x;
+            oldPassive.y = y;
+        }
+        int dx,dy;
+        dx = oldPassive.x - x;
+        dy = oldPassive.y - y;
+        Window::getWindow()->passiveMousemotionEvent(-dx,-dy);
+        //std::cout << "Passive motion not yet supported" << std::endl;
     }
     void motion(int x, int y){
-        std::cout << "Motion not yet supported" << std::endl;
+        int dx,dy;
+        dx = oldActive.x - x;
+        dy = oldActive.y - y;
+        Window::getWindow()->mousemotionEvent(-dx,-dy);
+    }
+
+    void keyboard(unsigned char key,int x, int y){
+        std::cout << "to do, implement";
+        __window->keyImpulseEvent(key);
+
+
+    }
+    void keyboardUp(unsigned char key,int x, int y){
+        std::cout << "to do, implement";
+        __window->keyImpulseEvent(key);
+
     }
 
     Window* Window::createWindow(uint16_t width,uint16_t height,std::string title,bool force32){
@@ -86,7 +114,10 @@ namespace AoTK{
 
         int i;
         char *c[1];
-        c[0] =strdup (title.c_str());
+        c[0] = new char[title.length()];
+        for(int i=0;i<title.length();i++){
+            c[0][i] = title[i];
+        }
         glutInit(&i,c);
 
         glutInitWindowSize(width,height);
@@ -113,8 +144,10 @@ namespace AoTK{
         glutIdleFunc(idle);
         glutReshapeFunc(resize);
         glutMouseFunc(mouseClick);
-        glutMotionFunc(passiveMotion);
-        glutPassiveMotionFunc(motion);
+        glutPassiveMotionFunc(passiveMotion);
+        glutMotionFunc(motion);
+        glutKeyboardFunc(keyboard);
+        glutKeyboardUpFunc(keyboardUp);
 
         __window->setSizes();
 

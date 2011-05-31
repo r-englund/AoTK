@@ -49,7 +49,7 @@ namespace AoTK{
         title(""),
         __run(false),
         __dispFunc(false),
-        #ifdef _WIN32
+        #ifdef AoTK_WIN
         hwndConsole(NULL),
         hwnd(),
         hInst(),
@@ -84,7 +84,7 @@ namespace AoTK{
 
         void (*__dispFunc)(void);
 
-        #ifdef _WIN32
+        #ifdef AoTK_WIN
         HWND hwndConsole; //Window handler for the console
         HWND hwnd;        //Window handler
         HINSTANCE hInst;  //APplication instance
@@ -101,6 +101,8 @@ namespace AoTK{
         friend void mouseClick(int button, int state, int x, int y);
         friend void passiveMotion(int x, int y);
         friend void motion(int x, int y);
+        friend void keyboard(unsigned char key,int x, int y);
+        friend void keyboardUp(unsigned char key,int x, int y);
         #endif
 
 

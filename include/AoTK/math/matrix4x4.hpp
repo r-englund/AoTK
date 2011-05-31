@@ -1,3 +1,5 @@
+#ifndef _AOTK_MATRIX4X4_HPP_
+#define _AOTK_MATRIX4x4_HPP_
 
 namespace AoTK{
 namespace Math{
@@ -285,3 +287,5 @@ template<typename T> std::ostream &operator<<(std::ostream &os,const Matrix4x4<T
 
 };
 };
+
+#endif

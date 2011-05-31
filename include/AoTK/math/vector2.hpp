@@ -1,4 +1,5 @@
-
+#ifndef _AOTK_VECTOR2_HPP_
+#define _AOTK_VECTOR2_HPP_
 
 
 namespace AoTK{
@@ -181,3 +182,4 @@ template<typename T,typename T2> Vector2<T> operator/(T2 t,const Vector2<T> &v){
 
 };
 };
+#endif

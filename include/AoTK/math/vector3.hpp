@@ -1,4 +1,5 @@
-
+#ifndef _AOTK_VECTOR3_HPP_
+#define _AOTK_VECTOR3_HPP_
 namespace AoTK{
 namespace Math{
 
@@ -207,3 +208,4 @@ template<typename T2> inline bool Vector3<T>::operator>=(const Vector3<T2> &m)co
 
 };
 };
+#endif

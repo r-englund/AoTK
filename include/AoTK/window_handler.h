@@ -7,32 +7,40 @@
 #include <vector>
 #include <algorithm>
 
+#define AoTK_FORCE_GLUT
 
-#ifdef _WIN32
+#if defined(_WIN32) && !defined(AoTK_FORCE_GLUT)
 
-#pragma comment(lib, "gdi32")
-#pragma comment(lib, "kernel32")
-#pragma comment(lib, "user32")
+#define AoTK_WIN
 
+    #pragma comment(lib, "gdi32")
+    #pragma comment(lib, "kernel32")
+    #pragma comment(lib, "user32")
 
-#define GLEW_STATIC
-#include <windows.h>
-#include <AoTK/externals/glew.h>
-#include <AoTK/externals/wglew.h>
+    #define GLEW_STATIC
+    #include <windows.h>
+    #include <AoTK/externals/glew.h>
+    #include <AoTK/externals/wglew.h>
 
-#elif defined(UNIX) //UNIX
-#define AoTK_UNIX
-#include <AoTK/externals/glew.h>
-#include <AoTK/externals/glxew.h>
+#elif defined(UNIX) && !defined(AoTK_FORCE_GLUT)
+
+    #define AoTK_UNIX
+    #include <AoTK/externals/glew.h>
+    #include <AoTK/externals/glxew.h>
 
 #else //anything else uses glut for the moment
-#define AoTK_GLUT
-#include <AoTK/externals/glew.h>
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
+    #define AoTK_GLUT
+    #define GLEW_STATIC
+    #if defined(_WIN32)
+        #include <windows.h>
+        #define GLUT_DISABLE_ATEXIT_HACK
+    #endif
+    #include <AoTK/externals/glew.h>
+    #ifdef __APPLE__
+        #include <GLUT/glut.h>
+    #else
+        #include <GL/glut.h>
+    #endif
 #endif
 
 #define GLERRORS() AoTK::getAllError(__FILE__,__LINE__)
