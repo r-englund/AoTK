@@ -20,10 +20,19 @@
 #include <AoTK/externals/glew.h>
 #include <AoTK/externals/wglew.h>
 
-#else //UNIX
+#elif defined(UNIX) //UNIX
 #define AoTK_UNIX
 #include <AoTK/externals/glew.h>
 #include <AoTK/externals/glxew.h>
+
+#else //anything else uses glut for the moment
+#define AoTK_GLUT
+#include <AoTK/externals/glew.h>
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 #endif
 
 #define GLERRORS() AoTK::getAllError(__FILE__,__LINE__)

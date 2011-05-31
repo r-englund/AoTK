@@ -7,6 +7,7 @@ Window * Window::getWindow(){
     return __window;
 }
 
+#ifndef AoTK_GLUT
 void Window::start(){
     std::cout << "starting" << std::endl;
     __run = true;
@@ -24,6 +25,7 @@ void Window::start(){
     }
 
 }
+#endif
 
 void Window::getClientSize(uint16_t &w,uint16_t &h)const{
     w = this->client_width;

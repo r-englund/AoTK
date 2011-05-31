@@ -94,6 +94,14 @@ namespace AoTK{
         HGLRC hRC;         //rendering content
 
         #endif
+        #ifdef AoTK_GLUT
+        friend void display();
+        friend void idle();
+        friend void resize(int w, int h);
+        friend void mouseClick(int button, int state, int x, int y);
+        friend void passiveMotion(int x, int y);
+        friend void motion(int x, int y);
+        #endif
 
 
     public:
