@@ -1,6 +1,7 @@
 
 
 namespace AoTK{
+namespace IMG{
 struct BMPMAGIC{
     unsigned char magic[2];
 };
@@ -205,4 +206,5 @@ Image<uint8_t> Image<uint8_t>::LoadBMP(std::string filename){
     fclose(file);
     return i;
 }
+};
 };

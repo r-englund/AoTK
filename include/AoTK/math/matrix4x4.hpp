@@ -1,5 +1,6 @@
 
 namespace AoTK{
+namespace Math{
 
 template<typename T> Matrix4x4<T>::Matrix4x4(T a[16]){
     for(int i = 0;i<16;i++){
@@ -220,20 +221,20 @@ template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateZ(T deg){
     return m;
 }
 template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateAxis(T deg,T x,T y,T z){
+    if((sqrt(x*x+y*y+z*z)-1.0)>0.01){
+        std::cout << x << " " << y << " " << z<< " " << std::endl;
+    }
     Matrix4x4<T> m;
     float c = cos(deg);
     float s = sin(deg);
-    m.xx = c+x*x*(1-c);
-    m.yx = x*y*(1-c)-z*s;
-    m.zx = x*z*(1-c)-y*s;
 
-    m.xy = y*x*(1-c)+z*s;
-    m.yy = c+y*y*(1-c);
-    m.zy = y*z*(1-c)-x*s;
+//    m.xx = x*x*(1-c)+c;     m.yx = x*y*(1-c)-z*s;   m.zx = x*z*(1-c)+y*s;
+//    m.xy = y*x*(1-c)+z*s;   m.yy = y*y*(1-c)+c;     m.zy = y*z*(1-c)-x*s;
+//    m.xz = z*x*(1-c)-y*s;   m.yz = z*y*(1-c)+x*s;   m.zz = z*z*(1-c)+c;
 
-    m.xz = z*x*(1-c)-y*s;
-    m.yz = z*y*(1-c)+z*s;
-    m.zz = c+z*z*(1-c);
+    m.xx = x*x*(1-c)+c;     m.xy = x*y*(1-c)-z*s;   m.xz = x*z*(1-c)+y*s;
+    m.yx = y*x*(1-c)+z*s;   m.yy = y*y*(1-c)+c;     m.yz = y*z*(1-c)-x*s;
+    m.zx = z*x*(1-c)-y*s;   m.zy = z*y*(1-c)+x*s;   m.zz = z*z*(1-c)+c;
 
     return m;
 }
@@ -280,4 +281,7 @@ template<typename T> std::ostream &operator<<(std::ostream &os,const Matrix4x4<T
 
 
 
+
+
+};
 };

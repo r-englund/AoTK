@@ -6,6 +6,7 @@
 
 
 namespace AoTK{
+namespace GPU{
     class FBO{
         std::vector<GLuint> attachment;
         uint16_t _w,_h;
@@ -33,6 +34,7 @@ namespace AoTK{
 
         void render(uint8_t attatchemntID = 0); // render on a fullscreen quad
     };
+};
 };
 
 #endif

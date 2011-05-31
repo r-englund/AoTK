@@ -55,6 +55,7 @@
 #endif
 
 namespace AoTK{
+namespace Math{
     template<int,int,typename T> struct Matrix;
     template<typename T = float> struct Matrix4x4;
     template<typename T = float> struct Vector2;
@@ -91,10 +92,10 @@ namespace AoTK{
                 T _2d[4][4];
             };
             struct{
-                T xx,xy,xz,xw,
-                  yx,yy,yz,yw,
-                  zx,zy,zz,zw,
-                  wx,wy,wz,ww;
+                T xx,xy,xz,xw, //column 1
+                  yx,yy,yz,yw, //column 2
+                  zx,zy,zz,zw, //column 3
+                  wx,wy,wz,ww; //column 4
             };
         };
 
@@ -141,9 +142,50 @@ namespace AoTK{
         static Matrix4x4 scale(T x){
             return scale(x,x,x);
         }
-
-        template<typename M> friend std::ostream &operator<<(std::ostream &os,const Matrix4x4<M> &m);
+        #ifdef GL_MODELVIEW_MATRIX
+        static Matrix4x4 fromCurrentModelViewGLMatrix();
+        static Matrix4x4 fromCurrentProjectionGLMatrix();
+        static Matrix4x4 fromCurrentTextureGLMatrix();
+        #endif
     };
+
+    #ifdef GL_MODELVIEW_MATRIX
+
+    template< > Matrix4x4<float> Matrix4x4<float>::fromCurrentModelViewGLMatrix(){
+        Matrix4x4<float> m;
+        glGetFloatv(GL_MODELVIEW_MATRIX,m._1d);
+        return m;
+    }
+    template< > Matrix4x4<double> Matrix4x4<double>::fromCurrentModelViewGLMatrix(){
+        Matrix4x4<double> m;
+        glGetDoublev(GL_MODELVIEW_MATRIX,m._1d);
+        return m;
+    }
+
+
+
+    template< > Matrix4x4<float> Matrix4x4<float>::fromCurrentProjectionGLMatrix(){
+        Matrix4x4<float> m;
+        glGetFloatv(GL_PROJECTION_MATRIX,m._1d);
+        return m;
+    }
+    template< > Matrix4x4<double> Matrix4x4<double>::fromCurrentProjectionGLMatrix(){
+        Matrix4x4<double> m;
+        glGetDoublev(GL_PROJECTION_MATRIX,m._1d);
+        return m;
+    }
+
+    template< > Matrix4x4<float> Matrix4x4<float>::fromCurrentTextureGLMatrix(){
+        Matrix4x4<float> m;
+        glGetFloatv(GL_TEXTURE_MATRIX,m._1d);
+        return m;
+    }
+    template< > Matrix4x4<double> Matrix4x4<double>::fromCurrentTextureGLMatrix(){
+        Matrix4x4<double> m;
+        glGetDoublev(GL_TEXTURE_MATRIX,m._1d);
+        return m;
+    }
+    #endif
 
     template<typename T>
     struct Vector2{
@@ -287,25 +329,50 @@ namespace AoTK{
 
 
     };
-
-//    template<typename V> std::ostream &operator<<(std::ostream &os,const Vector2<V> &v){}
-//    template<typename V> std::ostream &operator<<(std::ostream &os,const Vector3<V> &v){}
-//    template<typename V> std::ostream &operator<<(std::ostream &os,const Vector4<V> &v){}
-
-//    template<typename T,typename T2> Vector2<T> operator*(T2 t,const Vector2<T> &v);
-//    template<typename T,typename T2> Vector2<T> operator+(T2 t,const Vector2<T> &v);
-//    template<typename T,typename T2> Vector2<T> operator-(T2 t,const Vector2<T> &v);
-//    template<typename T,typename T2> Vector2<T> operator/(T2 t,const Vector2<T> &v);
+//    template<typename T> Vector4<T> &operator*=(const Matrix4x4<T> m,Vector4<T> &v){
+//        Vector4<T> out;
+//        out.x = v.x*m.xx + v.y*m.yx + v.z*m.zx + v.w*m.wx;
+//        out.y = v.x*m.xy + v.y*m.yy + v.z*m.zy + v.w*m.wy;
+//        out.z = v.x*m.xz + v.y*m.yz + v.z*m.zz + v.w*m.wz;
+//        out.w = v.x*m.xw + v.y*m.yw + v.z*m.zw + v.w*m.ww;
+//        v = out;
+//        return v;
+//    }
 //
-//    template<typename T,typename T2> Vector3<T> operator*(T2 t,const Vector3<T> &v);
-////    template<typename T,typename T2> Vector3<T> operator+(T2 t,const Vector3<T> &v);
-//    template<typename T,typename T2> Vector3<T> operator-(T2 t,const Vector3<T> &v);
-//    template<typename T,typename T2> Vector3<T> operator/(T2 t,const Vector3<T> &v);
-//
-//    template<typename T,typename T2> Vector4<T> operator*(T2 t,const Vector4<T> &v);
-//    template<typename T,typename T2> Vector4<T> operator+(T2 t,const Vector4<T> &v);
-//    template<typename T,typename T2> Vector4<T> operator-(T2 t,const Vector4<T> &v);
-//    template<typename T,typename T2> Vector4<T> operator/(T2 t,const Vector4<T> &v);
+//    template<typename T> Vector4<T>  operator*(const Matrix4x4<T> m,const Vector4<T> v){
+//        Vector4<T> out;
+//        out.x = v.x*m.xx + v.y*m.yx + v.z*m.zx + v.w*m.wx;
+//        out.y = v.x*m.xy + v.y*m.yy + v.z*m.zy + v.w*m.wy;
+//        out.z = v.x*m.xz + v.y*m.yz + v.z*m.zz + v.w*m.wz;
+//        out.w = v.x*m.xw + v.y*m.yw + v.z*m.zw + v.w*m.ww;
+//        return out;
+//    }
+
+    template<typename T> Vector4<T>  operator*(const Matrix4x4<T> m,const Vector4<T> v){
+        Vector4<T> out;
+        out.x = v.x*m.xx + v.y*m.xy + v.z*m.xz + v.w*m.xw;
+        out.y = v.x*m.yx + v.y*m.yy + v.z*m.yz + v.w*m.yw;
+        out.z = v.x*m.zx + v.y*m.zy + v.z*m.zz + v.w*m.zw;
+        out.w = v.x*m.wx + v.y*m.wy + v.z*m.wz + v.w*m.ww;
+        return out;
+    }
+
+
+template<typename T> std::ostream &operator<<(std::ostream &os,const Vector4<T> &v){
+    os << "[" << v.x << " " << v.y << " " << v.z << " " << v.w << "]" << std::endl;
+    return os;
+}
+
+template<typename T> std::ostream &operator<<(std::ostream &os,const Vector3<T> &v){
+    os << "[" << v.x << " " << v.y << " " << v.z << "]" << std::endl;
+    return os;
+}
+
+template<typename T> std::ostream &operator<<(std::ostream &os,const Vector2<T> &v){
+    os << "[" << v.x << " " << v.y << "]" << std::endl;
+    return os;
+}
+};
 };
 
 //#ifndef AOTK_MATH_ONLY_TYPES

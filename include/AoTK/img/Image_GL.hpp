@@ -1,4 +1,5 @@
 namespace AoTK{
+namespace IMG{
     template<>
     GLuint Image<uint8_t>::toGLTexture(){
         GLuint tex;
@@ -259,4 +260,5 @@ namespace AoTK{
         return img;
     }
 
+};
 };

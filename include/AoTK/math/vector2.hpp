@@ -2,6 +2,7 @@
 
 
 namespace AoTK{
+namespace Math{
 
 template<typename T> Vector2<T>::Vector2(T _x,T _y){
     x = _x;
@@ -178,4 +179,5 @@ template<typename T,typename T2> Vector2<T> operator/(T2 t,const Vector2<T> &v){
 
 
 
+};
 };

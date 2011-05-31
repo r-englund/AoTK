@@ -2,6 +2,7 @@
 
 
 namespace AoTK{
+namespace IMG{
 
 
 template<typename T>
@@ -11,4 +12,5 @@ template<typename T>
 Image<T> Image<T>::LoadGIF(std::string filename){assert(false && "LoadGIF not yet implemented");}
 
 
+};
 };

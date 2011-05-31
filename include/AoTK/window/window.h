@@ -5,41 +5,47 @@
 
 namespace AoTK{
     class Window{
-        std::vector<KeyboardListener*> keyboardListeners;
+        std::vector<Listeners::KeyboardListener*> keyboardListeners;
         std::map<int,void (*)(KEY key)> keyUpListenerFunctions; unsigned int __keyUpId;
         std::map<int,void (*)(KEY key)> keyDownListenerFunctions; unsigned int __keyDownId;
         std::map<int,void (*)(unsigned char key)> keyImpuleListenerFunctions; unsigned int __keyImpulseId;
 
-        std::vector<ResizeListener*> resizeListeners;
+        std::vector<Listeners::ResizeListener*> resizeListeners;
         std::map<int,void (*)(unsigned int, unsigned int)> resizeListenerFunctions;  unsigned int __resizeId;
 
-        std::vector<MouseListener*> mouseListeners;
+        std::vector<Listeners::MouseListener*> mouseListeners;
         std::map<int,void (*)(MOUSE_BUTTON mb,unsigned int x,unsigned int y)> mousePressListenerFunctions;  unsigned int __mousePressId;
         std::map<int,void (*)(MOUSE_BUTTON mb,unsigned int x,unsigned int y)> mouseReleaseListenerFunctions;  unsigned int __mouseReleaseId;
 
 
-        std::vector<MouseMotionListener*> mouseMotionListeners;
+        std::vector<Listeners::MouseMotionListener*> mouseMotionListeners;
         std::map<int,void (*)(int dx,int dy)> mouseMotionListenerFunctions;  unsigned int __mouseMotionId;
         std::map<int,void (*)(int dx,int dy)> passiveMouseMotionListenerFunctions;  unsigned int __mousePassiveMotionId;
 
 
-        std::vector<ScrollListener*> scrollListeners;
+        std::vector<Listeners::ScrollListener*> scrollListeners;
         std::map<int,void (*)(int p)> scrollListenerFunctions;  unsigned int __scrollId;
 
-        std::vector<IdleListener*> idleListeners;
+        std::vector<Listeners::IdleListener*> idleListeners;
         std::map<int,void (*)()> idleListenerFunctions;  unsigned int __idleId;
 
-        uint16_t width,height;
+        uint16_t window_width,window_height;
+        uint16_t client_width,client_height;
         std::string title;
 
+        bool redisplay;
+
         Window():
+        redisplay(0),
         keyboardListeners(),
         resizeListeners(),
         mouseListeners(),
         mouseMotionListeners(),
         scrollListeners(),
-        width(0),
-        height(0),
+        window_width(0),
+        window_height(0),
+        client_width(0),
+        client_height(0),
         title(""),
         __run(false),
         __dispFunc(false),
@@ -70,6 +76,7 @@ namespace AoTK{
 
         void checkForMessages();
         void swapBuffers();
+        void setSizes();
 
 
         bool __run;
@@ -90,34 +97,36 @@ namespace AoTK{
 
 
     public:
-        void addKeyboardListener(KeyboardListener *l);
+        void redraw(){redisplay = true;}
+
+        void addKeyboardListener(Listeners::KeyboardListener *l);
         unsigned int addKeyUpListener(void (*keyUp)(KEY key));
         unsigned int addKeyDownListener(void (*keyDown)(KEY key));
         unsigned int addKeyImpulseListener(void (*keyImpulse)(unsigned char key));
 
-        void addResizeListener(ResizeListener *l);
+        void addResizeListener(Listeners::ResizeListener *l);
         unsigned int addResizeListener(void (*resize)(unsigned int, unsigned int));
 
-        void addMouseListener(MouseListener *l);
+        void addMouseListener(Listeners::MouseListener *l);
         unsigned int addMousePressListener(void (*)(MOUSE_BUTTON mb,unsigned int x,unsigned int y));
         unsigned int addMouseReleaseListener(void (*)(MOUSE_BUTTON mb,unsigned int x,unsigned int y));
 
-        void addMouseMotionListener(MouseMotionListener *l);
+        void addMouseMotionListener(Listeners::MouseMotionListener *l);
         unsigned int addMouseMotionListener(void (*)(int dx,int dy));
         unsigned int addPassiveMouseMotionListener(void (*)(int dx,int dy));
 
-        void addScrollListener(ScrollListener *l);
+        void addScrollListener(Listeners::ScrollListener *l);
         unsigned int addScrollListener(void (*)(int p));
 
-        void addIdleListener(IdleListener *l);
+        void addIdleListener(Listeners::IdleListener *l);
         unsigned int addIdleListener(void (*)());
 
-        void removeKeyboardListener(KeyboardListener *l);
-        void removeResizeListener(ResizeListener *l);
-        void removeMouseListener(MouseListener *l);
-        void removeMouseMotionListener(MouseMotionListener *l);
-        void removeScrollListener(ScrollListener *l);
-        void removeIdleListener(IdleListener *l);
+        void removeKeyboardListener(Listeners::KeyboardListener *l);
+        void removeResizeListener(Listeners::ResizeListener *l);
+        void removeMouseListener(Listeners::MouseListener *l);
+        void removeMouseMotionListener(Listeners::MouseMotionListener *l);
+        void removeScrollListener(Listeners::ScrollListener *l);
+        void removeIdleListener(Listeners::IdleListener *l);
 
         void removeKeyUpListener(unsigned int id);
         void removeKeyDownListener(unsigned int id);
@@ -134,7 +143,7 @@ namespace AoTK{
         void keyDownEvent(KEY key);
         void keyUpEvent(KEY key);
         void keyImpulseEvent(unsigned char key);
-        void resizeEvent(unsigned int w,unsigned int h);
+        void resizeEvent();
         void mousePressEvent(MOUSE_BUTTON mb,unsigned int x,unsigned int y);
         void mouseReleaseEvent(MOUSE_BUTTON mb,unsigned int x,unsigned int y);
         void mousemotionEvent(int dx,int dy);
@@ -152,7 +161,8 @@ namespace AoTK{
             __dispFunc = dispFunc;
         }
 
-        void getSize(uint16_t &width,uint16_t &height)const;
+        void getWindowSize(uint16_t &width,uint16_t &height)const;
+        void getClientSize(uint16_t &width,uint16_t &height)const;
     };
 };
 

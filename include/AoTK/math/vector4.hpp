@@ -1,5 +1,6 @@
 
 namespace AoTK{
+namespace Math{
 
 template<typename T> Vector4<T>::Vector4(T _x,T _y,T _z,T _w){
     x = _x;
@@ -207,4 +208,5 @@ template<typename T2> inline bool Vector4<T>::operator!=(const Vector4<T2> &v)co
 //    V/=t;
 //    return V;
 //}
+};
 };

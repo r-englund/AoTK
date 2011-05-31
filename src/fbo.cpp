@@ -1,6 +1,7 @@
 #include <AoTK/fbo.h>
 
 namespace AoTK{
+namespace GPU{
 FBO::FBO(){
     isInit = false;
     _numAttachemnts = 0;
@@ -20,8 +21,8 @@ void FBO::init(){
 
     glGenTextures(1, &_depthtex);GLERRORS();
     glBindTexture(GL_TEXTURE_2D, _depthtex);GLERRORS();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);GLERRORS();
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);GLERRORS();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);GLERRORS();
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);GLERRORS();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);GLERRORS();
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);GLERRORS();
 
@@ -71,7 +72,7 @@ uint8_t FBO::createAttachment(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _w, _h, 0, GL_RGBA, GL_FLOAT, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, _w, _h, 0, GL_RGBA, GL_FLOAT, 0);
     bind();
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+index, GL_TEXTURE_2D, attachment[index], 0);
 
@@ -183,4 +184,5 @@ void FBO::fboerror()
 		break;
 	}
 }
+};
 };

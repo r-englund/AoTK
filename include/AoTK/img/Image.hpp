@@ -3,6 +3,7 @@
 #include <limits>
 
 namespace AoTK{
+namespace IMG{
 
 template<typename T>
 Image<T>::Image(const Image<T>& img):
@@ -305,5 +306,6 @@ Image<T> Image<T>::rotate(float deg)const{
 }
 
 
+};
 };
 

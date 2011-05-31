@@ -2,6 +2,7 @@
 #define LISTENERS_H
 
 namespace AoTK{
+namespace Listeners{
 class KeyboardListener{
 public:
     virtual void keyDown(KEY key) = 0;
@@ -49,10 +50,10 @@ class IdleListener{
 public:
     IdleListener(){}
     virtual ~IdleListener(){}
-
     virtual void idle() = 0;
 };
 
+};
 };
 
 #endif
