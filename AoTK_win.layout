@@ -25,9 +25,6 @@
 	<File name="include\AoTK\window_handler.h" open="1" top="0" tabpos="0">
 		<Cursor position="1018" topLine="9" />
 	</File>
-	<File name="src\math.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="120" topLine="0" />
-	</File>
 	<File name="src\window\window_glut.cpp" open="1" top="1" tabpos="0">
 		<Cursor position="0" topLine="0" />
 	</File>
