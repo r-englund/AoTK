@@ -46,6 +46,17 @@ namespace AoTK{
                 exit(1);
             }
 
+        printf( "Getting matching framebuffer configs\n" );
+        int fbcount = -1;
+        auto ds = DefaultScreen( display );
+        GLXFBConfig *fbc = glXChooseFBConfig( display, ds, visual_attribs, &fbcount );
+        if ( !fbc )
+        {
+            printf( "Failed to retrieve a framebuffer config\n" );
+            exit(1);
+        }
+        printf( "Found %d matching FB configs.\n", fbcount );
+
         std::cerr << "createWindow not yet implemented " << __FILE__ << " " << __LINE__<<std::endl;
 
         std::cout << "OpenGL window created, using:" << std::endl;
