@@ -20,6 +20,10 @@
 #include <AoTK/externals/glew.h>
 #include <AoTK/externals/wglew.h>
 
+#else //UNIX
+#define AoTK_UNIX
+#include <AoTK/externals/glew.h>
+#include <AoTK/externals/glxew.h>
 #endif
 
 #define GLERRORS() AoTK::getAllError(__FILE__,__LINE__)

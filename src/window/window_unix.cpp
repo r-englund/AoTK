@@ -1,4 +1,3 @@
-
 #include <AoTK/window_handler.h>
 
 #ifdef AoTK_UNIX
@@ -10,8 +9,8 @@ namespace AoTK{
 
     Window* Window::createWindow(uint16_t width,uint16_t height,std::string title,bool force32){
         __window = new Window();
-        __window->width = width;
-        __window->height = height;
+        __window->window_width = width;
+        __window->window_height = height;
 
         if(force32)
             std::cerr << "force32 not yet supported " << __FILE__ << " " << __LINE__<<std::endl;
@@ -63,6 +62,10 @@ namespace AoTK{
 
 
         return __window;
+    }
+
+    void Window::setSizes(){
+        throw "Not yet implemented";
     }
 
     void Window::checkForMessages(){
