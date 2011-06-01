@@ -171,15 +171,8 @@ namespace IMG{
 #include "Image_GIF.hpp"
 #include "Image_JPG.hpp"
 #include "Image_PNG.hpp"
-#include "Image_BMP.hpp"
 #include "Image_Static_Functions.hpp"
-#include "Image_uint8.hpp"
-#include "Image_float.hpp"
 #include "Image_Filters.hpp"
 
-
-#ifdef GL_VERSION_1_1
-    #include "Image_GL.hpp"
-#endif
 
 #endif

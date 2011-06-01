@@ -7,7 +7,7 @@
 #include <vector>
 #include <algorithm>
 
-#define AoTK_FORCE_GLUT
+//#define AoTK_FORCE_GLUT
 
 #if defined(_WIN32) && !defined(AoTK_FORCE_GLUT)
 

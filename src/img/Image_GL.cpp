@@ -1,3 +1,8 @@
+
+#include <AoTK/aotk.h>
+
+#ifdef GL_VERSION_1_1
+
 namespace AoTK{
 namespace IMG{
     template<>
@@ -262,3 +267,5 @@ namespace IMG{
 
 };
 };
+
+#endif
