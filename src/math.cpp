@@ -8,12 +8,12 @@ namespace Math{
     template< > Matrix4x4<float> Matrix4x4<float>::fromCurrentModelViewGLMatrix(){
         Matrix4x4<float> m;
         glGetFloatv(GL_MODELVIEW_MATRIX,m._1d);
-        return m;
+        return {m.toOpenGLMatrix()};
     }
     template< > Matrix4x4<double> Matrix4x4<double>::fromCurrentModelViewGLMatrix(){
         Matrix4x4<double> m;
         glGetDoublev(GL_MODELVIEW_MATRIX,m._1d);
-        return m;
+        return {m.toOpenGLMatrix()};
     }
 
 
@@ -21,23 +21,23 @@ namespace Math{
     template< > Matrix4x4<float> Matrix4x4<float>::fromCurrentProjectionGLMatrix(){
         Matrix4x4<float> m;
         glGetFloatv(GL_PROJECTION_MATRIX,m._1d);
-        return m;
+        return {m.toOpenGLMatrix()};
     }
     template< > Matrix4x4<double> Matrix4x4<double>::fromCurrentProjectionGLMatrix(){
         Matrix4x4<double> m;
         glGetDoublev(GL_PROJECTION_MATRIX,m._1d);
-        return m;
+        return {m.toOpenGLMatrix()};
     }
 
     template< > Matrix4x4<float> Matrix4x4<float>::fromCurrentTextureGLMatrix(){
         Matrix4x4<float> m;
         glGetFloatv(GL_TEXTURE_MATRIX,m._1d);
-        return m;
+        return {m.toOpenGLMatrix()};
     }
     template< > Matrix4x4<double> Matrix4x4<double>::fromCurrentTextureGLMatrix(){
         Matrix4x4<double> m;
         glGetDoublev(GL_TEXTURE_MATRIX,m._1d);
-        return m;
+        return {m.toOpenGLMatrix()};
     }
     #endif
 };

@@ -59,7 +59,6 @@
 		<Unit filename="include\AoTK\img\Image.hpp" />
 		<Unit filename="include\AoTK\img\Image_Filters.hpp" />
 		<Unit filename="include\AoTK\img\Image_GIF.hpp" />
-		<Unit filename="include\AoTK\img\Image_GL.hpp" />
 		<Unit filename="include\AoTK\img\Image_JPG.hpp" />
 		<Unit filename="include\AoTK\img\Image_PNG.hpp" />
 		<Unit filename="include\AoTK\img\Image_Static_Functions.hpp" />
@@ -80,6 +79,7 @@
 		</Unit>
 		<Unit filename="src\fbo.cpp" />
 		<Unit filename="src\img\Image_BMP.cpp" />
+		<Unit filename="src\img\Image_GL.cpp" />
 		<Unit filename="src\img\Image_double.cpp" />
 		<Unit filename="src\img\Image_float.cpp" />
 		<Unit filename="src\img\Image_uint8.cpp" />

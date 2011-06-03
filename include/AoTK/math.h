@@ -62,93 +62,6 @@ namespace Math{
     template<typename T = float> struct Vector3;
     template<typename T = float> struct Vector4;
 
-
-
-/*********
-*
-* xx yx zx wx
-* xy yy zy wy
-* xz yz zz wz
-* xw yw zw ww
-*
-*
-* _2d[col][row]
-*
-* _1d[id]
-*
-* id is asigned as:
-*
-* 1 5 9  13
-* 2 6 10 14
-* 3 7 11 15
-* 4 8 12 16
-*
-**********/
-    template<typename T>
-    struct Matrix4x4{
-        union{
-            T _1d[16];
-            struct{
-                T _2d[4][4];
-            };
-            struct{
-                T xx,xy,xz,xw, //column 1
-                  yx,yy,yz,yw, //column 2
-                  zx,zy,zz,zw, //column 3
-                  wx,wy,wz,ww; //column 4
-            };
-        };
-
-        Matrix4x4(T a[16]);
-        Matrix4x4(T a[4][4]);
-        Matrix4x4();
-        Matrix4x4(const Matrix4x4 &m);
-//        template<typename T2> Matrix4x4(const Matrix4x4<T2> &m);
-        virtual ~Matrix4x4(){}
-
-        Matrix4x4 operator+(const Matrix4x4  &m) const;
-        Matrix4x4 operator-(const Matrix4x4  &m) const;
-        Matrix4x4 operator*(const Matrix4x4  &m) const;
-        Matrix4x4 operator+(T f) const;
-        Matrix4x4 operator-(T f) const;
-        Matrix4x4 operator*(T f) const;
-        Matrix4x4 operator/(T f) const;
-
-        Matrix4x4 &operator=(const Matrix4x4  &m);
-
-        Matrix4x4 &operator+=(const Matrix4x4  &m);
-        Matrix4x4 &operator-=(const Matrix4x4  &m);
-        Matrix4x4 &operator*=(const Matrix4x4  &m);
-        Matrix4x4 &operator+=(T f);
-        Matrix4x4 &operator-=(T f);
-        Matrix4x4 &operator*=(T f);
-        Matrix4x4 &operator/=(T f);
-
-        bool operator==(const Matrix4x4<T>  &m);
-        bool operator!=(const Matrix4x4<T> &m);
-
-        static Matrix4x4 perspectiveProjection(T fovy,T aspc,T near,T far);
-        static Matrix4x4 orthogonalProjection(T left, T right, T bottom, T top, T near, T far);
-        static Matrix4x4 lookAt(Vector3<T> pos,Vector3<T> at,Vector3<T> up);
-
-        static Matrix4x4 rotateX(T deg);
-        static Matrix4x4 rotateY(T deg);
-        static Matrix4x4 rotateZ(T deg);
-        static Matrix4x4 rotateAxis(T deg,T x,T y,T z);
-        static Matrix4x4 rotateAxis(T deg,const Vector3<T> &_v);
-
-        static Matrix4x4 translate(T x,T y,T z);
-        static Matrix4x4 scale(T x,T y,T z);
-        static Matrix4x4 scale(T x){
-            return scale(x,x,x);
-        }
-        #ifdef GL_MODELVIEW_MATRIX
-        static Matrix4x4 fromCurrentModelViewGLMatrix();
-        static Matrix4x4 fromCurrentProjectionGLMatrix();
-        static Matrix4x4 fromCurrentTextureGLMatrix();
-        #endif
-    };
-
     template<typename T>
     struct Vector2{
         union{
@@ -291,31 +204,17 @@ namespace Math{
 
 
     };
-//    template<typename T> Vector4<T> &operator*=(const Matrix4x4<T> m,Vector4<T> &v){
-//        Vector4<T> out;
-//        out.x = v.x*m.xx + v.y*m.yx + v.z*m.zx + v.w*m.wx;
-//        out.y = v.x*m.xy + v.y*m.yy + v.z*m.zy + v.w*m.wy;
-//        out.z = v.x*m.xz + v.y*m.yz + v.z*m.zz + v.w*m.wz;
-//        out.w = v.x*m.xw + v.y*m.yw + v.z*m.zw + v.w*m.ww;
-//        v = out;
-//        return v;
-//    }
-//
-//    template<typename T> Vector4<T>  operator*(const Matrix4x4<T> m,const Vector4<T> v){
-//        Vector4<T> out;
-//        out.x = v.x*m.xx + v.y*m.yx + v.z*m.zx + v.w*m.wx;
-//        out.y = v.x*m.xy + v.y*m.yy + v.z*m.zy + v.w*m.wy;
-//        out.z = v.x*m.xz + v.y*m.yz + v.z*m.zz + v.w*m.wz;
-//        out.w = v.x*m.xw + v.y*m.yw + v.z*m.zw + v.w*m.ww;
-//        return out;
-//    }
+    template<typename T> Vector4<T> &operator*=(const Matrix4x4<T> m,Vector4<T> &v){
+        v = m * v;
+        return v;
+    }
 
     template<typename T> Vector4<T>  operator*(const Matrix4x4<T> m,const Vector4<T> v){
         Vector4<T> out;
-        out.x = v.x*m.xx + v.y*m.xy + v.z*m.xz + v.w*m.xw;
-        out.y = v.x*m.yx + v.y*m.yy + v.z*m.yz + v.w*m.yw;
-        out.z = v.x*m.zx + v.y*m.zy + v.z*m.zz + v.w*m.zw;
-        out.w = v.x*m.wx + v.y*m.wy + v.z*m.wz + v.w*m.ww;
+        out.x = v.x * m._2d[0][0] +  v.y * m._2d[0][1] +  v.z * m._2d[0][2] +  v.w * m._2d[0][3];
+        out.y = v.x * m._2d[1][0] +  v.y * m._2d[1][1] +  v.z * m._2d[1][2] +  v.w * m._2d[1][3];
+        out.z = v.x * m._2d[2][0] +  v.y * m._2d[2][1] +  v.z * m._2d[2][2] +  v.w * m._2d[2][3];
+        out.w = v.x * m._2d[3][0] +  v.y * m._2d[3][1] +  v.z * m._2d[3][2] +  v.w * m._2d[3][3];
         return out;
     }
 
