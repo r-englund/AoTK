@@ -1,37 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Debug" />
-	<File name="include\AoTK\geometry\sphere.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="247" topLine="0" />
+	<ActiveTarget name="" />
+	<File name="include\AoTK\math.h" open="0" top="0" tabpos="0">
+		<Cursor position="1363" topLine="58" />
 	</File>
-	<File name="include\AoTK\img\Image.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="503" topLine="15" />
+	<File name="include\AoTK\math\matrix.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="182" topLine="9" />
 	</File>
-	<File name="include\AoTK\img\Image_Filters.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="720" topLine="22" />
+	<File name="include\AoTK\math\matrix4x4.hpp" open="1" top="1" tabpos="1">
+		<Cursor position="1878" topLine="69" />
 	</File>
-	<File name="include\AoTK\img\Image_Static_Functions.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="314" topLine="0" />
+	<File name="include\AoTK\window\window.h" open="0" top="0" tabpos="0">
+		<Cursor position="1743" topLine="27" />
 	</File>
-	<File name="include\AoTK\img\image.h" open="0" top="0" tabpos="0">
-		<Cursor position="5178" topLine="161" />
-	</File>
-	<File name="include\AoTK\window_handler.h" open="0" top="0" tabpos="0">
-		<Cursor position="195" topLine="0" />
-	</File>
-	<File name="src\img\Image_BMP.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="24" topLine="0" />
+	<File name="src\fbo.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="332" topLine="18" />
 	</File>
 	<File name="src\img\Image_GL.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="7323" topLine="219" />
+		<Cursor position="7911" topLine="234" />
 	</File>
-	<File name="src\img\Image_double.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="65" topLine="0" />
-	</File>
-	<File name="src\img\Image_float.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="489" topLine="5" />
-	</File>
-	<File name="src\img\Image_uint8.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="26" topLine="0" />
+	<File name="src\math.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="286" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>

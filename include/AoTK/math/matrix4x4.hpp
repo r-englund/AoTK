@@ -4,6 +4,13 @@
 namespace AoTK{
 namespace Math{
 
+template<typename T> struct mat16{
+    T _1d[16];
+};
+template<typename T> struct mat4x4{
+    T _2d[4][4];
+};
+
 /*********
 *
 *
@@ -21,8 +28,13 @@ namespace Math{
             struct{
                 T _2d[4][4];
             };
+            mat4x4<T> _mat4x4;
+            mat16<T> _mat16;
         };
 
+
+        Matrix4x4(mat4x4<T> _mat4x4):_mat4x4(_mat4x4){}
+        Matrix4x4(mat16<T> _mat16):_mat16(_mat16){}
         Matrix4x4(T a,T b,T c,T d,
                   T e,T f,T g,T h,
                   T i,T j,T k,T l,
@@ -66,8 +78,12 @@ namespace Math{
         }
         virtual ~Matrix4x4(){}
 
-        T* toOpenGLMatrix()const{
-            T t[16] = {_1d[0],_1d[4],_1d[8],_1d[12],
+        Matrix4x4 transpose(){
+            return {toOpenGLMatrix()};
+        }
+
+        mat16<T> toOpenGLMatrix()const{
+            mat16<T> t = {_1d[0],_1d[4],_1d[8],_1d[12],
                        _1d[1],_1d[5],_1d[9],_1d[13],
                        _1d[2],_1d[6],_1d[10],_1d[14],
                        _1d[3],_1d[7],_1d[11],_1d[15]};
@@ -92,8 +108,9 @@ namespace Math{
                    -(p[2]*p[4]*p[6])
                    -(p[5]*p[7]*p[0])
                    -(p[1]*p[3]*p[8])
-                   );//*_2d[0][i];//*((i%2)?1:-1);
+                   )*_2d[0][i]*((i%2)?1:-1);
             }
+            //TODO test this
             return d;
         }
 
@@ -275,9 +292,9 @@ namespace Math{
         float s = sin(deg);
         float t = 1.0- c;
 
-        m._2d[0][0] = t*x*x+c;      m._2d[0][1] = t*x*y-s*z;    m._2d[0][2] = t*x*z+s*y;    m._2d[0][3] = 0;
-        m._2d[1][0] = t*x*y+s*z;    m._2d[1][1] = t*y*y+c;      m._2d[1][2] = t*y*z-s*z;    m._2d[1][3] = 0;
-        m._2d[2][0] = t*x*z-s*y;    m._2d[2][1] = t*y*z+s*x;     m._2d[2][2] = t*z*z+c;     m._2d[2][3] = 0;
+        m._2d[0][0] = t*x*x+c;      m._2d[0][1] = t*x*y+s*z;    m._2d[0][2] = t*x*z-s*y;    m._2d[0][3] = 0;
+        m._2d[1][0] = t*x*y-s*z;    m._2d[1][1] = t*y*y+c;      m._2d[1][2] = t*y*z+s*x;    m._2d[1][3] = 0;
+        m._2d[2][0] = t*x*y+s*y;    m._2d[2][1] = t*y*z-s*x;     m._2d[2][2] = t*z*z+c;     m._2d[2][3] = 0;
         m._2d[3][0] = 0;m._2d[3][1] = 0;m._2d[3][2] = 0;m._2d[3][3] = 1;
 
 
@@ -312,48 +329,10 @@ namespace Math{
         #endif
     };
 
-//template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateAxis(T deg,T x,T y,T z){
-//    if((sqrt(x*x+y*y+z*z)-1.0)>0.01){
-//        std::cout << x << " " << y << " " << z<< " " << std::endl;
-//    }
-//    Matrix4x4<T> m;
-//    float c = cos(deg);
-//    float s = sin(deg);
-//
-////    m.xx = x*x*(1-c)+c;     m.yx = x*y*(1-c)-z*s;   m.zx = x*z*(1-c)+y*s;
-////    m.xy = y*x*(1-c)+z*s;   m.yy = y*y*(1-c)+c;     m.zy = y*z*(1-c)-x*s;
-////    m.xz = z*x*(1-c)-y*s;   m.yz = z*y*(1-c)+x*s;   m.zz = z*z*(1-c)+c;
-//
-//    m.xx = x*x*(1-c)+c;     m.xy = x*y*(1-c)-z*s;   m.xz = x*z*(1-c)+y*s;
-//    m.yx = y*x*(1-c)+z*s;   m.yy = y*y*(1-c)+c;     m.yz = y*z*(1-c)-x*s;
-//    m.zx = z*x*(1-c)-y*s;   m.zy = z*y*(1-c)+x*s;   m.zz = z*z*(1-c)+c;
-//
-//    return m;
-//}
-//template<typename T> Matrix4x4<T> Matrix4x4<T>::rotateAxis(T deg,const Vector3<T> &_v){
-//    return rotateAxis(deg,_v.x,_v.y,_v.z);
-//}
-//
-//template<typename T> Matrix4x4<T> Matrix4x4<T>::translate(T x,T y,T z){
-//    Matrix4x4<T> m;
-//    m.wx = x;
-//    m.wy = y;
-//    m.wz = z;
-//
-//    return m;
-//}
-//template<typename T> Matrix4x4<T> Matrix4x4<T>::scale(T x,T y,T z){
-//    Matrix4x4<T> m;
-//    m.xx = x;
-//    m.yy = y;
-//    m.zz = z;
-//    return m;
-//}
-
 template<typename T> std::ostream &operator<<(std::ostream &os,const Matrix4x4<T> &m){
     for(int row = 0;row < 4;row++){
         for(int col = 0;col < 4;col++){
-            os << m._2d[col][row] << " ";
+            os << m._2d[row][col] << " ";
         }
         os << std::endl;
     }

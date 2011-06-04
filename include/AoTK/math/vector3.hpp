@@ -126,13 +126,13 @@ template<typename T2> inline Vector3<T>& Vector3<T>::operator-=(T2 t){
     z-=t;
     return *this;
 }
-//template<typename T>
-//template<typename T2> inline Vector3<T>& Vector3<T>::operator*=(T2 t){
-//    x*=t;
-//    y*=t;
-//    z*=t;
-//    return *this;
-//}
+template<typename T>
+template<typename T2> inline Vector3<T>& Vector3<T>::operator*=(T2 t){
+    x*=t;
+    y*=t;
+    z*=t;
+    return *this;
+}
 template<typename T>
 template<typename T2> inline Vector3<T>& Vector3<T>::operator/=(T2 t){
     x/=t;
