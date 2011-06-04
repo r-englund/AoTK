@@ -240,7 +240,7 @@ namespace IMG{
 
         std::cout << tex << " "  << w << " " << h << " " << c << " " << type << std::endl;
         if(w<= 0 || h <= 0 || c <= 0)
-            return Image<uint8_t>();
+            throw "Unexpected error";
 
 
 
