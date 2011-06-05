@@ -8,6 +8,7 @@ FBO::FBO(){
     _w = 0;
     _h = 0;
 }
+
 FBO::~FBO(){
     if(isInit){
         glDeleteFramebuffers(1,&_fbo);
