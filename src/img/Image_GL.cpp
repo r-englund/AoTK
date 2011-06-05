@@ -173,6 +173,7 @@ namespace IMG{
                 break;
             case 4:
             case GL_RGBA:
+            case GL_RGBA16:
                 c = 4;
                 break;
             default:
