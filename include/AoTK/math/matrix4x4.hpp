@@ -35,10 +35,10 @@ template<typename T> struct mat4x4{
 
         Matrix4x4(mat4x4<T> _mat4x4):_mat4x4(_mat4x4){}
         Matrix4x4(mat16<T> _mat16):_mat16(_mat16){}
-        Matrix4x4(T a,T b,T c,T d,
-                  T e,T f,T g,T h,
-                  T i,T j,T k,T l,
-                  T m,T n,T o,T p){
+        Matrix4x4(T a = 1.0,T b = 0.0,T c = 0.0,T d = 0.0,
+                  T e = 0.0,T f = 1.0,T g = 0.0,T h = 0.0,
+                  T i = 0.0,T j = 0.0,T k = 1.0,T l = 0.0,
+                  T m = 0.0,T n = 0.0,T o = 0.0,T p = 1.0){
             _1d[0] = a;
             _1d[1] = b;
             _1d[2] = c;
@@ -64,14 +64,7 @@ template<typename T> struct mat4x4{
             for(int i = 0;i<4;i++)for(int j = 0;j<4;j++)
                 _2d[i][j] = a[i][j];
         }
-        Matrix4x4(){
-            for(int i = 0;i<16;i++)
-                _1d[i] = 0;
-            _2d[0][0] = 1;
-            _2d[1][1] = 1;
-            _2d[2][2] = 1;
-            _2d[3][3] = 1;
-        }
+
         Matrix4x4(const Matrix4x4 &m){
             for(int i = 0;i<16;i++)
                 _1d[i] = m._1d[i];
@@ -131,7 +124,7 @@ template<typename T> struct mat4x4{
             for(int row = 0;row < 4;row++)for(int col = 0;col < 4;col++){
                 M._2d[row][col] = 0;
                 for(int i = 0;i<4;i++){
-                    M._2d[row][col] = this->_2d[row][i] * m._2d[i][col];
+                    M._2d[row][col] += this->_2d[row][i] * m._2d[i][col];
                 }
             }
             return M;
