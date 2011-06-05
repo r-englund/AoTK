@@ -13,11 +13,31 @@ namespace Geometry{
         radius(radius)
         {}
 
-        inline bool inside(Math::Vector3<T> p){return((p-center).length()<radius);}
-        inline bool outside(Math::Vector3<T> p){return((p-center).length()>radius);}
-        inline bool on(Math::Vector3<T> p){return((p-center).length()==radius);}
-        inline bool insideOn(Math::Vector3<T> p){return((p-center).length()<=radius);}
-        inline bool outsideOn(Math::Vector3<T> p){return((p-center).length()>=radius);}
+        inline bool inside(Math::Vector3<T> p){
+            return((p-center).getLength()<radius);
+        }
+        inline bool outside(Math::Vector3<T> p){
+            return((p-center).getLength()>radius);
+        }
+        inline bool on(Math::Vector3<T> p){
+            return((p-center).getLength()==radius);
+        }
+        inline bool insideOn(Math::Vector3<T> p){
+            return((p-center).getLength()<=radius);
+        }
+        inline bool outsideOn(Math::Vector3<T> p){
+            return((p-center).getLength()>=radius);
+        }
+
+        void addVertex(Math::Vector3<T> point){
+            if(insideOn(point))
+                return;
+            float l;
+            auto dir = center - point;
+            l = dir.getLength();
+            center += dir*(l-radius)/2.0;
+            radius = (l+radius)/2.0;
+        }
 
         static Sphere<T> fromPoints(std::vector<Math::Vector3<T>> points){
             assert(points.size()>=4 && "Cant create a sphere with less than four points");
@@ -53,7 +73,6 @@ namespace Geometry{
                 }
             }while(moved);
             return s;
-            //TODO test this..
         }
     };
 };
