@@ -5,3 +5,6 @@ bin/*
 volumes/*
 screens/*
 *git*
+*svn*
+svn*
+*svn
