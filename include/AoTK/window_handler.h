@@ -13,9 +13,11 @@
 
 #define AoTK_WIN
 
+    #ifdef MSVC
     #pragma comment(lib, "gdi32")
     #pragma comment(lib, "kernel32")
     #pragma comment(lib, "user32")
+    #endif
 
     #define GLEW_STATIC
     #include <windows.h>
