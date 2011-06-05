@@ -73,14 +73,17 @@ namespace Mesh{
         virtual void calculateFaceNormals();
 
         void loadFromWavefront(char * folder,char * filename, bool smooth,Math::Matrix4x4<float> transform = Math::Matrix4x4<float>());
-
 protected:
+
+        Math::Vector3<float> faceCenter(std::string mat,unsigned int id,bool triangle);
+
         void loadFromWavefrontMaterials(const char * filename);
 
         std::map<std::string,Material> materials;
         std::vector<Vertex> vertices;
         std::map<std::string,std::vector<Triangle>> triangles;
         std::map<std::string,std::vector<Quad>> quads;
+        std::vector<std::pair<std::string,std::pair<unsigned int,bool>>> faces;
 
         Vertex &v(unsigned int id){return vertices[id];}
 

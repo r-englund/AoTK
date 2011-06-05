@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <typeinfo>
 #include <assert.h>
 
 namespace AoTK{
@@ -32,8 +33,6 @@ bool Mesh::addFace(std::vector<Math::Vector3<float>> positions,std::string mat,b
     Math::Vector3<float> e2 = positions[2] - positions[1];
     Math::Vector3<float> normal = e1.cross(e2);
     normal.normalize();
-
-
     if(positions.size() == 4){
         v3 = addVertex(positions[3],mat,smooth);
         Quad q;
@@ -42,7 +41,11 @@ bool Mesh::addFace(std::vector<Math::Vector3<float>> positions,std::string mat,b
         q.v2 = v2;
         q.v3 = v3;
         q.normal = normal;
+        unsigned int id = quads[mat].size();
         quads[mat].push_back(q);
+        std::pair<unsigned int,bool> p(id,false);
+        std::pair<std::string,std::pair<unsigned int,bool>> P(mat,p);
+        faces.push_back(P);
         return true;
     }else{
         Triangle t;
@@ -50,11 +53,24 @@ bool Mesh::addFace(std::vector<Math::Vector3<float>> positions,std::string mat,b
         t.v1 = v1;
         t.v2 = v2;
         t.normal = normal;
+        unsigned int id = triangles[mat].size();
         triangles[mat].push_back(t);
+        std::pair<unsigned int,bool> p(id,true);
+        std::pair<std::string,std::pair<unsigned int,bool>> P(mat,p);
+        faces.push_back(P);
         return true;
     }
     return false;
 }
+
+Math::Vector3<float> Mesh::faceCenter(std::string mat,unsigned int id,bool triangle){
+    if(triangle){
+        return (vertices[triangles[mat][id].v0].pos+vertices[triangles[mat][id].v1].pos+vertices[triangles[mat][id].v2].pos)/3.0;
+    }else{
+        return (vertices[quads[mat][id].v0].pos+vertices[quads[mat][id].v1].pos+vertices[quads[mat][id].v2].pos+vertices[quads[mat][id].v3].pos)/4.0;
+    }
+}
+
 unsigned int Mesh::addVertex(Math::Vector3<float> position,std::string mat,bool smooth){
     int a = 0;
     for(auto i = vertices.begin();i<vertices.end()&&smooth;++i){
