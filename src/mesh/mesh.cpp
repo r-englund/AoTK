@@ -177,10 +177,20 @@ void Mesh::loadFromWavefrontMaterials(const char * filename){
     }while(!f.eof());
 }
 
+int char2num(char c){
+    if(c == '0') return 0;
+    if(c == '1') return 1;
+    if(c == '2') return 2;
+    if(c == '3') return 3;
+    if(c == '4') return 4;
+    if(c == '5') return 5;
+    if(c == '6') return 6;
+    if(c == '7') return 7;
+    if(c == '8') return 8;
+    if(c == '9') return 9;
+}
+
 void Mesh::loadFromWavefront(char * folder,char * filename, bool smooth,Math::Matrix4x4<float> transform){
-    if(transform != Math::Matrix4x4<float>()){
-        std::cerr << "loadFromWavefront with transform matrix is not yet supported in " << __FILE__ << " at line " << __LINE__ << std::endl;
-    }
     std::ifstream f;
     std::stringstream ss;
     ss << folder << "/" << filename;
@@ -190,6 +200,7 @@ void Mesh::loadFromWavefront(char * folder,char * filename, bool smooth,Math::Ma
     std::vector<Math::Vector3<float>> vertices;
     vertices.push_back(Math::Vector3<float>()); //Add dummy vert since indices start at 1 (not zero) in wavefron file format
     f >> s;
+    char *line = new char[200];
 
     while(!f.eof()){
         if(s.compare("mtllib") == 0){
@@ -216,30 +227,49 @@ void Mesh::loadFromWavefront(char * folder,char * filename, bool smooth,Math::Ma
                 f >> v.x;
                 f >> v.y;
                 f >> v.z;
-//                Vector4<float> v4;
-//                v4.x = v.x;
-//                v4.y = v.y;
-//                v4.z = v.z;
-//                v4.w = 1.0;
-//                v4 = transform * v4;
-//                v.x = v4.x;
-//                v.y = v4.y;
-//                v.z = v4.z;
+                Math::Vector4<float> v4;
+                v4.x = v.x;
+                v4.y = v.y;
+                v4.z = v.z;
+                v4.w = 1.0;
+                v4 = transform * v4;
+                v.x = v4.x/v4.w;
+                v.y = v4.y/v4.w;
+                v.z = v4.z/v4.w;
                 vertices.push_back(v);
             }
             else if(s[0] == 'f'){
                 std::vector<Math::Vector3<float>> positions;
-                uint32_t i;
-                f >> i;
-                positions.push_back(vertices[i]);
-                f >> i;
-                positions.push_back(vertices[i]);
-                f >> i;
-                positions.push_back(vertices[i]);
-//                if(f >> i){
-//                    std::cout << "Found Quad" << std::endl;
-//                    positions.push_back(vertices[i]);
-//                }
+                memset(line,0,200);
+                f.getline(line,200);
+                int n = 0;
+                unsigned int v0,v1,v2,v3;
+                v0 = v1= v2 = v3 = 0;
+                int i;
+                for(int i = 1;line[i-1]!='\0';i++){
+                    if(line[i]==' '||line[i]=='\0'){
+                        n++;
+                        int mult = 1;
+                        for(int j = i-1;line[j]!=' ';j--){
+                            if(n==1)
+                                v0 += mult*char2num(line[j]);
+                            else if(n==2)
+                                v1 += mult*char2num(line[j]);
+                            else if(n==3)
+                                v2 += mult*char2num(line[j]);
+                            else if(n==4)
+                                v3 += mult*char2num(line[j]);
+                            mult *= 10;
+                        }
+                    }
+                }
+
+                positions.push_back(vertices[v0]);
+                positions.push_back(vertices[v1]);
+                positions.push_back(vertices[v2]);
+                if(n == 4)
+                    positions.push_back(vertices[v3]);
+                char pe;
                 this->addFace(positions,current_mat,smooth);
             }else{
                 std::cout << s << std::endl;
@@ -247,9 +277,9 @@ void Mesh::loadFromWavefront(char * folder,char * filename, bool smooth,Math::Ma
         }else{
             std::cout << s << std::endl;
         }
-        if(!(f >> s)){
+//        if(!(f >> s)){
 //            std::cerr << "Missed something, damit" << std::endl;
-        }
+//        }
     }
 
 //    std::cout << vertices.size() << std::endl;
@@ -259,7 +289,7 @@ void Mesh::loadFromWavefront(char * folder,char * filename, bool smooth,Math::Ma
     if(this->materials.size() == 0){
         this->materials["default"] = Material();
     }
-
+    delete line;
     f.close();
     this->calculateFaceNormals();
     this->calculateVertexNormals();
