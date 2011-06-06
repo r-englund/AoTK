@@ -190,7 +190,7 @@ int char2num(char c){
     if(c == '9') return 9;
 }
 
-void Mesh::loadFromWavefront(char * folder,char * filename, bool smooth,Math::Matrix4x4<float> transform){
+void Mesh::loadFromWavefront(char * folder,char * filename,Math::Matrix4x4<float> transform){
     std::ifstream f;
     std::stringstream ss;
     ss << folder << "/" << filename;
@@ -201,7 +201,7 @@ void Mesh::loadFromWavefront(char * folder,char * filename, bool smooth,Math::Ma
     vertices.push_back(Math::Vector3<float>()); //Add dummy vert since indices start at 1 (not zero) in wavefron file format
     f >> s;
     char *line = new char[200];
-
+    bool smooth = true;
     while(!f.eof()){
         if(s.compare("mtllib") == 0){
             std::string mat_filename;
@@ -217,7 +217,10 @@ void Mesh::loadFromWavefront(char * folder,char * filename, bool smooth,Math::Ma
             }
         }
         else if(s.length() == 1){
-            if(s[0] == '#'){
+            if(s[0] == 's'){
+                f >> s;
+                smooth = s.compare("off")!=0;
+            }else if(s[0] == '#'){
                 char c[1000];
                 f.getline(c,1000);
 //                std::cout << "Comment: " << c << std::endl;
@@ -276,16 +279,10 @@ void Mesh::loadFromWavefront(char * folder,char * filename, bool smooth,Math::Ma
             }
         }else{
             std::cout << s << std::endl;
-        }
-//        if(!(f >> s)){
+        }if(!(f >> s)){
 //            std::cerr << "Missed something, damit" << std::endl;
-//        }
+        }
     }
-
-//    std::cout << vertices.size() << std::endl;
-//    std::cout << m.vertices.size() << std::endl;
-//    std::cout << m.triangles.size() << std::endl;
-
     if(this->materials.size() == 0){
         this->materials["default"] = Material();
     }
