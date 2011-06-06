@@ -142,6 +142,11 @@ void Window::removeScrollListener(Listeners::ScrollListener *l){
         scrollListeners.erase(std::find(scrollListeners.begin(),scrollListeners.end(),l));
 }
 
+void Window::removeIdleListener(Listeners::IdleListener *l){
+    while(std::count(idleListeners.begin(),idleListeners.end(),l) != 0)
+        idleListeners.erase(std::find(idleListeners.begin(),idleListeners.end(),l));
+}
+
 void Window::removeKeyUpListener(unsigned int id){
     auto it = keyUpListenerFunctions.find(id);
     if(it != keyUpListenerFunctions.end())
