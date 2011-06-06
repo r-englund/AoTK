@@ -36,11 +36,6 @@ void FBO::init(){
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);GLERRORS();
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _depthtex, 0);GLERRORS();GLERRORS();
 
-    std::cout << GL_FRAMEBUFFER << std::endl;
-    std::cout << GL_DEPTH_ATTACHMENT_EXT << std::endl;
-    std::cout << GL_TEXTURE_2D << std::endl;
-    std::cout << _depthtex << std::endl;
-    std::cout << "asdf"<< std::endl;
 //    glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, _fbo);GLERRORS();
 //    glGenRenderbuffers(1, &_depth);
 //
