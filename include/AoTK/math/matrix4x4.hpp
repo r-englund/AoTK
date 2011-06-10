@@ -279,6 +279,7 @@ template<typename T> struct mat4x4{
             m._2d[1][1] = cos(deg);
             return m;
         }
+
         static Matrix4x4 rotateAxis(T deg,T x,T y,T z){
         Matrix4x4<T> m;
         float c = cos(deg);
@@ -298,6 +299,9 @@ template<typename T> struct mat4x4{
             return rotateAxis(deg,_v.x,_v.y,_v.z);
         }
 
+        static Matrix4x4 translate(const Vector3<T> &v){
+            return translate(v.x,v.y,v.z);
+        }
         static Matrix4x4 translate(T x,T y,T z){
             Matrix4x4 m;
             m._2d[0][3] = x;
