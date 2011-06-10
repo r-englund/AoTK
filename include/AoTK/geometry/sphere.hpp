@@ -5,6 +5,7 @@ namespace AoTK{
 namespace Geometry{
     template<typename T>
     class Sphere{
+    public:
         Math::Vector3<T> center;
         T radius;
     public:
@@ -56,7 +57,7 @@ namespace Geometry{
             }
             center = min + max;
             center *= 0.5;
-            r = (max-min).getLenth()*0.5;
+            r = (max-min).getLength()*0.5;
             Sphere<T> s(center,r);
             bool moved = false;
             do{
