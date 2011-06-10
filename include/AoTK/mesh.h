@@ -73,6 +73,7 @@ namespace Mesh{
         virtual void calculateFaceNormals();
 
         void loadFromWavefront(char * folder,char * filename,Math::Matrix4x4<float> transform = Math::Matrix4x4<float>());
+        void loadCollada(char * filename,Math::Matrix4x4<float> transform = Math::Matrix4x4<float>());
 protected:
 
         Math::Vector3<float> faceCenter(std::string mat,unsigned int id,bool triangle);

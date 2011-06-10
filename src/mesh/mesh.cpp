@@ -292,6 +292,195 @@ void Mesh::loadFromWavefront(char * folder,char * filename,Math::Matrix4x4<float
     this->calculateVertexNormals();
 }
 
+enum COLLADA_DATA_SEMANTICS{
+    VERTEX,NORMAL
+};
+void Mesh::loadCollada(char * filename,Math::Matrix4x4<float> transform){
+    std::ifstream f;
+    f.open(filename);
+    assert(f.good());
+
+    bool normalsDone = false;
+    std::map<std::string,std::vector<AoTK::Math::Vector3<float>>> float_arrays;
+
+    std::vector<int> face_types;
+    std::map<int,std::pair<COLLADA_DATA_SEMANTICS,std::string>> offsets;
+
+    char tag[300],*data;
+    f.getline(tag,300,'>');
+    data = strchr(tag,'<');
+    while(strncmp(data,"</COLLADA",9) != 0){
+        if(strncmp(data,"<up_axis",8) == 0){
+            f.getline(tag,300,'<');
+//            if(strcmp(tag,"Z_UP")==0){
+//                transform *= AoTK::Math::Matrix4x4<float>(1,0,0,0,
+//                                                          0,0,1,0,
+//                                                          0,1,0,0,
+//                                                          0,0,0,1);
+//            }
+             memset(tag,0,300);
+            f.getline(tag,300,'>');
+            continue;
+        }else if(strncmp(data,"<float_array",12) == 0){
+            int i,name_start,count_start,count = 0;
+            std::string name;
+            for(i = 7;i<300;i++){
+                if((tag[i-7] == 'c')&&
+                (tag[i-6] == 'o')&&
+                (tag[i-5] == 'u')&&
+                (tag[i-4] == 'n')&&
+                (tag[i-3] == 't')&&
+                (tag[i-2] == '=')&&
+                (tag[i-1] == '"')){
+                    count_start = i;
+                }
+                if((tag[i-4] == 'i')&&
+                (tag[i-3] == 'd')&&
+                (tag[i-2] == '=')&&
+                (tag[i-1] == '"')){
+                    name_start = i;
+                }
+            }
+            while(tag[count_start]!='"'){
+                count = count*10 + char2num(tag[count_start++]);
+            }
+            int j = 0;
+            while(tag[name_start]!='"'){
+                name.push_back(tag[name_start++]);
+//                name[j++] = ;
+            }
+            std::cout << name << " " << count / 3 << std::endl;;
+            for(int i = 0;i<count/3;i++){
+                AoTK::Math::Vector4<float> v(0,0,0,1);
+                f >> v.x;
+                f >> v.y;
+                f >> v.z;
+                v = transform * v;
+                float_arrays[name].push_back({v.x,v.y,v.z});
+            }
+        }else if(strncmp(data,"<polylist",9) == 0){
+            int i,count = 0;
+            for(i = 7;i<300;i++){
+                if((tag[i-7] == 'c')&&
+                (tag[i-6] == 'o')&&
+                (tag[i-5] == 'u')&&
+                (tag[i-4] == 'n')&&
+                (tag[i-3] == 't')&&
+                (tag[i-2] == '=')&&
+                (tag[i-1] == '"')){
+                    break;
+                }
+            }
+            while(tag[i]!='"'){
+                count = count*10 + char2num(tag[i++]);
+            }
+            memset(tag,0,300);
+            f.getline(tag,300,'>');
+            data = strchr(tag,'<');
+            while(strncmp(data,"<vcount",7) != 0){
+                if(strncmp(data,"<input",6) == 0){
+                    char *p;
+                    std::string name;
+                    if(p = strstr(data,"VERTEX")){
+                        int offset;
+                        p = strstr(data,"offset=\"");
+                        assert(p);
+                        offset = char2num(p[8]);
+                        p = strstr(data,"source=\"#");
+                        for(int j = 9;p[j]!='"';j++){
+                            name.push_back(p[j]);
+                        }
+                        name = name.substr(0,name.find("vertices"));
+                        name.push_back('p');
+                        name.push_back('o');
+                        name.push_back('s');
+                        name.push_back('i');
+                        name.push_back('t');
+                        name.push_back('i');
+                        name.push_back('o');
+                        name.push_back('n');
+                        name.push_back('s');
+                        name.push_back('-');
+                        name.push_back('a');
+                        name.push_back('r');
+                        name.push_back('r');
+                        name.push_back('a');
+                        name.push_back('y');
+                        std::cout << name << std::endl;
+                        assert(p);
+                        offsets[offset] = std::pair<COLLADA_DATA_SEMANTICS,std::string>(VERTEX,name);
+                    }
+                    else if(p = strstr(data,"NORMAL")){
+                        int offset;
+                        p = strstr(data,"offset=\"");
+                        assert(p);
+                        offset = char2num(p[8]);
+                        p = strstr(data,"source=\"#");
+                        int j;
+                        for(j = 9;p[j]!='"';j++){
+                            name.push_back(p[j]);
+                        }
+                        name.push_back('-');
+                        name.push_back('a');
+                        name.push_back('r');
+                        name.push_back('r');
+                        name.push_back('a');
+                        name.push_back('y');
+                        std::cout << name << std::endl;
+                        assert(p);
+                        offsets[offset] = std::pair<COLLADA_DATA_SEMANTICS,std::string>(NORMAL,name);;
+                    }else{
+                        assert(false && "Unkown semantic");
+                    }
+
+                }
+                memset(tag,0,300);
+                f.getline(tag,300,'>');
+                data = strchr(tag,'<');
+
+            }
+            for(int i = 0;i<count;i++){
+                int n;
+                f >> n;
+                face_types.push_back(n);
+            }
+            memset(tag,0,300);
+            f.getline(tag,300,'>');
+            data = strchr(tag,'<');
+            memset(tag,0,300);
+            f.getline(tag,300,'>');
+            data = strchr(tag,'<');
+            std::vector<AoTK::Math::Vector3<float>> pos;
+            int index;
+            for(auto face_type = face_types.begin();face_type != face_types.end();++face_type){
+                pos.clear();
+                for(int i = 0;i<(*face_type);i++){
+                    for(auto o = offsets.begin();o != offsets.end();++o){
+                        if(o->second.first == NORMAL){
+                            f >> index; //normal index
+                        }else if(o->second.first == VERTEX){
+                            f >> index;
+                            pos.push_back(float_arrays[o->second.second][index]);
+                        }
+                    }
+                }
+                addFace(pos,"default",true);
+            }
+        }
+        memset(tag,0,300);
+        f.getline(tag,300,'>');
+        data = strchr(tag,'<');
+    }
+    if(this->materials.size() == 0){
+        this->materials["default"] = Material();
+    }
+    f.close();
+    this->calculateFaceNormals();
+    this->calculateVertexNormals();
+}
 
 };
+
+
+
 };
