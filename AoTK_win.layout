@@ -1,28 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="" />
-	<File name="include\AoTK\geometry.h" open="0" top="0" tabpos="0">
-		<Cursor position="195" topLine="0" />
+	<ActiveTarget name="Debug" />
+	<File name="include\AoTK\math\matrix4x4.hpp" open="0" top="0" tabpos="0">
+		<Cursor position="8360" topLine="265" />
 	</File>
-	<File name="include\AoTK\geometry\sphere.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="340" topLine="60" />
+	<File name="include\AoTK\mesh.h" open="1" top="1" tabpos="1">
+		<Cursor position="2272" topLine="56" />
 	</File>
-	<File name="include\AoTK\math\vector3.hpp" open="0" top="0" tabpos="0">
-		<Cursor position="876" topLine="30" />
-	</File>
-	<File name="include\AoTK\mesh.h" open="1" top="0" tabpos="3">
-		<Cursor position="1014" topLine="28" />
-	</File>
-	<File name="include\AoTK\window\window.h" open="0" top="0" tabpos="0">
-		<Cursor position="3682" topLine="91" />
-	</File>
-	<File name="include\AoTK\window_handler.h" open="1" top="0" tabpos="7">
-		<Cursor position="404" topLine="0" />
-	</File>
-	<File name="src\img\Image_BMP.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1758" topLine="93" />
-	</File>
-	<File name="src\mesh\mesh.cpp" open="1" top="1" tabpos="5">
-		<Cursor position="954" topLine="34" />
+	<File name="src\mesh\mesh.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="658" topLine="29" />
 	</File>
 </CodeBlocks_layout_file>
