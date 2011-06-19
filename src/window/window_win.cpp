@@ -1,5 +1,6 @@
 
 #include <AoTK/window_handler.h>
+#include <AoTK/aotk.h>
 
 #ifdef AoTK_WIN
 
@@ -388,7 +389,8 @@ KEY translateKEY(WPARAM w);
            0,                   /* Extended possibilites for variation */
            "OpenGLwindow",         /* Classname */
            title.c_str(),       /* Title Text */
-           WS_OVERLAPPEDWINDOW, /* default window */
+//           WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX, /* default window */
+           WS_POPUP , /* default window */
            CW_USEDEFAULT,       /* Windows decides the position */
            CW_USEDEFAULT,       /* where the window ends up on the screen */
            width,                 /* The programs width */
@@ -483,9 +485,11 @@ KEY translateKEY(WPARAM w);
             std::cout << "VBO suport: NOT OK" << std::endl;
 
         __window->setSizes();
-
+        __window->initDevices();
         return __window;
     }
+
+
 
     void Window::setSizes(){
         RECT lpRect;
@@ -530,6 +534,56 @@ KEY translateKEY(WPARAM w);
     }
     void Window::swapBuffers(){
         SwapBuffers(hDC);
+    }
+
+    BOOL CALLBACK _countDevices(HMONITOR hMonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData){
+        __window->number_of_devices++;
+        return 1;
+    }
+
+    BOOL CALLBACK _initDevices(HMONITOR hMonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData){
+        MONITORINFO info;
+        info.cbSize = sizeof(MONITORINFO);
+        GetMonitorInfo(hMonitor,&info);
+
+        __window->devices[__window->number_of_devices].x = info.rcMonitor.left;
+        __window->devices[__window->number_of_devices].y = info.rcMonitor.top;
+        __window->devices[__window->number_of_devices].z = info.rcMonitor.right-info.rcMonitor.left;
+        __window->devices[__window->number_of_devices].w = info.rcMonitor.bottom-info.rcMonitor.top;
+        __window->number_of_devices++;
+        return 1;
+    }
+
+    void Window::fullscreenOn(unsigned int device){
+        RECT lpRect;
+        GetWindowRect(hwnd,&lpRect);
+        oldPos.x = lpRect.left;
+        oldPos.y = lpRect.top;
+        getWindowSize(oldSize.x,oldSize.y);
+
+        SetWindowPos(this->hwnd,
+                     HWND_TOP,
+                     devices[device].x,
+                     devices[device].y,
+                     devices[device].z,
+                     devices[device].w,
+                     SWP_SHOWWINDOW);
+        this->setSizes();
+        fullscreen = true;
+    }
+
+
+    void Window::fullscreenOff(){
+        SetWindowPos(this->hwnd,HWND_TOP,oldPos.x,oldPos.y,oldSize.x,oldSize.y,SWP_SHOWWINDOW);
+        fullscreen = false;
+    }
+
+    void Window::initDevices(){
+        number_of_devices = 0;
+        EnumDisplayMonitors(0,0,_countDevices,0);
+        devices = new AoTK::Math::Vector4<int>[number_of_devices];
+        number_of_devices = 0;
+        EnumDisplayMonitors(0,0,_initDevices,0);
     }
 
 };

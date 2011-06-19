@@ -10,6 +10,7 @@ namespace AoTK{
 
     void Window::start(){
     std::cout << "starting" << std::endl;
+    __start = clock();
     glutMainLoop();
 //    __run = true;
 //    while(__run){

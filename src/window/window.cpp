@@ -7,10 +7,15 @@ Window * Window::getWindow(){
     return __window;
 }
 
+unsigned long long Window::getRunTime(){
+    return (clock()-__start)/(CLOCKS_PER_SEC/1000);
+}
+
 #ifndef AoTK_GLUT
 void Window::start(){
     std::cout << "starting" << std::endl;
     __run = true;
+    __start = clock();
     while(__run){
         checkForMessages();
         idleEvent();
@@ -322,6 +327,22 @@ void getAllError(std::string file, int line){
         }
         err = glGetError();
     }
+}
+
+ void Window::setFullscreen(bool set,unsigned int device){
+    if(set == fullscreen)
+        return;
+    if(set)
+        fullscreenOn(device);
+    else
+        fullscreenOff();
+    fullscreen = set;
+}
+void Window::toggleFullscreen(){
+    setFullscreen(!fullscreen);
+}
+bool Window::isFullscreen()const{
+    return fullscreen;
 }
 
 

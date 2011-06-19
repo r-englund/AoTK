@@ -20,6 +20,7 @@
     #endif
 
     #define GLEW_STATIC
+    #define WINVER 0x7600
     #include <windows.h>
     #include <AoTK/externals/glew.h>
     #include <AoTK/externals/wglew.h>
