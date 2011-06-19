@@ -258,24 +258,24 @@ template<typename T> struct mat4x4{
         static Matrix4x4 rotateX(T deg){
             Matrix4x4 m;
             m._2d[1][1] = cos(deg);
-            m._2d[1][2] = sin(deg);
-            m._2d[2][1] = -sin(deg);
+            m._2d[1][2] = -sin(deg);
+            m._2d[2][1] = sin(deg);
             m._2d[2][2] = cos(deg);
             return m;
         }
         static Matrix4x4 rotateY(T deg){
             Matrix4x4 m;
             m._2d[0][0] = cos(deg);
-            m._2d[0][2] = -sin(deg);
-            m._2d[2][0] = sin(deg);
+            m._2d[0][2] = sin(deg);
+            m._2d[2][0] = -sin(deg);
             m._2d[2][2] = cos(deg);
             return m;
         }
         static Matrix4x4 rotateZ(T deg){
             Matrix4x4 m;
             m._2d[0][0] = cos(deg);
-            m._2d[0][1] = sin(deg);
-            m._2d[1][0] = -sin(deg);
+            m._2d[0][1] = -sin(deg);
+            m._2d[1][0] = sin(deg);
             m._2d[1][1] = cos(deg);
             return m;
         }
@@ -283,7 +283,7 @@ template<typename T> struct mat4x4{
         static Matrix4x4 rotateAxis(T deg,T x,T y,T z){
         Matrix4x4<T> m;
         float c = cos(deg);
-        float s = sin(deg);
+        float s = -sin(deg);
         float t = 1.0- c;
 
         m._2d[0][0] = t*x*x+c;      m._2d[0][1] = t*x*y+s*z;    m._2d[0][2] = t*x*z-s*y;    m._2d[0][3] = 0;
