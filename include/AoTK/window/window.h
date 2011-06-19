@@ -2,6 +2,8 @@
 #define WINDOW_H
 
 #include <map>
+#include <AoTK/aotk.h>
+#include "../math.h"
 
 namespace AoTK{
     class Window{
@@ -80,7 +82,7 @@ namespace AoTK{
 
 
         bool __run;
-
+        bool fullscreen;
 
         void (*__dispFunc)(void);
 
@@ -105,9 +107,28 @@ namespace AoTK{
         friend void keyboardUp(unsigned char key,int x, int y);
         #endif
 
+        AoTK::Math::Vector4<int> *devices;
+        int number_of_devices;
+
+        unsigned long long __start;
+
+
+        void fullscreenOn(unsigned int device = 0);
+        void fullscreenOff();
+        AoTK::Math::Vector2<uint16_t> oldSize;
+        AoTK::Math::Vector2<uint16_t> oldPos;
+
+
+        friend BOOL CALLBACK _initDevices(HMONITOR hMonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData);
+        friend BOOL CALLBACK _countDevices(HMONITOR hMonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData);
 
     public:
+        unsigned long long getRunTime();
+
+        AoTK::Math::Vector4<int> *getDevices(){return devices;}
+        unsigned int getNumberOfDevices(){return number_of_devices;}
         void redraw(){redisplay = true;}
+        void initDevices();
 
         void addKeyboardListener(Listeners::KeyboardListener *l);
         unsigned int addKeyUpListener(void (*keyUp)(KEY key));
@@ -130,6 +151,10 @@ namespace AoTK{
 
         void addIdleListener(Listeners::IdleListener *l);
         unsigned int addIdleListener(void (*)());
+
+        void setFullscreen(bool set = true,unsigned int device = 0);
+        void toggleFullscreen();
+        bool isFullscreen()const;
 
         void removeKeyboardListener(Listeners::KeyboardListener *l);
         void removeResizeListener(Listeners::ResizeListener *l);
