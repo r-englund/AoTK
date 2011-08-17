@@ -1,0 +1,34 @@
+#!/bin/bash
+
+FILES=test/exec/*
+declare -i I
+I=0
+declare -i N
+N=0
+
+echo
+echo ********RUNING AOTK TESTS***********
+echo
+
+
+t=$(date --rfc-3339 seconds)
+
+
+for f in $FILES
+do
+  $f 1>/dev/null 2>>"./test/logs/errors.$t.log"
+  v=$?
+  if [ $v -ne 0 ]; then
+	  echo $v Errors in $f
+	  I+=$v
+	  N+=1
+  fi
+done
+
+cp "./test/logs/errors.$t.log" "./test/logs/errors.latest.log"
+
+echo
+echo Totaly $I failures in $N files, see "./test/logs/errors.latest.log" for error messages
+
+echo
+
