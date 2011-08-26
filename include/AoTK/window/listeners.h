@@ -1,12 +1,14 @@
 #ifndef LISTENERS_H
 #define LISTENERS_H
 
+#include <AoTK/aotk.h>
+
 namespace AoTK{
 namespace Listeners{
 class KeyboardListener{
 public:
-    virtual void keyDown(KEY key) = 0;
-    virtual void keyUp(KEY key) = 0;
+    virtual void keyDown(AoTK::KEY key) = 0;
+    virtual void keyUp(AoTK::KEY key) = 0;
     virtual void keyImpulse(unsigned char key) = 0;
 
     KeyboardListener(){}

@@ -1,10 +1,23 @@
 
-OBJS = glew.o fbo.o math.o shader.o Image_BMP.o Image_GL.o Image_JSON.o Image_double.o Image_float.o Image_uint8.o mesh.o window.o window_glut.o window_unix.o window_win.o
+OBJS = glew.o fbo.o math.o shader.o Image_BMP.o Image_GL.o Image_JSON.o Image_double.o Image_float.o Image_uint8.o mesh.o window.o window_glut.o window_unix.o window_win.o aotk_win.o aotk_unix.o
 ODIR = obj
 OBJPATH = $(patsubst %,$(ODIR)/%,$(OBJS))
 
+OS = unkown
 
 ifeq ($(shell uname) , Linux)
+    OS = Linux
+endif
+ifeq ($(shell uname -o) , Msys)
+    OS = Windows
+endif
+ifeq ($(shell uname) , MINGW32_NT-6.0)
+    OS = Windows
+endif
+
+
+
+ifeq ($(OS) , Linux)
 	CPP = g++
 	CC = gcc
 	GL = /user/include
@@ -15,13 +28,13 @@ ifeq ($(shell uname) , Linux)
 	OUT = out
 	CHMOD = chmod 755
 endif
-ifeq ($(shell uname -o) , Msys)
+ifeq ($(OS) , Windows)
 	PATH = C:\MinGW\bin
 	CPP = $(PATH)\mingw32-g++.exe
 	CC = $(PATH)\mingw32-gcc.exe
 	LFLAGS =  -L C:\MinGW\lib -lopengl32 -L . -lAoTK -lkernel32 -luser32 -lgdi32  -lopengl32 -lglu32 -lglaux -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32
 	GL = C:\MinGW\include
-	CFLAGS = -Wall -std=c++0x -g -I .\include -I $(GL)	
+	CFLAGS = -Wall -std=c++0x -I .\include -I $(GL)	
 	AR = $(PATH)\ar cr 
 	RM = rm -f
 	OUT = exe
@@ -78,6 +91,12 @@ $(ODIR)/window_unix.o : src/window/window_unix.cpp
 
 $(ODIR)/window_win.o : src/window/window_win.cpp
 	$(CPP) $(CFLAGS) -c $< -o $(ODIR)/window_win.o 
+
+$(ODIR)/aotk_win.o : src/aotk_win.cpp
+	$(CPP) $(CFLAGS) -c $< -o $(ODIR)/aotk_win.o 
+
+$(ODIR)/aotk_unix.o : src/aotk_unix.cpp
+	$(CPP) $(CFLAGS) -c $< -o $(ODIR)/aotk_unix.o 
 
 
 TEST_SRC_DIR = test/src

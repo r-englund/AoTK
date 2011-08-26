@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <cmath>
+#include <cstdlib>
 #include <iostream>
 
 #include <assert.h>
@@ -12,7 +13,6 @@
 #ifndef M_E
 #define M_E		    2.7182818284590452354
 #endif
-
 #ifndef M_LOG2E
 #define M_LOG2E		1.4426950408889634074
 #endif
@@ -59,7 +59,10 @@ template<class T> int round(T t){
 }
 #endif
 
-template<typename T> inline T abs( T a){return ((a<0) ? -a : a);}
+#ifndef abs
+//template<typename T> inline T abs( T a){return ((a<0) ? -a : a);}
+#endif
+
 inline bool floatCMP(float a,float b,float e = 0.001){return abs(a-b)<e;}
 
 #ifndef clamp

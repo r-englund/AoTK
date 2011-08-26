@@ -351,6 +351,7 @@ template<typename T> struct mat4x4{
             return scale(x,x,x);
         }
         #ifdef GL_MODELVIEW_MATRIX
+		#define AoTK_GL_MATRIX_FUNC
         static Matrix4x4 fromCurrentModelViewGLMatrix();
         static Matrix4x4 fromCurrentProjectionGLMatrix();
         static Matrix4x4 fromCurrentTextureGLMatrix();

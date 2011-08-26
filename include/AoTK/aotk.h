@@ -10,4 +10,19 @@
 #include "mesh.h"
 
 
+namespace AoTK{
+	void init();
+
+	extern AoTK::Math::Vector4<int> *devices;
+    extern int number_of_devices;
+
+	AoTK::Math::Vector4<int> *getDevices();
+	unsigned int getNumberOfDevices();
+	void initDevices();
+	
+	void getAllError(std::string file, int line);
+
+    
+};
+
 #endif

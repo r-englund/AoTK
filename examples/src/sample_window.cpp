@@ -45,6 +45,7 @@ void resize(int w,int h){
 }
 
 int main(int argc , char * argv[]){
+	AoTK::init();
 	window = AoTK::Window::createWindow(600,600,"SampleWindow");
 	
 	window->setDisplayFunction(display);
@@ -60,11 +61,11 @@ int main(int argc , char * argv[]){
 	
 	window->resizeEvent();
 
-        auto d = window->getDevices();
-        auto i = window->getNumberOfDevices();
-        for(unsigned int a = 0;a<i;a++){
-            std::cout << "Device 1: " << d[a] << std::endl;
-        }
+	auto d = AoTK::getDevices();
+	auto i = AoTK::getNumberOfDevices();
+	for(unsigned int a = 0;a<i;a++){
+		std::cout << "Device 1: " << d[a] << std::endl;
+    }
         
 	
 	window->start();

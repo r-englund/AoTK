@@ -1,4 +1,4 @@
 rm -f examples\sample_window.exe
-make examples
+mingw32-make examples
 examples\sample_window.exe
 PAUSE 

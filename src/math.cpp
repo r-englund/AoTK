@@ -1,9 +1,10 @@
 #include <AoTK/window_handler.h>
 #include <AoTK/math.h>
+#include <AoTK/aotk.h>
 
 namespace AoTK{
 namespace Math{
-#ifdef GL_MODELVIEW_MATRIX
+#ifdef AoTK_GL_MATRIX_FUNC
 
     template< > Matrix4x4<float> Matrix4x4<float>::fromCurrentModelViewGLMatrix(){
         Matrix4x4<float> m;
@@ -40,6 +41,8 @@ namespace Math{
         return Matrix4x4<double>(m.toOpenGLMatrix());
     }
     #endif
+
+	
 };
 };
 
