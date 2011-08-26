@@ -44,7 +44,7 @@ enum KEY{
 
 //#define AoTK_FORCE_GLUT
 
-//#define UNIX
+#define UNIX
 
 #if defined(_WIN32) && !defined(AoTK_FORCE_GLUT)
 
