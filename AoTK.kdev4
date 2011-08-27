@@ -1,0 +1,4 @@
+[Project]
+Name=AoTK
+Manager=KDevCMakeManager
+VersionControl=kdevgit
