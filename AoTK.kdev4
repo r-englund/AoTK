@@ -1,4 +1,3 @@
 [Project]
+Manager=KDevCustomMakeManager
 Name=AoTK
-Manager=KDevCMakeManager
-VersionControl=kdevgit
