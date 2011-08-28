@@ -2,16 +2,18 @@
 
 #ifdef AoTK_UNIX
 
-
-
 namespace AoTK{
 	Display *disp;
 	int scr;
-
+	
+	AoTK::Math::Vector4<int> *devices;
+	int number_of_devices;
+	
+	
 	bool ___isInit = false;
 	void init(){
 		if(___isInit)
-			throw "AoTK::init called two times, can only be called once";
+			return;//throw "AoTK::init called two times, can only be called once";
 		___isInit = true;
 		
 		 disp = XOpenDisplay(0);

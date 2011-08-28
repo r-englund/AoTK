@@ -1,5 +1,5 @@
 
-OBJS = glew.o fbo.o math.o shader.o Image_BMP.o Image_GL.o Image_JSON.o Image_double.o Image_float.o Image_uint8.o mesh.o window.o window_glut.o window_unix.o window_win.o aotk_win.o aotk_unix.o
+OBJS = glew.o fbo.o math.o shader.o Image_BMP.o Image_GL.o Image_JSON.o Image_double.o Image_float.o Image_uint8.o mesh.o window.o window_unix.o window_win.o aotk_win.o aotk_unix.o
 ODIR = obj
 OBJPATH = $(patsubst %,$(ODIR)/%,$(OBJS))
 
@@ -82,9 +82,6 @@ $(ODIR)/mesh.o : src/mesh/mesh.cpp
 
 $(ODIR)/window.o : src/window/window.cpp
 	$(CPP) $(CFLAGS) -c $< -o $(ODIR)/window.o 
-
-$(ODIR)/window_glut.o : src/window/window_glut.cpp
-	$(CPP) $(CFLAGS) -c $< -o $(ODIR)/window_glut.o 
 
 $(ODIR)/window_unix.o : src/window/window_unix.cpp
 	$(CPP) $(CFLAGS) -c $< -o $(ODIR)/window_unix.o 

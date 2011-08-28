@@ -42,11 +42,9 @@ enum KEY{
     };
 };
 
-//#define AoTK_FORCE_GLUT
-
 #define UNIX
 
-#if defined(_WIN32) && !defined(AoTK_FORCE_GLUT)
+#if defined(_WIN32)
 
 #define AoTK_WIN
     #ifdef _MSC_VER
@@ -69,12 +67,12 @@ enum KEY{
 		KEY translateKEY(WPARAM w);
 
 		BOOL CALLBACK _initDevices(HMONITOR hMonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData);
-        BOOL CALLBACK _countDevices(HMONITOR hMonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData);
+		BOOL CALLBACK _countDevices(HMONITOR hMonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData);
 	};
 	
 
 
-#elif defined(UNIX)// && !defined(AoTK_FORCE_GLUT)
+#elif defined(UNIX)
     #define AoTK_UNIX
 	#define GLX_GLXEXT_PROTOTYPES
 	#define GL_GLEXT_PROTOTYPES
@@ -90,20 +88,6 @@ enum KEY{
 		
 		KEY translateKEY(KeySym w);
 	};
-
-#else //anything else uses glut for the moment, very buggy
-    #define AoTK_GLUT
-    #define GLEW_STATIC
-    #if defined(_WIN32)
-        #include <windows.h>
-        #define GLUT_DISABLE_ATEXIT_HACK
-    #endif
-    #include <AoTK/externals/glew.h>
-    #ifdef __APPLE__
-        #include <GLUT/glut.h>
-    #else
-        #include <GL/glut.h>
-    #endif
 #endif
 
 #define GLERRORS() AoTK::getAllError(__FILE__,__LINE__)
@@ -113,8 +97,8 @@ enum KEY{
 #include "window/listeners.h"
 #include "window/window.h"
 
-namespace AoTK{
-    extern Window *__window;
-};
+//namespace AoTK{
+//    extern Window *__window;
+//};
 
 #endif

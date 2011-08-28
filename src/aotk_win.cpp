@@ -11,7 +11,7 @@ namespace AoTK{
 	HINSTANCE hInst;  //Application instance
 	
 	AoTK::Math::Vector4<int> *devices;
-    int number_of_devices;
+	int number_of_devices;
 	
 	bool ___isInit = false;
 	void init(){

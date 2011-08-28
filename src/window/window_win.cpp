@@ -150,7 +150,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 	}
 
     Window* Window::createWindow(uint16_t width,uint16_t height,std::string title,bool force32){
-        __window = new Window();
+        Window * __window = new Window();
         __window->window_width = width;
         __window->window_height = height;
         
