@@ -81,6 +81,7 @@ namespace AoTK{
 		Colormap cmap;
 		Atom wmDelete;
 		::Window win;
+		unsigned long windowAttributes;
         #endif
         
         unsigned long long __start;

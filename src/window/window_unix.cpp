@@ -105,11 +105,11 @@ namespace AoTK{
 		__window->XAttr.event_mask = ExposureMask | KeyPressMask | KeyReleaseMask | ButtonPressMask |ButtonReleaseMask | PointerMotionMask | StructureNotifyMask | PropertyChangeMask | ResizeRedirectMask | EnterWindowMask | LeaveWindowMask;
 		__window->XAttr.override_redirect = False;
 		 
-		unsigned long windowAttributes = CWBorderPixel | CWColormap | CWEventMask;
+		__window->windowAttributes = CWBorderPixel | CWColormap | CWEventMask;
 		 	 
 		__window->win = XCreateWindow(disp, RootWindow(disp, __window->vi->screen),
 				                      0, 0, width, height, 0, __window->vi->depth, InputOutput, __window->vi->visual,
-				                      CWBorderPixel | CWColormap | CWEventMask, &__window->XAttr);
+				                      __window->windowAttributes, &__window->XAttr);
 		
 		std::cout <<"Win type "<< typeid(__window->win).name() << std::endl;
 
