@@ -3,5 +3,5 @@
 *.exe
 *.a
 .svn
-*.kdev4
+*.kdev*
 *~
