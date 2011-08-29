@@ -22,9 +22,9 @@ ifeq ($(OS) , Linux)
 	CC = gcc
 	GL = /user/include
 	LFLAGS =  -L /usr/lib/mesa -L . -lAoTK -lGL -lXext -lXau -lXdmcp -lxcb -lX11 -lXxf86vm
-	CFLAGS = -Wall -std=c++0x -g -I ./include -I $(GL)	
+	CFLAGS = -Wall -std=c++0x -I ./include -I $(GL)	
 	RM = rm -f
-	AR = ar -cvq
+	AR = ar -cr
 	OUT = out
 	CHMOD = chmod 755
 endif
