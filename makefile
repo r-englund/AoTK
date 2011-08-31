@@ -107,7 +107,7 @@ $(TESTS) :
 	$(CPP) $(CFLAGS) $(TEST_SRC_DIR)/$@.cpp $(LFLAGS) -o $(TEST_OUT_DIR)/$@.$(OUT)
 
 withtest : tests
-	./run_tests
+	bash run_tests
 
 EX_SRC_DIR = examples/src
 EX_OUT_DIR = examples
