@@ -9,6 +9,7 @@
 
 namespace AoTK{
 
+Window *___window;
 LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
     int prev_x = -1,prev_y = -1,dx,dy;
     float ml = 0;
@@ -19,40 +20,40 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
         switch (message)                  /* handle the messages */
         {
             case WM_DESTROY:
-                __window->stop();
+                ___window->stop();
                 break;
             case WM_KEYDOWN:
-                __window->keyDownEvent(translateKEY(wParam));
+                ___window->keyDownEvent(translateKEY(wParam));
                 break;
             case WM_KEYUP:
-                __window->keyUpEvent(translateKEY(wParam));
+                ___window->keyUpEvent(translateKEY(wParam));
                 break;
             case WM_CHAR:
-                __window->keyImpulseEvent((unsigned char)wParam);
+                ___window->keyImpulseEvent((unsigned char)wParam);
                 break;
             case WM_SIZE:
-                __window->resizeEvent();
+                ___window->resizeEvent();
                 break;
             case WM_LBUTTONUP:
-                __window->mouseReleaseEvent(LEFT_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                ___window->mouseReleaseEvent(LEFT_BUTTON,LOWORD(lParam),HIWORD(lParam));
                 break;
             case WM_LBUTTONDOWN:
-                __window->mousePressEvent(LEFT_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                ___window->mousePressEvent(LEFT_BUTTON,LOWORD(lParam),HIWORD(lParam));
                 break;
             case WM_RBUTTONUP:
-                __window->mouseReleaseEvent(RIGHT_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                ___window->mouseReleaseEvent(RIGHT_BUTTON,LOWORD(lParam),HIWORD(lParam));
                 break;
             case WM_RBUTTONDOWN:
-                __window->mousePressEvent(RIGHT_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                ___window->mousePressEvent(RIGHT_BUTTON,LOWORD(lParam),HIWORD(lParam));
                 break;
             case WM_MBUTTONUP:
-                __window->mouseReleaseEvent(MIDDLE_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                ___window->mouseReleaseEvent(MIDDLE_BUTTON,LOWORD(lParam),HIWORD(lParam));
                 break;
             case WM_MBUTTONDOWN:
-                __window->mousePressEvent(MIDDLE_BUTTON,LOWORD(lParam),HIWORD(lParam));
+                ___window->mousePressEvent(MIDDLE_BUTTON,LOWORD(lParam),HIWORD(lParam));
                 break;
             case WM_MOUSEWHEEL:
-                __window->scrollEvent((short)HIWORD(wParam) / 120);
+                ___window->scrollEvent((short)HIWORD(wParam) / 120);
                 break;
             case WM_MOUSELEAVE:
                 prev_x = -1;
@@ -73,10 +74,10 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                     case MK_LBUTTON:
                     case MK_RBUTTON:
                     case MK_MBUTTON:
-                        __window->mousemotionEvent(dx,dy);
+                        ___window->mousemotionEvent(dx,dy);
                         break;
                     default:
-                        __window->passiveMousemotionEvent(dx,dy);
+                        ___window->passiveMousemotionEvent(dx,dy);
                 }
                 break;
             default:
@@ -115,7 +116,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 			0,                   /* Extended possibilites for variation */
 			"OpenGLwindow",         /* Classname */
 			title.c_str(),       /* Title Text */
-			__window->styles, /* default window */
+			this->styles, /* default window */
 			//           WS_POPUP , /* default window */
 			50,       /* Windows decides the position */
 			50,       /* where the window ends up on the screen */
@@ -150,23 +151,23 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 	}
 
     Window* Window::createWindow(uint16_t width,uint16_t height,std::string title,bool force32){
-        Window * __window = new Window();
-        __window->window_width = width;
-        __window->window_height = height;
+        Window * w = new Window();
+        w->window_width = width;
+        w->window_height = height;
         
 		
-		__window->styles = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME;
+		w->styles = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME;
 
-        assert(__window->initWindowClass() && "Could not register winclass");
-        assert(__window->createWindow(title) && "Could not create window");
-		assert(__window->hDC=GetDC(__window->hwnd));
+        assert(w->initWindowClass() && "Could not register winclass");
+        assert(w->createWindow(title) && "Could not create window");
+		assert(w->hDC=GetDC(w->hwnd));
         
-		assert(__window->setPixelFormat());
+		assert(w->setPixelFormat());
 
         
         HGLRC tmp;
-        assert(tmp=wglCreateContext(__window->hDC));
-        assert(wglMakeCurrent(__window->hDC,tmp));
+        assert(tmp=wglCreateContext(w->hDC));
+        assert(wglMakeCurrent(w->hDC,tmp));
 
 		GLint a = 0,b = 0;
 		double v;
@@ -194,7 +195,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                     0
                 };
 
-                assert(__window->hRC=wglCreateContextAttribsARB(__window->hDC,0,attribs));
+                assert(w->hRC=wglCreateContextAttribsARB(w->hDC,0,attribs));
 
                 wglMakeCurrent(NULL,NULL);
                 wglDeleteContext(tmp);
@@ -206,20 +207,20 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                     0
                 };
 				
-				std::cout << __window->hDC << " " << attribs[1] << " " << attribs[3] << std::endl;
+				std::cout << w->hDC << " " << attribs[1] << " " << attribs[3] << std::endl;
 
-                assert(__window->hRC=wglCreateContextAttribsARB(__window->hDC,0,attribs));
+                assert(w->hRC=wglCreateContextAttribsARB(w->hDC,0,attribs));
 
                 wglMakeCurrent(NULL,NULL);
                 wglDeleteContext(tmp);
             }
         }else{
-            assert(__window->hRC = tmp);
+            assert(w->hRC = tmp);
         }
-        assert(wglMakeCurrent(__window->hDC,__window->hRC));
+        assert(wglMakeCurrent(w->hDC,w->hRC));
         wglSwapIntervalEXT(0); //Disable vsync
 
-        ShowWindow (__window->hwnd, SW_SHOWNORMAL);
+        ShowWindow (w->hwnd, SW_SHOWNORMAL);
 
 		
 
@@ -234,9 +235,9 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
         else
             std::cout << "VBO suport: NOT OK" << std::endl;
 
-        __window->setSizes();
+        w->setSizes();
         initDevices();
-        return __window;
+        return w;
     }
 
 
@@ -255,11 +256,14 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
     void Window::checkForMessages(){
         MSG msg;
         if(PeekMessage (&msg, hwnd, 0, 0, PM_REMOVE)){
+			while(___window != 0)
+			___window = this;
            // switch(msg.message){
            //     default:
                     TranslateMessage(&msg);				// Translate The Message
                     DispatchMessage(&msg);
             //}
+			___window = 0;
             checkForMessages();
         }
     }
@@ -275,7 +279,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
         oldPos.y = (uint16_t)lpRect.top;
         getWindowSize(oldSize.x,oldSize.y);
 		
-		ShowWindow (__window->hwnd, SW_SHOWMAXIMIZED);
+		ShowWindow (this->hwnd, SW_SHOWMAXIMIZED);
 	
 		this->setSizes();
         fullscreen = true;
