@@ -5,3 +5,5 @@
 .svn
 *.kdev*
 *~
+AoTK.anjuta
+*anjut*
