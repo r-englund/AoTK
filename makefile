@@ -32,9 +32,9 @@ ifeq ($(OS) , Windows)
 	PATH = C:\MinGW\bin
 	CPP = $(PATH)\mingw32-g++.exe
 	CC = $(PATH)\mingw32-gcc.exe
-	LFLAGS =  -L C:\MinGW\lib -lopengl32 -L . -lAoTK -lkernel32 -luser32 -lgdi32  -lopengl32 -lglu32 -lglaux -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32
+	LFLAGS =  -g -L C:\MinGW\lib -lopengl32 -L . -lAoTK -lkernel32 -luser32 -lgdi32  -lopengl32 -lglu32 -lglaux -lkernel32 -luser32 -lgdi32 -lwinspool -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32
 	GL = C:\MinGW\include
-	CFLAGS = -Wall -std=c++0x -I .\include -I $(GL)	
+	CFLAGS = -Wall -g -std=c++0x -I .\include -I $(GL)	
 	AR = $(PATH)\ar cr 
 	RM = rm -f
 	OUT = exe
