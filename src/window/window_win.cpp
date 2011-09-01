@@ -14,10 +14,52 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
     int prev_x = -1,prev_y = -1,dx,dy;
     float ml = 0;
     float l;
-
-
+	
     LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam){
-        switch (message)                  /* handle the messages */
+        if(___window == 0){
+			std::map<UINT,std::string> event2string;
+			event2string[WM_ACTIVATEAPP]="WM_ACTIVATEAPP";
+			event2string[WM_CANCELMODE]="WM_CANCELMODE";
+			event2string[WM_CHILDACTIVATE]="WM_CHILDACTIVATE";
+			event2string[WM_CLOSE]="WM_CLOSE";
+			event2string[WM_COMPACTING]="WM_COMPACTING";
+			event2string[WM_CREATE]="WM_CREATE";
+			event2string[WM_DESTROY]="WM_DESTROY";
+			event2string[WM_ENABLE]="WM_ENABLE";
+			event2string[WM_ENTERSIZEMOVE]="WM_ENTERSIZEMOVE";
+			event2string[WM_EXITSIZEMOVE]="WM_EXITSIZEMOVE";
+			event2string[WM_GETICON]="WM_GETICON";
+			event2string[WM_GETMINMAXINFO]="WM_GETMINMAXINFO";
+			event2string[WM_INPUTLANGCHANGE]="WM_INPUTLANGCHANGE";
+			event2string[WM_INPUTLANGCHANGEREQUEST]="WM_INPUTLANGCHANGEREQUEST";
+			event2string[WM_MOVE]="WM_MOVE";
+			event2string[WM_MOVING]="WM_MOVING";
+			event2string[WM_NCACTIVATE]="WM_NCACTIVATE";
+			event2string[WM_NCCALCSIZE]="WM_NCCALCSIZE";
+			event2string[WM_NCCREATE]="WM_NCCREATE";
+			event2string[WM_NCDESTROY]="WM_NCDESTROY";
+			event2string[WM_NULL]="WM_NULL";
+			event2string[WM_PARENTNOTIFY]="WM_PARENTNOTIFY";
+			event2string[WM_QUERYDRAGICON]="WM_QUERYDRAGICON";
+			event2string[WM_QUERYOPEN]="WM_QUERYOPEN";
+			event2string[WM_QUIT]="WM_QUIT";
+			event2string[WM_SHOWWINDOW]="WM_SHOWWINDOW";
+			event2string[WM_SIZE]="WM_SIZE";
+			event2string[WM_SIZING]="WM_SIZING";
+			event2string[WM_STYLECHANGED]="WM_STYLECHANGED";
+			event2string[WM_STYLECHANGING]="WM_STYLECHANGING";
+			event2string[WM_THEMECHANGED]="WM_THEMECHANGED";
+			event2string[WM_USERCHANGED]="WM_USERCHANGED";
+			event2string[WM_WINDOWPOSCHANGED]="WM_WINDOWPOSCHANGED";
+			event2string[WM_WINDOWPOSCHANGING]="WM_WINDOWPOSCHANGING";
+
+			std::cerr << "___window == 0 with a msg type: " << event2string[message] << std::endl;
+			if(event2string[message].length() == 0){
+				std::cerr << "Unkown event nr: " << message << std::endl;
+			}
+			return DefWindowProc (hwnd, message, wParam, lParam);
+		}
+		switch (message)                  /* handle the messages */
         {
             case WM_DESTROY:
                 ___window->stop();
