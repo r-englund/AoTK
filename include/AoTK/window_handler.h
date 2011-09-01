@@ -66,6 +66,8 @@ enum KEY{
 
 		KEY translateKEY(WPARAM w);
 
+		std::string message2String(UINT msg);
+
 		BOOL CALLBACK _initDevices(HMONITOR hMonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData);
 		BOOL CALLBACK _countDevices(HMONITOR hMonitor,HDC hdcMonitor,LPRECT lprcMonitor,LPARAM dwData);
 	};
